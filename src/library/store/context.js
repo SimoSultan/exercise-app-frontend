@@ -53,17 +53,24 @@ export default function ExerciseContextProvider({ children }) {
           },
         };
       case ACTIONS.ADD_USER_EXERCISE:
-        // const updatedUser = await removeExerciseFromUser(
-        //   userProfile.id,
-        //   exerciseID
-        // );
-        console.log(payload);
+        // const resp = await addNewExerciseToUser(userID, {
+        //   id,
+        //   amount: Number(newExerciseAmount),
+        // });
+
         return {
           ...state,
           user: {
             ...state.user,
             exercises: [...state.user.exercises, payload],
           },
+        };
+      case ACTIONS.ADD_ONE_EXERCISE:
+        // const id = await addNewExerciseToExercises(newExercise);
+
+        return {
+          ...state,
+          exercises: [...state.exercises, payload],
         };
       case ACTIONS.ADD_ALL_EXERCISES:
         return {

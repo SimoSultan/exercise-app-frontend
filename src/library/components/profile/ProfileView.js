@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -50,7 +50,7 @@ export default function ProfileView() {
   return (
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 2,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -75,6 +75,7 @@ export default function ProfileView() {
               autoFocus
               value={user.firstName}
               onChange={handleChange}
+              disabled
             />
           </Grid>
           <Grid item xs={12}>
@@ -87,6 +88,7 @@ export default function ProfileView() {
               autoComplete="family-name"
               value={user.lastName}
               onChange={handleChange}
+              disabled
             />
           </Grid>
           {user.exercises.length > 0 && (
@@ -101,14 +103,14 @@ export default function ProfileView() {
             <AddUserExercise />
           </Grid>
         </Grid>
-        <Button
+        {/* <Button
           type="submit"
           fullWidth
           variant="contained"
           sx={{ mt: 4, mb: 2 }}
         >
-          Update User
-        </Button>
+          Update User Name and Exercise Amounts
+        </Button> */}
         <AddNewExercise userID={user.id} />
       </Box>
     </Box>

@@ -35,6 +35,7 @@ export default function UserExercises({
                 value={amount}
                 onChange={handleExerciseAmountChange}
                 label="Amount"
+                disabled
               />
             </FormControl>
           </Grid>
