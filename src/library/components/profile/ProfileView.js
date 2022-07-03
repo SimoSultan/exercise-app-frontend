@@ -18,25 +18,16 @@ export default function ProfileView() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const updatedUser = await updateUser(userProfile.id, userProfile);
-    // console.log("updated user", updatedUser);
+    // dispatch({ type: ACTIONS.UPDATE_USER, payload: user });
   };
 
   function handleChange(event) {
     event.preventDefault();
     console.log(event.target.name, event.target.value);
-    // setUserProfile(() => ({
-    //   ...userProfile,
-    //   [event.target.name]: event.target.value,
-    // }));
   }
 
   const handleExerciseAmountChange = (event) => {
     event.preventDefault();
-    // setUserProfile(() => ({
-    //   ...userProfile,
-    //   amount: Number(event.target.value),
-    // }));
   };
 
   const handleRemoveExerciseFromUser = async (exerciseID) => {
