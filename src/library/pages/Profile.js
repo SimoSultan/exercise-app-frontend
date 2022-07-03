@@ -1,11 +1,5 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { ProfileView } from "../components/exports";
 
-export default function Profile({ authenticated }) {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!authenticated) return navigate("/login");
-  }, [authenticated]);
-
-  return <div>Profile</div>;
+export default function Profile() {
+  return <ProfileView />;
 }

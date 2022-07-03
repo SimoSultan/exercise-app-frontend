@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useContext } from "react";
 import { Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 import {
   FixedBottomNavigation,
@@ -15,45 +14,27 @@ import {
   FOOTER_HEIGHT,
 } from "./library/styles/styles";
 import "./App.css";
+import { getAllExercises } from "./library/api/api";
+import { ExerciseContext } from "./library/store/context";
+import { ACTIONS } from "./library/store/initialState";
 
 function App() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [authenticated, setAuthenticated] = useState(false);
-  const navigate = useNavigate();
+  const { dispatch } = useContext(ExerciseContext);
 
-  function handleLogin() {
-    setAuthenticated(true);
-    switch (activeTab) {
-      case 0:
-        navigate("/");
-        break;
-      case 1:
-        navigate("/profile");
-        break;
-      case 2:
-        navigate("/bank");
-        break;
-      case 3:
-        navigate("/leaderboard");
-        break;
-    }
-  }
-  function handleLogout() {
-    setAuthenticated(false);
-    navigate("/");
-  }
-
-  function handleChangeTab(tabNumber) {
-    setActiveTab(parseInt(tabNumber));
-  }
+  useEffect(() => {
+    (async () => {
+      try {
+        const exercises = await getAllExercises();
+        dispatch({ type: ACTIONS.ADD_ALL_EXERCISES, payload: exercises });
+      } catch (error) {
+        dispatch({ type: ACTIONS.ERROR });
+      }
+    })();
+  }, [dispatch]);
 
   return (
     <div className="App">
-      <Header
-        handleLogout={handleLogout}
-        authenticated={authenticated}
-        handleLogin={handleLogin}
-      />
+      <Header />
       <Container
         maxWidth="sm"
         sx={{
@@ -67,16 +48,10 @@ function App() {
           alignItems: "center",
         }}
       >
-        <ExerciseRouter
-          handleLogin={handleLogin}
-          authenticated={authenticated}
-        />
+        <ExerciseRouter />
       </Container>
       <Footer />
-      <FixedBottomNavigation
-        activeTab={activeTab}
-        handleChangeTab={handleChangeTab}
-      />
+      <FixedBottomNavigation />
     </div>
   );
 }

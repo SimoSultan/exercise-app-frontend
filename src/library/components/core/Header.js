@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,11 +12,13 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { HEADER_HEIGHT } from "../../styles/styles";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { ExerciseContext } from "../../store/context";
+import { ACTIONS } from "../../store/initialState";
 
-export default function Header({ handleLogout, handleLogin, authenticated }) {
+export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const navigate = useNavigate();
+  const { state, dispatch } = useContext(ExerciseContext);
+  const { isAuthenticated } = state;
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -27,10 +29,10 @@ export default function Header({ handleLogout, handleLogin, authenticated }) {
   };
 
   const handleClickAuth = () => {
-    if (authenticated) {
-      handleLogout();
+    if (isAuthenticated) {
+      dispatch({ type: ACTIONS.LOGOUT });
     } else {
-      navigate("login");
+      dispatch({ type: ACTIONS.NAVIGATE_ROUTE, payload: "login" });
     }
     handleCloseUserMenu();
   };
@@ -90,7 +92,7 @@ export default function Header({ handleLogout, handleLogin, authenticated }) {
               </Link>
               <MenuItem onClick={handleClickAuth}>
                 <Typography textAlign="center">
-                  {authenticated ? "Logout" : "Login"}
+                  {isAuthenticated ? "Logout" : "Login"}
                 </Typography>
               </MenuItem>
             </Menu>
