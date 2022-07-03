@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import Box from "@mui/material/Box";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
@@ -7,8 +8,16 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { Grid, Typography, IconButton } from "@mui/material";
 import { BOTTOM_NAVIGATION_HEIGHT } from "../../styles/styles";
+import { ExerciseContext } from "../../store/context";
+import { ACTIONS } from "../../store/initialState";
 
-export default function FixedBottomNavigation({ activeTab, handleChangeTab }) {
+export default function FixedBottomNavigation() {
+  const { state, dispatch } = useContext(ExerciseContext);
+  const { activeTab } = state;
+  function handleChangeTab(tab) {
+    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: tab });
+  }
+
   return (
     <Box
       sx={{
@@ -40,12 +49,12 @@ export default function FixedBottomNavigation({ activeTab, handleChangeTab }) {
                   display: "flex",
                   flexDirection: "column",
                 }}
-                onClick={() => handleChangeTab(0)}
+                onClick={() => handleChangeTab("home")}
               >
-                <HomeIcon color={activeTab === 0 ? "primary" : ""} />
+                <HomeIcon color={activeTab === "home" ? "primary" : ""} />
                 <Typography
                   variant="button"
-                  color={activeTab === 0 ? "primary" : ""}
+                  color={activeTab === "home" ? "primary" : ""}
                 >
                   Home
                 </Typography>
@@ -67,12 +76,12 @@ export default function FixedBottomNavigation({ activeTab, handleChangeTab }) {
                   display: "flex",
                   flexDirection: "column",
                 }}
-                onClick={() => handleChangeTab(1)}
+                onClick={() => handleChangeTab("profile")}
               >
-                <PersonIcon color={activeTab === 1 ? "primary" : ""} />
+                <PersonIcon color={activeTab === "profile" ? "primary" : ""} />
                 <Typography
                   variant="button"
-                  color={activeTab === 1 ? "primary" : ""}
+                  color={activeTab === "profile" ? "primary" : ""}
                 >
                   Profile
                 </Typography>
@@ -87,12 +96,12 @@ export default function FixedBottomNavigation({ activeTab, handleChangeTab }) {
               <IconButton
                 color="inherit"
                 sx={{ display: "flex", flexDirection: "column" }}
-                onClick={() => handleChangeTab(2)}
+                onClick={() => handleChangeTab("bank")}
               >
-                <AddTaskIcon color={activeTab === 2 ? "primary" : ""} />
+                <AddTaskIcon color={activeTab === "bank" ? "primary" : ""} />
                 <Typography
                   variant="button"
-                  color={activeTab === 2 ? "primary" : ""}
+                  color={activeTab === "bank" ? "primary" : ""}
                 >
                   Bank
                 </Typography>
@@ -107,12 +116,14 @@ export default function FixedBottomNavigation({ activeTab, handleChangeTab }) {
               <IconButton
                 color="inherit"
                 sx={{ display: "flex", flexDirection: "column" }}
-                onClick={() => handleChangeTab(3)}
+                onClick={() => handleChangeTab("leaderboard")}
               >
-                <LeaderboardIcon color={activeTab === 3 ? "primary" : ""} />
+                <LeaderboardIcon
+                  color={activeTab === "leaderboard" ? "primary" : ""}
+                />
                 <Typography
                   variant="button"
-                  color={activeTab === 3 ? "primary" : ""}
+                  color={activeTab === "leaderboard" ? "primary" : ""}
                 >
                   Leaderboard
                 </Typography>

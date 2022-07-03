@@ -1,24 +1,38 @@
-import { Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Leaderboard from "../pages/Leaderboard";
 import Login from "../pages/Login";
 import Bank from "../pages/Bank";
 import Profile from "../pages/Profile";
 import Home from "../pages/Home";
+import { ExerciseContext } from "../store/context";
 
-export default function Router({ handleLogin, authenticated }) {
+export default function Router() {
+  const { state } = useContext(ExerciseContext);
+  const { isAuthenticated } = state;
+
   return (
     <Routes>
       <Route
         path="/profile"
-        element={<Profile authenticated={authenticated} />}
+        element={
+          isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
+        }
       />
-      <Route path="/bank" element={<Bank authenticated={authenticated} />} />
+      <Route
+        path="/bank"
+        element={
+          isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
+        }
+      />
       <Route
         path="/leaderboard"
-        element={<Leaderboard authenticated={authenticated} />}
+        element={
+          isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
+        }
       />
-      <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-      <Route path="*" element={<Home authenticated={authenticated} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 }
