@@ -39,9 +39,12 @@ export default function Login() {
           Back to Home
         </Button>
       ) : (
-        <Button variant="contained" onClick={handleLogin}>
-          Login
-        </Button>
+        <>
+          <Button variant="contained" onClick={handleLogin}>
+            Login
+          </Button>
+          <a href={`${process.env.REACT_APP_API_ENDPOINT}/auth/google`}>Login With Google</a>
+        </>
       )}
     </>
   );
