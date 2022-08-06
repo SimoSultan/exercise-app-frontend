@@ -7,6 +7,7 @@ const ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const api = axios.create({
   baseURL: ENDPOINT,
+  withCredentials: true,
 });
 
 export async function getPing() {

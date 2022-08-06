@@ -22,6 +22,10 @@ export default function Login() {
     }
   }
 
+  function handleLoginWithGoogle() {
+    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, '_self')
+  }
+
   function handleHomeNavigation() {
     dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
     navigate("/");
@@ -43,7 +47,9 @@ export default function Login() {
           <Button variant="contained" onClick={handleLogin}>
             Login
           </Button>
-          <a href={`${process.env.REACT_APP_API_ENDPOINT}/auth/google`}>Login With Google</a>
+          <Button variant="contained" onClick={handleLoginWithGoogle}>
+            Login With Google
+          </Button>
         </>
       )}
     </>
