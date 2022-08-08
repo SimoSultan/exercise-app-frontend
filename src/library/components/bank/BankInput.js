@@ -27,7 +27,12 @@ export default function BankInput({ dailyExercises, allExercises }) {
           <Typography>User has no exercises</Typography>
         )}
       </Box>
-      <Button variant="contained" size="large" sx={{ mt: 3 }}>
+      <Button
+        variant="contained"
+        size="large"
+        sx={{ mt: 3 }}
+        onClick={() => window.alert("this currently does nothing")}
+      >
         Bank All
       </Button>
     </>
