@@ -1,15 +1,24 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { useState, useContext } from "react";
+import { Button, Typography, Container } from "@mui/material";
 import { getPing, postEcho } from "../api/api";
+import { ExerciseContext } from "../store/context";
+import CurrentSummary from "../components/bank/CurrentSummary";
+import BankInput from "../components/bank/BankInput";
+
+// import { ACTIONS } from "../../store/initialState";
+
+const debug = false;
 
 export default function Bank({ authenticated }) {
   const [response, setResponse] = useState(null);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!authenticated) return navigate("/login");
-  }, [authenticated]);
-
+  const { state } = useContext(ExerciseContext);
+  const { user, exercises } = state;
+  const userExercises = user.exercises.map((exercise) => {
+    return { banked: 0, ...exercise };
+  });
+  const [dailyExercises, setDailyExercises] = useState(userExercises);
+  console.log(dailyExercises);
+  // DEBUG FUNCTIONS
   async function handleClickPing() {
     const resp = await getPing();
     setResponse(JSON.stringify(resp));
@@ -24,15 +33,36 @@ export default function Bank({ authenticated }) {
   }
 
   return (
-    <div>
-      <Typography>Bank</Typography>
-      <Button variant="contained" onClick={handleClickPing}>
-        Ping
-      </Button>
-      <Button variant="contained" onClick={handleClickEcho}>
-        Echo
-      </Button>
-      <div>{response}</div>
-    </div>
+    <Container
+      maxWidth="sm"
+      sx={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h4" sx={{ py: 3 }}>
+        Bank Daily Exercises
+      </Typography>
+      <CurrentSummary
+        allExercises={exercises}
+        dailyExercises={dailyExercises}
+      />
+
+      <BankInput dailyExercises={dailyExercises} allExercises={exercises} />
+      {debug ? (
+        <>
+          <Button variant="contained" onClick={handleClickPing}>
+            Ping
+          </Button>
+          <Button variant="contained" onClick={handleClickEcho}>
+            Echo
+          </Button>
+          <div>{response}</div>
+        </>
+      ) : null}
+    </Container>
   );
 }
