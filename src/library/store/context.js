@@ -71,6 +71,14 @@ export default function ExerciseContextProvider({ children }) {
           ...state,
           exercises: payload,
         };
+      case ACTIONS.BANK_USER_EXERCISE:
+        // const updatedExercises = updateUserDailyExercises(payload);
+        return {
+          ...state,
+          user: {
+            exercises: payload,
+          },
+        };
       default:
         return state;
     }

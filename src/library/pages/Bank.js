@@ -13,11 +13,6 @@ export default function Bank({ authenticated }) {
   const [response, setResponse] = useState(null);
   const { state } = useContext(ExerciseContext);
   const { user, exercises } = state;
-  const userExercises = user.exercises.map((exercise) => {
-    return { banked: 0, ...exercise };
-  });
-  const [dailyExercises, setDailyExercises] = useState(userExercises);
-  console.log(dailyExercises);
   // DEBUG FUNCTIONS
   async function handleClickPing() {
     const resp = await getPing();
@@ -48,10 +43,10 @@ export default function Bank({ authenticated }) {
       </Typography>
       <CurrentSummary
         allExercises={exercises}
-        dailyExercises={dailyExercises}
+        dailyExercises={user.exercises}
       />
 
-      <BankInput dailyExercises={dailyExercises} allExercises={exercises} />
+      <BankInput dailyExercises={user.exercises} allExercises={exercises} />
       {debug ? (
         <>
           <Button variant="contained" onClick={handleClickPing}>

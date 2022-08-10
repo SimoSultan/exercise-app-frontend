@@ -8,10 +8,12 @@ export const DATABASE = {
         {
           id: 1,
           amount: 20,
+          dailyBanked: 0,
         },
         {
           id: 2,
           amount: 30,
+          dailyBanked: 0,
         },
       ],
     },
