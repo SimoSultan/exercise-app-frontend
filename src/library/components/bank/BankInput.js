@@ -14,7 +14,6 @@ export default function BankInput({ dailyExercises, allExercises }) {
     if (isNaN(Number(e.target.value))) return;
     let arr = [...bank];
     arr[index] = Number(e.target.value);
-    console.log(arr);
     setBank(() => [...arr]);
   };
 
