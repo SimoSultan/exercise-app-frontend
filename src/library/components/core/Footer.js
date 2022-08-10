@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { Typography, Container } from "@mui/material";
 
 import Copyright from "./Copyright";
 
@@ -12,6 +11,7 @@ export default function Footer() {
         py: 3,
         px: 2,
         mt: "auto",
+        width: "100%",
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]

@@ -41,7 +41,7 @@ export default function AddUserExercise() {
           startIcon={showInput ? <CloseIcon /> : <AddIcon />}
           onClick={() => setShowInput(!showInput)}
         >
-          {showInput ? "Cancel" : "Add New Exercise"}
+          {showInput ? "Cancel" : "Add New Exercise Type"}
         </Button>
       </Grid>
       {showInput && (
@@ -50,7 +50,7 @@ export default function AddUserExercise() {
             <TextField
               fullWidth
               id="new-exercise-name"
-              label="New Exercise"
+              label="New Exercise Name"
               variant="filled"
               value={newExercise}
               onChange={(e) => setNewExercise(e.target.value)}

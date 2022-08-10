@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getExerciseName } from "../../utils/utils";
 
 export default function UserExercises({
   allExercises,
@@ -12,9 +13,6 @@ export default function UserExercises({
   handleExerciseAmountChange,
   handleRemoveExerciseFromUser,
 }) {
-  const getExerciseName = (id) =>
-    allExercises.find((ex) => ex.id === id)?.name || "not found";
-
   return (
     <>
       {userExercises.map(({ id, amount }) => (
@@ -24,7 +22,7 @@ export default function UserExercises({
               variant="outlined"
               disabled={true}
               sx={{ width: "100%" }}
-              value={getExerciseName(id)}
+              value={getExerciseName(id, allExercises)}
             />
           </Grid>
           <Grid item xs={3}>

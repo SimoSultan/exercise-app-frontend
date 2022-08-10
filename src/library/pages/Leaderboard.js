@@ -1,12 +1,18 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/material";
 
 export default function Leaderboard({ authenticated }) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!authenticated) return navigate("/login");
-  }, [authenticated]);
-
-  return <div>Leaderboard</div>;
+  return (
+    <Container
+      maxWidth="sm"
+      sx={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center",
+      }}
+    >
+      Leaderboard
+    </Container>
+  );
 }

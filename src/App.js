@@ -1,18 +1,8 @@
 import { useEffect, useContext } from "react";
-import { Container } from "@mui/material";
 
-import {
-  FixedBottomNavigation,
-  Header,
-  Footer,
-} from "./library/components/exports";
+import { FixedBottomNavigation, Header } from "./library/components/exports";
 import ExerciseRouter from "./library/routes/ExerciseRouter";
 
-import {
-  BOTTOM_NAVIGATION_HEIGHT,
-  HEADER_HEIGHT,
-  FOOTER_HEIGHT,
-} from "./library/styles/styles";
 import "./App.css";
 import { getAllExercises } from "./library/api/api";
 import { ExerciseContext } from "./library/store/context";
@@ -35,22 +25,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Container
-        maxWidth="sm"
-        sx={{
-          minHeight: `calc(100vh - ${
-            BOTTOM_NAVIGATION_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT
-          }px)`,
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
-        <ExerciseRouter />
-      </Container>
-      <Footer />
+      <ExerciseRouter />
       <FixedBottomNavigation />
     </div>
   );
