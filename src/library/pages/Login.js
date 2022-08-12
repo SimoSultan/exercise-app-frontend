@@ -10,8 +10,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   function handleLoginWithGoogle() {
-    dispatch({ type: ACTIONS.IS_ATTEMPTING_LOGIN, payload: true });
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
+    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
   }
 
   function handleHomeNavigation() {

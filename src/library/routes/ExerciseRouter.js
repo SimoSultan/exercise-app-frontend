@@ -11,6 +11,7 @@ export default function Router() {
   const { state } = useContext(ExerciseContext);
   const { isAuthenticated } = state;
 
+  // TODO: testing if it's better to just just show the Login component instead of redirecting
   return (
     <Routes>
       <Route
