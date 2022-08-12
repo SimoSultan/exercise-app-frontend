@@ -12,23 +12,39 @@ export default function ExerciseContextProvider({ children }) {
       case ACTIONS.LOGIN:
         return {
           ...state,
-          error: "",
-          isLoading: true,
-        };
-      case ACTIONS.LOGIN_SUCCESS:
-        return {
-          ...state,
+          isAttemptingLogin: false,
           isAuthenticated: true,
+          user: {
+            ...state.user,
+            ...payload,
+          },
+          alert: {
+            type: "success",
+            message: "Successfully logged in.",
+          },
         };
       case ACTIONS.LOGOUT:
         return {
           ...state,
           isAuthenticated: false,
+          user: initialState.user,
+          alert: {
+            type: "success",
+            message: "Successfully logged out.",
+          },
         };
-      case ACTIONS.ERROR:
+      case ACTIONS.SHOW_ALERT:
         return {
           ...state,
-          error: "An error occurred",
+          alert: payload,
+        };
+      case ACTIONS.HIDE_ALERT:
+        return {
+          ...state,
+          alert: {
+            type: "",
+            message: "",
+          },
         };
       case ACTIONS.SET_ACTIVE_TAB:
         return {
@@ -39,7 +55,10 @@ export default function ExerciseContextProvider({ children }) {
         // const updatedUser = await updateUser(userID, payload);
         return {
           ...state,
-          user: payload,
+          user: {
+            ...payload,
+            ...state.user,
+          },
         };
       case ACTIONS.REMOVE_USER_EXERCISE:
         // const updatedUser = await removeExerciseFromUser(userID, exerciseID);

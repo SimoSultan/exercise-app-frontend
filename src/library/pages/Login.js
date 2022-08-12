@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Button, Typography } from "@mui/material";
 import { ExerciseContext } from "../store/context";
-import { loginUser } from "../api/api";
 import { ACTIONS } from "../store/initialState";
 import { useNavigate } from "react-router-dom";
 
@@ -10,20 +9,9 @@ export default function Login() {
   const { isAuthenticated } = state;
   const navigate = useNavigate();
 
-  async function handleLogin() {
-    try {
-      const user = await loginUser();
-      console.log(user);
-      dispatch({ type: ACTIONS.UPDATE_USER, payload: user });
-      dispatch({ type: ACTIONS.LOGIN_SUCCESS });
-      navigate("/profile");
-    } catch (error) {
-      dispatch({ type: ACTIONS.ERROR });
-    }
-  }
-
   function handleLoginWithGoogle() {
-    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, '_self')
+    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
+    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
   }
 
   function handleHomeNavigation() {
@@ -43,14 +31,9 @@ export default function Login() {
           Back to Home
         </Button>
       ) : (
-        <>
-          <Button variant="contained" onClick={handleLogin}>
-            Login
-          </Button>
-          <Button variant="contained" onClick={handleLoginWithGoogle}>
-            Login With Google
-          </Button>
-        </>
+        <Button variant="contained" onClick={handleLoginWithGoogle}>
+          Login With Google
+        </Button>
       )}
     </>
   );

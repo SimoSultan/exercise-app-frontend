@@ -53,6 +53,20 @@ export default function ProfileView() {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
+              autoComplete="username"
+              name="username"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              autoFocus
+              value={user.username}
+              onChange={handleChange}
+              disabled
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               autoComplete="given-name"
               name="firstName"
               required
@@ -65,7 +79,7 @@ export default function ProfileView() {
               disabled
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               required
               fullWidth
@@ -87,7 +101,11 @@ export default function ProfileView() {
             />
           )}
           <Grid item xs={12}>
-            <AddUserExercise />
+            {user.exercises.length === exercises.length ? (
+              <Typography>No new (different) exercises to add.</Typography>
+            ) : (
+              <AddUserExercise />
+            )}
           </Grid>
         </Grid>
         {/* <Button

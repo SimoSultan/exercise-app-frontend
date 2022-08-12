@@ -11,24 +11,28 @@ export default function Router() {
   const { state } = useContext(ExerciseContext);
   const { isAuthenticated } = state;
 
+  // TODO: testing if it's better to just just show the Login component instead of redirecting
   return (
     <Routes>
       <Route
         path="/profile"
         element={
-          isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Profile /> : <Login />
         }
       />
       <Route
         path="/bank"
         element={
-          isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Bank /> : <Login />
         }
       />
       <Route
         path="/leaderboard"
         element={
-          isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Leaderboard /> : <Login />
         }
       />
       <Route path="/login" element={<Login />} />

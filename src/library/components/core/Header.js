@@ -14,11 +14,14 @@ import { HEADER_HEIGHT } from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { ExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
+import { logoutUser } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { state, dispatch } = useContext(ExerciseContext);
   const { isAuthenticated } = state;
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -28,11 +31,14 @@ export default function Header() {
     setAnchorElUser(null);
   };
 
-  const handleClickAuth = () => {
+  const handleClickAuth = async () => {
     if (isAuthenticated) {
+      const resp = await logoutUser();
+      console.log(resp);
       dispatch({ type: ACTIONS.LOGOUT });
+      navigate("/");
     } else {
-      dispatch({ type: ACTIONS.NAVIGATE_ROUTE, payload: "login" });
+      navigate("/login");
     }
     handleCloseUserMenu();
   };
