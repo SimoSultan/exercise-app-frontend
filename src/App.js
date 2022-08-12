@@ -42,8 +42,9 @@ function App() {
         console.log({ resp });
         if (resp) {
           dispatch({ type: ACTIONS.LOGIN, payload: resp });
-          navigate("/profile");
           dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "profile" });
+          navigate("/profile");
+          setIsLoading(false);
         } else {
           dispatch({
             type: ACTIONS.SHOW_ALERT,

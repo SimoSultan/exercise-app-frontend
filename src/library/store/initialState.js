@@ -17,6 +17,7 @@ export const initialState = {
 
 export const ACTIONS = {
   LOADING: "loading",
+  IS_ATTEMPTING_LOGIN: "is-attempting-login",
   LOGIN: "login",
   LOGOUT: "logout",
   SHOW_ALERT: "show-alert",

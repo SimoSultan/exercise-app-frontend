@@ -33,8 +33,8 @@ export default function Header() {
 
   const handleClickAuth = async () => {
     if (isAuthenticated) {
-      const res = await logoutUser();
-      console.log(res);
+      const resp = await logoutUser();
+      console.log(resp);
       dispatch({ type: ACTIONS.LOGOUT });
       navigate("/");
     } else {

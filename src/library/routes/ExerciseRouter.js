@@ -16,19 +16,22 @@ export default function Router() {
       <Route
         path="/profile"
         element={
-          isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Profile /> : <Login />
         }
       />
       <Route
         path="/bank"
         element={
-          isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Bank /> : <Login />
         }
       />
       <Route
         path="/leaderboard"
         element={
-          isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
+          // isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
+          isAuthenticated ? <Leaderboard /> : <Login />
         }
       />
       <Route path="/login" element={<Login />} />

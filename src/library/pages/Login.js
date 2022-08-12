@@ -9,12 +9,9 @@ export default function Login() {
   const { isAuthenticated } = state;
   const navigate = useNavigate();
 
-  async function handleLoginWithGoogle() {
-    const wait = await window.open(
-      `${process.env.REACT_APP_API_ENDPOINT}/auth/google`,
-      "_self"
-    );
-    console.log(wait);
+  function handleLoginWithGoogle() {
+    dispatch({ type: ACTIONS.IS_ATTEMPTING_LOGIN, payload: true });
+    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
   }
 
   function handleHomeNavigation() {

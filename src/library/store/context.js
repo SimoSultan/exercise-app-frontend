@@ -12,6 +12,7 @@ export default function ExerciseContextProvider({ children }) {
       case ACTIONS.LOGIN:
         return {
           ...state,
+          isAttemptingLogin: false,
           isAuthenticated: true,
           user: {
             ...state.user,
