@@ -31,11 +31,9 @@ export default function Login() {
           Back to Home
         </Button>
       ) : (
-        <>
-          <Button variant="contained" onClick={handleLoginWithGoogle}>
-            Login With Google
-          </Button>
-        </>
+        <Button variant="contained" onClick={handleLoginWithGoogle}>
+          Login With Google
+        </Button>
       )}
     </>
   );
