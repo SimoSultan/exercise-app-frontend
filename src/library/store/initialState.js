@@ -25,4 +25,5 @@ export const ACTIONS = {
   UPDATE_USER: "update-user",
   NAVIGATE_ROUTE: "navigate-route",
   SET_ACTIVE_TAB: "set-active-tab",
+  BANK_USER_EXERCISE: "bank-user-exercise",
 };

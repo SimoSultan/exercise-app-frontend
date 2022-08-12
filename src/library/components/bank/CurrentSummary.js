@@ -17,7 +17,7 @@ export default function CurrentSummary({ allExercises, dailyExercises }) {
             <Typography>
               {getExerciseName(exercise.id, allExercises)}
             </Typography>
-            <Typography>{`${exercise.banked} / ${exercise.amount}`}</Typography>
+            <Typography>{`${exercise.dailyBanked} / ${exercise.amount}`}</Typography>
           </Grid>
         ))
       ) : (
