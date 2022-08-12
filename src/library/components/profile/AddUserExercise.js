@@ -11,6 +11,7 @@ import {
 
 import { ExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
+import { capitalize } from "../../utils/utils";
 
 export default function AddUserExercise() {
   const DEFAULT_SELECT_VALUE = 0;
@@ -32,7 +33,7 @@ export default function AddUserExercise() {
     }
     dispatch({
       type: ACTIONS.ADD_USER_EXERCISE,
-      payload: { id: newExerciseID, amount: newExerciseAmount },
+      payload: { id: newExerciseID, amount: newExerciseAmount, dailyBanked: 0 },
     });
     setNewExerciseID(0);
     setNewExerciseAmount(0);
@@ -61,7 +62,7 @@ export default function AddUserExercise() {
                   value={id}
                   disabled={userExercisesExists(id)}
                 >
-                  {name}
+                  {capitalize(name)}
                 </MenuItem>
               ))}
             </Select>

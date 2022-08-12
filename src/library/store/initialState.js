@@ -1,22 +1,26 @@
 export const initialState = {
   activeTab: "home",
-  isLoading: false,
   isAuthenticated: false,
-  error: "",
+  alert: {
+    type: "",
+    message: "",
+  },
   user: {
     id: 0,
-    firstName: "Rick",
-    lastName: "Roll",
+    firstName: "",
+    lastName: "",
+    username: "",
     exercises: [],
   },
   exercises: [],
 };
 
 export const ACTIONS = {
+  LOADING: "loading",
   LOGIN: "login",
   LOGOUT: "logout",
-  LOGIN_SUCCESS: "login-success",
-  ERROR: "error",
+  SHOW_ALERT: "show-alert",
+  HIDE_ALERT: "hide-alert",
   ADD_ALL_EXERCISES: "add-all-exercise",
   ADD_ONE_EXERCISE: "add-exercise",
   REMOVE_USER_EXERCISE: "remove-user-exercise",

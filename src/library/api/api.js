@@ -21,17 +21,33 @@ export async function postEcho(payload) {
 // AUTH
 
 export async function loginUser() {
-  return getUser(1) ?? false;
+  try {
+    const res = await checkIfCurrentUser();
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(`checkIfCurrentUser: ${error.code}: ${error.message}`);
+    return error.message;
+  }
 }
 
 export async function logoutUser() {
-  return true;
+  try {
+    return await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
+  } catch (error) {
+    console.log(`logoutUser: ${error.code}: ${error.message}`);
+    return error.message;
+  }
 }
 
 // USERS
 
-export async function getUser(id = 1) {
-  return await users.find((user) => user.id === id);
+export async function checkIfCurrentUser() {
+  return await axios.get(
+    `${process.env.REACT_APP_API_ENDPOINT}/users/current`,
+    { withCredentials: true }
+  );
 }
 
 export async function addNewExerciseToUser(userID, payload) {
