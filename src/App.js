@@ -7,7 +7,7 @@ import {
 import ExerciseRouter from "./library/routes/ExerciseRouter";
 
 import "./App.css";
-import { getAllExercises, loginUser } from "./library/api/api";
+import { getAllExercises, getCurrentUser } from "./library/api/api";
 import { ExerciseContext } from "./library/store/context";
 import { ACTIONS } from "./library/store/initialState";
 import { useNavigate } from "react-router-dom";
@@ -38,9 +38,10 @@ function App() {
       // }
       if (!isAuthenticated) {
         setIsLoading(true);
-        const resp = await loginUser();
+        const resp = await getCurrentUser();
         console.log({ resp });
-        if (resp) {
+        // TODO: Probably need a better way of validating the response than just checking if the ID exists.
+        if (resp && resp.id) {
           dispatch({ type: ACTIONS.LOGIN, payload: resp });
           dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "profile" });
           navigate("/profile");

@@ -33,10 +33,8 @@ export default function Header() {
 
   const handleClickAuth = async () => {
     if (isAuthenticated) {
-      const resp = await logoutUser();
-      console.log(resp);
+      window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`)
       dispatch({ type: ACTIONS.LOGOUT });
-      navigate("/");
     } else {
       navigate("/login");
     }
