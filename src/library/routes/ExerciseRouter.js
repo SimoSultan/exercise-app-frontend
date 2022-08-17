@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import {
   LeaderboardScreen,
   LoginScreen,
@@ -7,10 +8,29 @@ import {
   HomeScreen,
 } from "../screens/exports";
 import { useExerciseContext } from "../store/context";
+import { ACTIONS } from "../store/initialState";
 
 export default function Router() {
-  const { state } = useExerciseContext();
+  const { state, dispatch } = useExerciseContext();
   const { isAuthenticated } = state;
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/profile":
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "profile" });
+        break;
+      case "/bank":
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "bank" });
+        break;
+      case "/leaderboard":
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "leaderboard" });
+        break;
+      default:
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
+        break;
+    }
+  }, [location, dispatch]);
 
   return (
     <Routes>
