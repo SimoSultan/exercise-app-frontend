@@ -8,14 +8,10 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, IconButton } from "@mui/material";
 import { BOTTOM_NAVIGATION_HEIGHT } from "../../styles/styles";
 import { useExerciseContext } from "../../store/context";
-import { ACTIONS } from "../../store/initialState";
 
 export default function FixedBottomNavigation() {
-  const { state, dispatch } = useExerciseContext();
+  const { state } = useExerciseContext();
   const { activeTab } = state;
-  function handleChangeTab(tab) {
-    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: tab });
-  }
 
   return (
     <Box
@@ -48,7 +44,6 @@ export default function FixedBottomNavigation() {
                   display: "flex",
                   flexDirection: "column",
                 }}
-                onClick={() => handleChangeTab("home")}
               >
                 <HomeIcon color={activeTab === "home" ? "primary" : ""} />
                 <Typography
@@ -75,7 +70,6 @@ export default function FixedBottomNavigation() {
                   display: "flex",
                   flexDirection: "column",
                 }}
-                onClick={() => handleChangeTab("profile")}
               >
                 <PersonIcon color={activeTab === "profile" ? "primary" : ""} />
                 <Typography
@@ -95,7 +89,6 @@ export default function FixedBottomNavigation() {
               <IconButton
                 color="inherit"
                 sx={{ display: "flex", flexDirection: "column" }}
-                onClick={() => handleChangeTab("bank")}
               >
                 <AddTaskIcon color={activeTab === "bank" ? "primary" : ""} />
                 <Typography
@@ -115,7 +108,6 @@ export default function FixedBottomNavigation() {
               <IconButton
                 color="inherit"
                 sx={{ display: "flex", flexDirection: "column" }}
-                onClick={() => handleChangeTab("leaderboard")}
               >
                 <LeaderboardIcon
                   color={activeTab === "leaderboard" ? "primary" : ""}

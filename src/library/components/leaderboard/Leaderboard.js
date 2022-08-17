@@ -4,6 +4,7 @@ import { getAllUsers } from "../../api/api";
 
 export default function Leaderboard() {
   const [userList, setUserList] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {

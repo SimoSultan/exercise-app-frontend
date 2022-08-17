@@ -1,20 +1,18 @@
 import { Button, Typography } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { ACTIONS } from "../store/initialState";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { state, dispatch } = useExerciseContext();
+  const { state } = useExerciseContext();
   const { isAuthenticated } = state;
   const navigate = useNavigate();
 
   function handleLoginWithGoogle() {
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
-    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
+    navigate("/");
   }
 
   function handleHomeNavigation() {
-    dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
     navigate("/");
   }
 
