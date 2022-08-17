@@ -20,7 +20,7 @@ export async function postEcho(payload) {
 
 // AUTH
 
-export async function loginUser() {
+export async function getCurrentUser() {
   try {
     const res = await checkIfCurrentUser();
     if (res.status === 200) {
@@ -34,7 +34,7 @@ export async function loginUser() {
 
 export async function logoutUser() {
   try {
-    return await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
+    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
   } catch (error) {
     console.log(`logoutUser: ${error.code}: ${error.message}`);
     return error.message;
