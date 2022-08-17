@@ -14,8 +14,8 @@ import { HEADER_HEIGHT } from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { ExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
-import { logoutUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -33,7 +33,7 @@ export default function Header() {
 
   const handleClickAuth = async () => {
     if (isAuthenticated) {
-      window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`)
+      window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
       dispatch({ type: ACTIONS.LOGOUT });
     } else {
       navigate("/login");

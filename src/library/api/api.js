@@ -22,13 +22,10 @@ export async function postEcho(payload) {
 
 export async function getCurrentUser() {
   try {
-    const res = await checkIfCurrentUser();
-    if (res.status === 200) {
-      return res.data;
-    }
+    return await checkIfCurrentUser();
   } catch (error) {
     console.log(`checkIfCurrentUser: ${error.code}: ${error.message}`);
-    return error.message;
+    return error;
   }
 }
 
