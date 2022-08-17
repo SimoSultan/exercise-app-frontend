@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BasicAlert,
   FixedBottomNavigation,
@@ -8,17 +8,13 @@ import ExerciseRouter from "./library/routes/ExerciseRouter";
 
 import "./App.css";
 import { getAllExercises, getCurrentUser } from "./library/api/api";
-import { ExerciseContext } from "./library/store/context";
+import { useExerciseContext } from "./library/store/context";
 import { ACTIONS } from "./library/store/initialState";
-import { useNavigate } from "react-router-dom";
 
 function App() {
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { alert } = state;
-  const { isAuthenticated } = state;
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
   useEffect(() => {
     (async () => {
       // try {
@@ -36,25 +32,15 @@ function App() {
       //     },
       //   });
       // }
-      if (!isAuthenticated) {
-        setIsLoading(true);
-        const resp = await getCurrentUser();
-        console.log({ resp });
-        // TODO: Probably need a better way of validating the response than just checking if the ID exists.
-        if (resp && resp.id) {
-          dispatch({ type: ACTIONS.LOGIN, payload: resp });
-          dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "profile" });
-          navigate("/profile");
-          setIsLoading(false);
-        } else {
-          dispatch({
-            type: ACTIONS.SHOW_ALERT,
-            payload: { type: "error", message: resp },
-          });
-        }
+      setIsLoading(true);
+      const resp = await getCurrentUser();
+      // TODO: Probably need a better way of validating the response than just checking if the ID exists.
+      if (resp.status === 200 && resp.data.id) {
+        dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
+        setIsLoading(false);
       }
     })();
-  }, [dispatch, navigate, isAuthenticated]);
+  }, [dispatch]);
 
   return (
     <div className="App">

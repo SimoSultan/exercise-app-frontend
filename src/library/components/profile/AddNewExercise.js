@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Grid, Button, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { ACTIONS } from "../../store/initialState";
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 
 export default function AddUserExercise() {
   const [showInput, setShowInput] = useState(false);
   const [newExercise, setNewExercise] = useState("");
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
 
   const handleSubmitExercise = async () => {
     if (newExercise.length < 1) {

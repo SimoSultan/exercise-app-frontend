@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
-import { ProfileView } from "../components/exports";
+import { Leaderboard } from "../components/exports";
 
-export default function Profile() {
+export default function LeaderboardScreen() {
   return (
     <Container
       maxWidth="sm"
@@ -13,7 +13,7 @@ export default function Profile() {
         alignItems: "center",
       }}
     >
-      <ProfileView />
+      <Leaderboard />
     </Container>
   );
 }

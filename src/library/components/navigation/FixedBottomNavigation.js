@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Box from "@mui/material/Box";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
@@ -8,11 +7,11 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { Grid, Typography, IconButton } from "@mui/material";
 import { BOTTOM_NAVIGATION_HEIGHT } from "../../styles/styles";
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 
 export default function FixedBottomNavigation() {
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { activeTab } = state;
   function handleChangeTab(tab) {
     dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: tab });

@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Button, Typography, Container } from "@mui/material";
 import { getPing, postEcho } from "../api/api";
-import { ExerciseContext } from "../store/context";
+import { useExerciseContext } from "../store/context";
 import CurrentSummary from "../components/bank/CurrentSummary";
 import BankInput from "../components/bank/BankInput";
 
@@ -9,9 +9,9 @@ import BankInput from "../components/bank/BankInput";
 
 const debug = false;
 
-export default function Bank({ authenticated }) {
+export default function Bank() {
   const [response, setResponse] = useState(null);
-  const { state } = useContext(ExerciseContext);
+  const { state } = useExerciseContext();
   const { user, exercises } = state;
   // DEBUG FUNCTIONS
   async function handleClickPing() {

@@ -1,15 +1,14 @@
-import { useContext } from "react";
 import { TextField, Grid, Box, Typography, Avatar } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 import UserExercises from "./UserExercises";
 import AddNewExercise from "./AddNewExercise";
 import AddUserExercise from "./AddUserExercise";
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 
 export default function ProfileView() {
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { user, exercises } = state;
 
   const handleSubmit = async (event) => {

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import { initialState, ACTIONS } from "./initialState";
 
 export const ExerciseContext = React.createContext();
@@ -12,7 +12,6 @@ export default function ExerciseContextProvider({ children }) {
       case ACTIONS.LOGIN:
         return {
           ...state,
-          isAttemptingLogin: false,
           isAuthenticated: true,
           user: {
             ...state.user,
@@ -108,4 +107,8 @@ export default function ExerciseContextProvider({ children }) {
       {children}
     </ExerciseContext.Provider>
   );
+}
+
+export function useExerciseContext() {
+  return useContext(ExerciseContext);
 }
