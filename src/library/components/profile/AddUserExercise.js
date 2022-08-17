@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
   Grid,
   TextField,
@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 import { capitalize } from "../../utils/utils";
 
@@ -17,7 +17,7 @@ export default function AddUserExercise() {
   const DEFAULT_SELECT_VALUE = 0;
   const [newExerciseID, setNewExerciseID] = useState(DEFAULT_SELECT_VALUE);
   const [newExerciseAmount, setNewExerciseAmount] = useState(0);
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { user, exercises } = state;
 
   function userExercisesExists(id) {

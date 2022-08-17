@@ -1,42 +1,33 @@
-import { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Leaderboard from "../pages/Leaderboard";
-import Login from "../pages/Login";
-import Bank from "../pages/Bank";
-import Profile from "../pages/Profile";
-import Home from "../pages/Home";
-import { ExerciseContext } from "../store/context";
+import { Routes, Route } from "react-router-dom";
+import {
+  LeaderboardScreen,
+  LoginScreen,
+  BankScreen,
+  ProfileScreen,
+  HomeScreen,
+} from "../screens/exports";
+import { useExerciseContext } from "../store/context";
 
 export default function Router() {
-  const { state } = useContext(ExerciseContext);
+  const { state } = useExerciseContext();
   const { isAuthenticated } = state;
 
-  // TODO: testing if it's better to just just show the Login component instead of redirecting
   return (
     <Routes>
       <Route
         path="/profile"
-        element={
-          // isAuthenticated ? <Profile /> : <Navigate replace to={"/login"} />
-          isAuthenticated ? <Profile /> : <Login />
-        }
+        element={isAuthenticated ? <ProfileScreen /> : <LoginScreen />}
       />
       <Route
         path="/bank"
-        element={
-          // isAuthenticated ? <Bank /> : <Navigate replace to={"/login"} />
-          isAuthenticated ? <Bank /> : <Login />
-        }
+        element={isAuthenticated ? <BankScreen /> : <LoginScreen />}
       />
       <Route
         path="/leaderboard"
-        element={
-          // isAuthenticated ? <Leaderboard /> : <Navigate replace to={"/login"} />
-          isAuthenticated ? <Leaderboard /> : <Login />
-        }
+        element={isAuthenticated ? <LeaderboardScreen /> : <LoginScreen />}
       />
-      <Route path="/login" element={<Login />} />
-      <Route path="*" element={<Home />} />
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="*" element={<HomeScreen />} />
     </Routes>
   );
 }

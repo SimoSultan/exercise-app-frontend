@@ -34,7 +34,6 @@ export async function logoutUser() {
     axios.get(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
   } catch (error) {
     console.log(`logoutUser: ${error.code}: ${error.message}`);
-    return error.message;
   }
 }
 
@@ -45,6 +44,12 @@ export async function checkIfCurrentUser() {
     `${process.env.REACT_APP_API_ENDPOINT}/users/current`,
     { withCredentials: true }
   );
+}
+
+export async function getAllUsers() {
+  return await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/users/list`, {
+    withCredentials: true,
+  });
 }
 
 export async function addNewExerciseToUser(userID, payload) {

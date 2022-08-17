@@ -1,14 +1,14 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { Typography, Box, Grid, Button, TextField } from "@mui/material";
 import { getExerciseName } from "../../utils/utils";
 import { ACTIONS } from "../../store/initialState";
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 
 export default function BankInput({ dailyExercises, allExercises }) {
   const initializeBankArray = [...Array(dailyExercises.length)].map(() => 0);
   const [bank, setBank] = useState(() => [...initializeBankArray]);
-  const { dispatch } = useContext(ExerciseContext);
+  const { dispatch } = useExerciseContext();
 
   const handleChange = (e, index) => {
     if (isNaN(Number(e.target.value))) return;

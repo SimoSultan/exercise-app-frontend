@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Container, Alert, Stack, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 
 export default function BasicAlert({ type, message }) {
-  const { dispatch } = useContext(ExerciseContext);
+  const { dispatch } = useExerciseContext();
 
   if (!type && !message) {
     return null;

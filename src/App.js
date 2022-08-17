@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BasicAlert,
   FixedBottomNavigation,
@@ -8,14 +8,13 @@ import ExerciseRouter from "./library/routes/ExerciseRouter";
 
 import "./App.css";
 import { getAllExercises, getCurrentUser } from "./library/api/api";
-import { ExerciseContext } from "./library/store/context";
+import { useExerciseContext } from "./library/store/context";
 import { ACTIONS } from "./library/store/initialState";
 
 function App() {
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { alert } = state;
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     (async () => {
       // try {

@@ -5,6 +5,7 @@ import BasicAlert from "./core/BasicAlert";
 import ProfileView from "./profile/ProfileView";
 import AddNewExercise from "./profile/AddNewExercise";
 import AddUserExercise from "./profile/AddUserExercise";
+import Leaderboard from "./leaderboard/Leaderboard";
 
 export {
   Header,
@@ -14,4 +15,5 @@ export {
   ProfileView,
   AddNewExercise,
   AddUserExercise,
+  Leaderboard,
 };

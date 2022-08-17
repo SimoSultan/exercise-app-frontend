@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,14 +12,13 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { HEADER_HEIGHT } from "../../styles/styles";
 import { Link } from "react-router-dom";
-import { ExerciseContext } from "../../store/context";
+import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { isAuthenticated } = state;
   const navigate = useNavigate();
 

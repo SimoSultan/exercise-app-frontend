@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { Button, Typography } from "@mui/material";
-import { ExerciseContext } from "../store/context";
+import { useExerciseContext } from "../store/context";
 import { ACTIONS } from "../store/initialState";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { state, dispatch } = useContext(ExerciseContext);
+  const { state, dispatch } = useExerciseContext();
   const { isAuthenticated } = state;
   const navigate = useNavigate();
 
