@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../api/api";
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -32,7 +33,7 @@ export default function Header() {
 
   const handleClickAuth = async () => {
     if (isAuthenticated) {
-      window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
+      await logoutUser()
       dispatch({ type: ACTIONS.LOGOUT });
     } else {
       navigate("/login");
