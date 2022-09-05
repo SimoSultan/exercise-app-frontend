@@ -5,14 +5,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export async function getPing() {
-  return await api.get("/ping").then((res) => res.data);
-}
-
-export async function postEcho(payload) {
-  return api.post("/echo", payload).then((res) => res.data);
-}
-
 // AUTH
 
 export async function logoutUser() {
@@ -58,6 +50,12 @@ export async function getUserExercises(routineId) {
 
 export async function deleteUserExercise(id) {
   return await api.post("/exercises/delete", { id });
+}
+
+// ENTRIES
+
+export async function getUserEntry(exerciseId) {
+  return await api.get("/entries/list", { exerciseId });
 }
 
 // LEADERBOARD

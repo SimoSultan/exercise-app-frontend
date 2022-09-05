@@ -1,10 +1,16 @@
 import { useState } from "react";
-
-import { Typography, Box, Grid, Button, TextField } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Button,
+  TextField,
+  capitalize,
+} from "@mui/material";
 import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
 
-export default function BankInput({ dailyExercises, allExercises }) {
+export default function BankInput({ dailyExercises }) {
   const initializeBankArray = [...Array(dailyExercises.length)].map(() => 0);
   const [bank, setBank] = useState(() => [...initializeBankArray]);
   const { dispatch } = useExerciseContext();
@@ -16,13 +22,21 @@ export default function BankInput({ dailyExercises, allExercises }) {
     setBank(() => [...arr]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (exerciseId) => {
     const updatedUserExercises = dailyExercises.map(
       ({ dailyBanked, ...x }, index) => ({
         dailyBanked: (dailyBanked += bank[index]),
         ...x,
       })
     );
+
+    console.log(updatedUserExercises);
+
+    try {
+      // const resp = submitUserExerciseEntry(exerciseId, amount)
+    } catch (error) {
+      console.log("error adding user exercise entry", error);
+    }
 
     dispatch({
       type: ACTIONS.BANK_USER_EXERCISE,
@@ -33,40 +47,46 @@ export default function BankInput({ dailyExercises, allExercises }) {
   };
 
   return (
-    <>
-      <Box sx={{ width: "90%", py: 4, mt: 6 }}>
-        {dailyExercises.length > 0 ? (
-          dailyExercises.map((exercise, index) => (
-            <Grid
-              key={`bank-exercise-${exercise.id}`}
-              container
-              justifyContent="space-between"
-              flexDirection="row"
-              alignItems="center"
-              sx={{ pb: 1 }}
-            >
-              <Typography>Exercises</Typography>
+    <Box sx={{ width: "100%", mt: 6 }}>
+      {dailyExercises.length > 0 ? (
+        dailyExercises.map(({ id, name }, index) => (
+          <Grid
+            key={`bank-exercise-${id}`}
+            container
+            item
+            justifyContent="space-evenly"
+            flexDirection="row"
+            alignItems="center"
+            sx={{ px: 1, pb: 1 }}
+            xs={12}
+            spacing={1}
+          >
+            <Grid item container xs={5}>
+              <Typography>{capitalize(name)}</Typography>
+            </Grid>
+            <Grid item xs={4}>
               <TextField
                 placeholder="0"
                 className="bankInput"
-                sx={{ width: "40%" }}
                 value={bank[index]}
+                fullWidth
                 onChange={(e) => handleChange(e, index)}
               />
             </Grid>
-          ))
-        ) : (
-          <Typography>User has no exercises</Typography>
-        )}
-      </Box>
-      <Button
-        variant="contained"
-        size="large"
-        sx={{ mt: 3 }}
-        onClick={handleSubmit}
-      >
-        Bank All
-      </Button>
-    </>
+            <Grid item xs={3}>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={() => handleSubmit(id)}
+              >
+                Add
+              </Button>
+            </Grid>
+          </Grid>
+        ))
+      ) : (
+        <Typography>User has no exercises</Typography>
+      )}
+    </Box>
   );
 }
