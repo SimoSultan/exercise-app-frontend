@@ -1,15 +1,41 @@
-import { TextField, Grid, Box, Typography, Avatar } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Avatar,
+  Divider,
+} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 import UserExercises from "./UserExercises";
-import AddNewExercise from "./AddNewExercise";
 import AddUserExercise from "./AddUserExercise";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
+import { deleteUserExercise, getUserExercises } from "../../api/api";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
-  const { user, exercises } = state;
+  const { user } = state;
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log({ user });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resp = await getUserExercises(user.routineId);
+        if (resp.status === 200) {
+          dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
+        }
+      } catch (error) {
+        console.log("error getting current user exercises", error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [dispatch, user.routineId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,6 +47,10 @@ export default function ProfileView() {
     console.log(event.target.name, event.target.value);
   }
 
+  const handleExerciseNameChange = (event) => {
+    event.preventDefault();
+  };
+
   const handleExerciseAmountChange = (event) => {
     event.preventDefault();
   };
@@ -29,8 +59,14 @@ export default function ProfileView() {
     if (!window.confirm("Are you sure you want to delete this exercise?"))
       return;
 
-    const userExercises = user.exercises.filter((ex) => ex.id !== exerciseID);
-    dispatch({ type: ACTIONS.REMOVE_USER_EXERCISE, payload: userExercises });
+    try {
+      const resp = deleteUserExercise(exerciseID);
+      if (resp.status === 200) {
+        dispatch({ type: ACTIONS.REMOVE_USER_EXERCISE, payload: exerciseID });
+      }
+    } catch (error) {
+      console.log("error deleting user exercise", error);
+    }
   };
 
   return (
@@ -91,20 +127,27 @@ export default function ProfileView() {
               disabled
             />
           </Grid>
-          {user.exercises.length > 0 && (
+          <Grid item xs={12}>
+            <Typography variant="h6">Exercises</Typography>
+          </Grid>
+          {user.exercises?.length > 0 ? (
             <UserExercises
-              allExercises={exercises}
               userExercises={user.exercises}
+              handleExerciseNameChange={handleExerciseNameChange}
               handleExerciseAmountChange={handleExerciseAmountChange}
               handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
             />
+          ) : (
+            <Grid item xs={12}>
+              <Typography>User has no exercises</Typography>
+            </Grid>
           )}
+          <Grid item xs={12} sx={{ py: 2 }}>
+            <Divider />
+          </Grid>
           <Grid item xs={12}>
-            {user.exercises.length === exercises.length ? (
-              <Typography>No new (different) exercises to add.</Typography>
-            ) : (
-              <AddUserExercise />
-            )}
+            <Typography variant="h6">Add New Exercise</Typography>
+            <AddUserExercise />
           </Grid>
         </Grid>
         {/* <Button
@@ -115,7 +158,6 @@ export default function ProfileView() {
         >
           Update User Name and Exercise Amounts
         </Button> */}
-        <AddNewExercise userID={user.id} />
       </Box>
     </Box>
   );

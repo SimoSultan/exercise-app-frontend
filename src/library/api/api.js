@@ -1,12 +1,7 @@
 import axios from "axios";
-import { DATABASE } from "../database";
-
-const { exercises } = DATABASE;
-
-const ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const api = axios.create({
-  baseURL: ENDPOINT,
+  baseURL: process.env.REACT_APP_API_ENDPOINT,
   withCredentials: true,
 });
 
@@ -20,83 +15,59 @@ export async function postEcho(payload) {
 
 // AUTH
 
-export async function getCurrentUser() {
-  try {
-    return await checkIfCurrentUser();
-  } catch (error) {
-    console.log(`checkIfCurrentUser: ${error.code}: ${error.message}`);
-    return error;
-  }
-}
-
 export async function logoutUser() {
-  try {
-    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/auth/logout`);
-  } catch (error) {
-    console.log(`logoutUser: ${error.code}: ${error.message}`);
-  }
+  return api.get("/auth/logout");
 }
 
 // USERS
 
-export async function checkIfCurrentUser() {
-  return await axios.get(
-    `${process.env.REACT_APP_API_ENDPOINT}/users/current`,
-    { withCredentials: true }
-  );
+export async function getCurrentUser() {
+  return await api.get("/users/current");
 }
 
-export async function getAllUsers() {
-  return await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/users/list`, {
-    withCredentials: true,
+export async function updateUserDetails(user) {
+  return await api.post("/users/update", {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
   });
 }
 
-export async function addNewExerciseToUser(userID, payload) {
-  const userIdx = DATABASE.users.findIndex((user) => user.id === userID);
-  DATABASE.users[userIdx].exercises.push({ ...payload });
-  return DATABASE.users[userIdx];
-}
-
-export async function removeExerciseFromUser(userID, exerciseID) {
-  const userIdx = DATABASE.users.findIndex((user) => user.id === userID);
-  DATABASE.users[userIdx].exercises = DATABASE.users[userIdx].exercises.filter(
-    (ex) => ex.id !== exerciseID
-  );
-  return DATABASE.users[userIdx];
-}
-
-export async function updateUser(userID, payload) {
-  const userIdx = DATABASE.users.findIndex((user) => user.id === userID);
-  DATABASE.users[userIdx] = payload;
-  return DATABASE.users[userIdx];
-}
+// export async function updateUser(userID, payload) {
+//   const userIdx = DATABASE.users.findIndex((user) => user.id === userID);
+//   DATABASE.users[userIdx] = payload;
+//   return DATABASE.users[userIdx];
+// }
 
 // EXERCISES
 
-export async function getAllExercises() {
-  return await exercises;
+export async function createUserExercise(routineId, name, amount, unit, order) {
+  console.log(routineId, name, amount, unit, order);
+  return await api.post("/exercises/create", {
+    routineId,
+    name,
+    amount,
+    unit,
+    order,
+  });
 }
 
-export async function getExercise(id = 1) {
-  return await exercises.find((exercise) => exercise.id === id);
+export async function getUserExercises(routineId) {
+  return await api.post("/exercises/list", { routineId });
 }
 
-export async function addNewExerciseToExercises(name) {
-  let exercisesLength = exercises.length;
-  DATABASE.exercises.push({ id: exercisesLength + 1, name });
-  return exercisesLength + 1;
+export async function deleteUserExercise(id) {
+  return await api.post("/exercises/delete", { id });
 }
 
 // LEADERBOARD
 
 export async function getLeaderboard() {
-  const day = new Date(
-    new Date().toLocaleString("en-US", {
-      timeZone: "Australia/Brisbane",
-    })
-  );
-  return await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/leaderboard`, {
-    day,
+  return await api.post("/leaderboard", {
+    day: new Date(
+      new Date().toLocaleString("en-US", {
+        timeZone: "Australia/Brisbane",
+      })
+    ),
   });
 }

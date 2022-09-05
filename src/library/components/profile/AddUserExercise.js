@@ -1,90 +1,94 @@
 import { useState } from "react";
-import {
-  Grid,
-  TextField,
-  Select,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  Button,
-} from "@mui/material";
+import { Grid, TextField, Button } from "@mui/material";
 
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
-import { capitalize } from "../../utils/utils";
+import { createUserExercise } from "../../api/api";
 
 export default function AddUserExercise() {
-  const DEFAULT_SELECT_VALUE = 0;
-  const [newExerciseID, setNewExerciseID] = useState(DEFAULT_SELECT_VALUE);
-  const [newExerciseAmount, setNewExerciseAmount] = useState(0);
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [unit, setUnit] = useState("reps");
   const { state, dispatch } = useExerciseContext();
-  const { user, exercises } = state;
-
-  function userExercisesExists(id) {
-    return user.exercises.some((el) => el.id === id);
-  }
+  const { user } = state;
 
   const handleSubmitExercise = async () => {
-    if (newExerciseID < 1) {
-      return window.alert("Please select an exercise.");
+    if (name.length < 1) {
+      return window.alert("Please enter an exercise.");
     }
-    if (isNaN(newExerciseAmount) || newExerciseAmount < 1) {
+    if (isNaN(amount) || amount < 1) {
       return window.alert("Please ensure the amount is a number.");
     }
-    dispatch({
-      type: ACTIONS.ADD_USER_EXERCISE,
-      payload: { id: newExerciseID, amount: newExerciseAmount, dailyBanked: 0 },
-    });
-    setNewExerciseID(0);
-    setNewExerciseAmount(0);
+
+    try {
+      const resp = await createUserExercise(
+        user.routineId,
+        name,
+        Number(amount),
+        unit,
+        user.exercises.length + 1
+      );
+      console.log({ resp });
+      if (resp.status === 200) {
+        const { id, name, amount, order, unit } = resp.data;
+        dispatch({
+          type: ACTIONS.ADD_USER_EXERCISE,
+          payload: {
+            id,
+            routineId: user.routineId,
+            name,
+            amount,
+            order,
+            unit,
+          },
+        });
+        setName("");
+        setAmount("");
+        setUnit("");
+      }
+    } catch (error) {
+      console.log("error creating user exercise", error);
+    }
   };
 
   return (
     <>
-      <Grid item container justifyContent="space-between" alignItems="center">
-        <Grid item xs={7}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel htmlFor="exercise-select-label">Exercise</InputLabel>
-            <Select
-              labelId="exercise-select-label"
-              id="exercise-select"
-              label="Exercise"
-              value={newExerciseID}
-              defaultValue={DEFAULT_SELECT_VALUE}
-              onChange={(e) => setNewExerciseID(e.target.value)}
-            >
-              <MenuItem key={0} value={DEFAULT_SELECT_VALUE} disabled>
-                New exercise
-              </MenuItem>
-              {exercises.map(({ id, name }) => (
-                <MenuItem
-                  key={id}
-                  value={id}
-                  disabled={userExercisesExists(id)}
-                >
-                  {capitalize(name)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={3}>
+      <Grid
+        item
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={1}
+      >
+        <Grid item xs={6}>
           <TextField
-            id="filled-basic-amount"
-            label="Amount"
+            label="Exercise Name"
             variant="outlined"
-            value={newExerciseAmount}
-            onChange={(e) => setNewExerciseAmount(Number(e.target.value))}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
             sx={{ width: "100%" }}
           />
         </Grid>
-        <Grid
-          item
-          xs={1}
-          container
-          alignItems="center"
-          justifyContent="center"
-        />
+        <Grid item xs={3}>
+          <TextField
+            label="Amount"
+            variant="outlined"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+            sx={{ width: "100%" }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            label="Units"
+            variant="outlined"
+            value={unit}
+            onChange={(e) => setAmount(e.target.value)}
+            sx={{ width: "100%" }}
+          />
+        </Grid>
       </Grid>
       <Button
         variant="contained"
@@ -92,7 +96,7 @@ export default function AddUserExercise() {
         onClick={handleSubmitExercise}
         sx={{ mt: 2 }}
       >
-        Submit New User Exercise
+        Submit New Exercise
       </Button>
     </>
   );
