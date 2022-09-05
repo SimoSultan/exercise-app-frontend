@@ -1,7 +1,7 @@
 import axios from "axios";
 import { DATABASE } from "../database";
 
-const { users, exercises, leaderboard } = DATABASE;
+const { exercises } = DATABASE;
 
 const ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -86,4 +86,17 @@ export async function addNewExerciseToExercises(name) {
   let exercisesLength = exercises.length;
   DATABASE.exercises.push({ id: exercisesLength + 1, name });
   return exercisesLength + 1;
+}
+
+// LEADERBOARD
+
+export async function getLeaderboard() {
+  const day = new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "Australia/Brisbane",
+    })
+  );
+  return await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/leaderboard`, {
+    day,
+  });
 }
