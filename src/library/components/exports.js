@@ -3,7 +3,6 @@ import Header from "./core/Header";
 import Footer from "./core/Footer";
 import BasicAlert from "./core/BasicAlert";
 import ProfileView from "./profile/ProfileView";
-import AddNewExercise from "./profile/AddNewExercise";
 import AddUserExercise from "./profile/AddUserExercise";
 import Leaderboard from "./leaderboard/Leaderboard";
 
@@ -13,7 +12,6 @@ export {
   BasicAlert,
   FixedBottomNavigation,
   ProfileView,
-  AddNewExercise,
   AddUserExercise,
   Leaderboard,
 };

@@ -51,16 +51,14 @@ export default function ExerciseContextProvider({ children }) {
           activeTab: payload,
         };
       case ACTIONS.UPDATE_USER:
-        // const updatedUser = await updateUser(userID, payload);
         return {
           ...state,
           user: {
-            ...payload,
             ...state.user,
+            ...payload,
           },
         };
-      case ACTIONS.REMOVE_USER_EXERCISE:
-        // const updatedUser = await removeExerciseFromUser(userID, exerciseID);
+      case ACTIONS.SET_USER_EXERCISES:
         return {
           ...state,
           user: {
@@ -68,18 +66,31 @@ export default function ExerciseContextProvider({ children }) {
             exercises: payload,
           },
         };
+      case ACTIONS.REMOVE_USER_EXERCISE:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            exercises: state.user.exercises.filter((ex) => ex.id !== payload),
+          },
+          alert: {
+            type: "success",
+            message: "Exercise successfully deleted.",
+          },
+        };
       case ACTIONS.ADD_USER_EXERCISE:
-        // const resp = await addNewExerciseToUser(userID, payload);
         return {
           ...state,
           user: {
             ...state.user,
             exercises: [...state.user.exercises, payload],
           },
+          alert: {
+            type: "success",
+            message: "Exercise successfully added.",
+          },
         };
       case ACTIONS.ADD_ONE_EXERCISE:
-        // const id = await addNewExerciseToExercises(payload);
-
         return {
           ...state,
           exercises: [...state.exercises, payload],

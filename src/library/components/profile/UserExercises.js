@@ -1,29 +1,37 @@
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getExerciseName } from "../../utils/utils";
 
 export default function UserExercises({
-  allExercises,
   userExercises,
+  handleExerciseNameChange,
   handleExerciseAmountChange,
   handleRemoveExerciseFromUser,
 }) {
   return (
     <>
-      {userExercises.map(({ id, amount }) => (
-        <Grid item container key={id} justifyContent="space-between" xs={12}>
-          <Grid item xs={7}>
-            <TextField
-              variant="outlined"
-              disabled={true}
-              sx={{ width: "100%" }}
-              value={getExerciseName(id, allExercises)}
-            />
+      {userExercises.map(({ id, name, amount, unit }) => (
+        <Grid
+          item
+          container
+          key={name}
+          justifyContent="space-between"
+          xs={12}
+          spacing={1}
+        >
+          <Grid item xs={5}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel htmlFor="exercise-name">Name</InputLabel>
+              <OutlinedInput
+                id="exercise-name"
+                value={name}
+                label="Name"
+                onChange={handleExerciseNameChange}
+              />
+            </FormControl>
           </Grid>
           <Grid item xs={3}>
             <FormControl sx={{ width: "100%" }}>
@@ -33,8 +41,13 @@ export default function UserExercises({
                 value={amount}
                 onChange={handleExerciseAmountChange}
                 label="Amount"
-                disabled
               />
+            </FormControl>
+          </Grid>
+          <Grid item xs={3}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel htmlFor="exercise-unit">Unit</InputLabel>
+              <OutlinedInput id="exercise-unit" value={unit} label="Amount" />
             </FormControl>
           </Grid>
           <Grid

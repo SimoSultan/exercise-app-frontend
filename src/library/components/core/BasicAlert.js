@@ -22,8 +22,19 @@ export default function BasicAlert({ type, message }) {
   }
 
   return (
-    <Container maxWidth="sm">
-      <Stack sx={{ width: "100%" }} spacing={2}>
+    <Container maxWidth="sm" sx={{ width: "100vw" }}>
+      <Stack
+        sx={{
+          width: "auto",
+          left: "5%",
+          right: "5%",
+          position: "absolute",
+          bottom: "10%",
+
+          margin: "0 auto",
+        }}
+        spacing={2}
+      >
         <Alert
           variant="filled"
           severity={type}

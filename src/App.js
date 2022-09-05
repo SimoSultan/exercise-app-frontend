@@ -7,7 +7,7 @@ import {
 import ExerciseRouter from "./library/routes/ExerciseRouter";
 
 import "./App.css";
-import { getAllExercises, getCurrentUser } from "./library/api/api";
+import { getCurrentUser } from "./library/api/api";
 import { useExerciseContext } from "./library/store/context";
 import { ACTIONS } from "./library/store/initialState";
 
@@ -17,26 +17,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
-      // try {
-      //   const exercises = await getAllExercises();
-      //   dispatch({ type: ACTIONS.ADD_ALL_EXERCISES, payload: exercises });
-      // } catch (error) {
-      //   dispatch({
-      //     type: ACTIONS.SHOW_ALERT,
-      //     payload: {
-      //       type: "error",
-      //       message: {
-      //         type: "error",
-      //         message: "Failed to retrieve all exercises",
-      //       },
-      //     },
-      //   });
-      // }
-      setIsLoading(true);
-      const resp = await getCurrentUser();
-      // TODO: Probably need a better way of validating the response than just checking if the ID exists.
-      if (resp.status === 200 && resp.data.id) {
-        dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
+      try {
+        setIsLoading(true);
+        const resp = await getCurrentUser();
+        // TODO: Probably need a better way of validating the response than just checking if the ID exists.
+        if (resp.status === 200 && resp.data.id) {
+          dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
+        }
+      } catch (error) {
+        console.log("error getting current user", error);
+      } finally {
         setIsLoading(false);
       }
     })();

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { Typography, Box, Grid, Button, TextField } from "@mui/material";
-import { getExerciseName } from "../../utils/utils";
 import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
 
@@ -46,9 +45,7 @@ export default function BankInput({ dailyExercises, allExercises }) {
               alignItems="center"
               sx={{ pb: 1 }}
             >
-              <Typography>
-                {getExerciseName(exercise.id, allExercises)}
-              </Typography>
+              <Typography>Exercises</Typography>
               <TextField
                 placeholder="0"
                 className="bankInput"
