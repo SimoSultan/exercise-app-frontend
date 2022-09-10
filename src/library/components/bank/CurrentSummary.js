@@ -1,24 +1,26 @@
-import { Typography, Box, Grid } from "@mui/material";
+import { memo } from "react";
+import { Typography, Box, Grid, capitalize } from "@mui/material";
 
-export default function CurrentSummary({ dailyExercises }) {
+function Summary({ dailyExercises, userEntries }) {
+  if (dailyExercises.length < 1)
+    return <Typography>User has no exercises</Typography>;
+
   return (
     <Box sx={{ width: "90%", py: 4, bgcolor: "lightgrey" }}>
-      {dailyExercises.length > 0 ? (
-        dailyExercises.map((exercise, index) => (
-          <Grid
-            key={`summary-exercise-${exercise.id}`}
-            container
-            justifyContent="space-between"
-            flexDirection="row"
-            sx={{ px: 3, pb: 1 }}
-          >
-            <Typography>Exercisesssssss</Typography>
-            <Typography>{`${exercise.dailyBanked} / ${exercise.amount}`}</Typography>
-          </Grid>
-        ))
-      ) : (
-        <Typography>User has no exercises</Typography>
-      )}
+      {dailyExercises.map(({ id, amount, name }) => (
+        <Grid
+          key={`summary-exercise-${id}`}
+          container
+          justifyContent="space-between"
+          flexDirection="row"
+          sx={{ px: 3, pb: 1 }}
+        >
+          <Typography>{capitalize(name)}</Typography>
+          <Typography>{`${userEntries[id] ?? 0} / ${amount}`}</Typography>
+        </Grid>
+      ))}
     </Box>
   );
 }
+
+export const CurrentSummary = memo(Summary);

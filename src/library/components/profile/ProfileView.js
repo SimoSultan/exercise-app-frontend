@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   TextField,
   Grid,
@@ -13,29 +12,11 @@ import UserExercises from "./UserExercises";
 import AddUserExercise from "./AddUserExercise";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
-import { deleteUserExercise, getUserExercises } from "../../api/api";
+import { deleteUserExercise } from "../../api/api";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
   const { user } = state;
-  const [isLoading, setIsLoading] = useState(false);
-
-  console.log({ user });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const resp = await getUserExercises(user.routineId);
-        if (resp.status === 200) {
-          dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
-        }
-      } catch (error) {
-        console.log("error getting current user exercises", error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [dispatch, user.routineId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,7 +43,7 @@ export default function ProfileView() {
     try {
       const resp = deleteUserExercise(exerciseID);
       if (resp.status === 200) {
-        dispatch({ type: ACTIONS.REMOVE_USER_EXERCISE, payload: exerciseID });
+        dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }
     } catch (error) {
       console.log("error deleting user exercise", error);
@@ -130,18 +111,12 @@ export default function ProfileView() {
           <Grid item xs={12}>
             <Typography variant="h6">Exercises</Typography>
           </Grid>
-          {user.exercises?.length > 0 ? (
-            <UserExercises
-              userExercises={user.exercises}
-              handleExerciseNameChange={handleExerciseNameChange}
-              handleExerciseAmountChange={handleExerciseAmountChange}
-              handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
-            />
-          ) : (
-            <Grid item xs={12}>
-              <Typography>User has no exercises</Typography>
-            </Grid>
-          )}
+          <UserExercises
+            userExercises={user.exercises}
+            handleExerciseNameChange={handleExerciseNameChange}
+            handleExerciseAmountChange={handleExerciseAmountChange}
+            handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
+          />
           <Grid item xs={12} sx={{ py: 2 }}>
             <Divider />
           </Grid>

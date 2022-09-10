@@ -1,31 +1,55 @@
-import { useState } from "react";
-import { Button, Typography, Container } from "@mui/material";
-import { getPing, postEcho } from "../api/api";
+import { useEffect, useState } from "react";
+import { Typography, Container } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import CurrentSummary from "../components/bank/CurrentSummary";
-import BankInput from "../components/bank/BankInput";
-
-// import { ACTIONS } from "../../store/initialState";
-
-const debug = false;
+import { CurrentSummary } from "../components/bank/CurrentSummary";
+import { BankInput } from "../components/bank/BankInput";
+import { getUserEntry } from "../api/api";
 
 export default function Bank() {
-  const [response, setResponse] = useState(null);
   const { state } = useExerciseContext();
-  const { user, exercises } = state;
-  // DEBUG FUNCTIONS
-  async function handleClickPing() {
-    const resp = await getPing();
-    setResponse(JSON.stringify(resp));
-  }
+  const { user } = state;
+  // const [isLoading, setIsLoading] = useState(false);
+  const [userEntries, setUserEntries] = useState({});
 
-  async function handleClickEcho() {
-    const resp = await postEcho({
-      firstName: "Fred",
-      lastName: "Flintstone",
-    });
-    setResponse(JSON.stringify(resp));
-  }
+  const getUserEntriesForExercise = async (exerciseId) => {
+    try {
+      const resp = await getUserEntry(exerciseId);
+      if (resp.status === 200) return resp.data;
+    } catch (error) {
+      if (
+        error.response.status === 404 &&
+        error.response.data === "no entries found"
+      ) {
+        return null;
+      }
+      console.log("error getting current user exercise entry", error);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      user.exercises.length < 1 ||
+      user.exercises.length === userEntries.length ||
+      userEntries === []
+    )
+      return;
+
+    (async () => {
+      for await (const exercise of user.exercises) {
+        const entries = await getUserEntriesForExercise(exercise.id);
+        if (entries !== null) {
+          const subtotal = entries.reduce(
+            (prev, curr) => prev + curr.amount,
+            0
+          );
+          setUserEntries((prev) => ({
+            ...prev,
+            [exercise.id]: subtotal,
+          }));
+        }
+      }
+    })();
+  }, [user.exercises, userEntries]);
 
   return (
     <Container
@@ -42,22 +66,10 @@ export default function Bank() {
         Bank Daily Exercises
       </Typography>
       <CurrentSummary
-        allExercises={exercises}
         dailyExercises={user.exercises}
+        userEntries={userEntries}
       />
-
-      <BankInput dailyExercises={user.exercises} allExercises={exercises} />
-      {debug ? (
-        <>
-          <Button variant="contained" onClick={handleClickPing}>
-            Ping
-          </Button>
-          <Button variant="contained" onClick={handleClickEcho}>
-            Echo
-          </Button>
-          <div>{response}</div>
-        </>
-      ) : null}
+      <BankInput dailyExercises={user.exercises} />
     </Container>
   );
 }

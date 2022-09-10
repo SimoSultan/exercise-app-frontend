@@ -24,7 +24,7 @@ export const ACTIONS = {
   ADD_ALL_EXERCISES: "add-all-exercise",
   ADD_ONE_EXERCISE: "add-exercise",
   SET_USER_EXERCISES: "set-user-exercises",
-  REMOVE_USER_EXERCISE: "remove-user-exercise",
+  DELETE_USER_EXERCISE: "remove-user-exercise",
   ADD_USER_EXERCISE: "add-user-exercise",
   UPDATE_EXERCISE: "update-exercise",
   UPDATE_USER: "update-user",

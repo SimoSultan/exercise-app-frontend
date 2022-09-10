@@ -13,10 +13,13 @@ export default function Leaderboard() {
           setLeaderboard(() => Object.values(resp.data));
         }
       } catch (error) {
-        console.log(error.response.data);
+        console.log("error getting leaderboard", error.response.data);
       }
     })();
   }, []);
+
+  if (leaderboard.length < 1) return;
+  <Typography>No users to display</Typography>;
 
   return (
     <>
@@ -35,18 +38,14 @@ export default function Leaderboard() {
           bgcolor: "lightgrey",
         }}
       >
-        {leaderboard.length > 0 ? (
-          leaderboard.map((entry) => (
-            <LeaderboardItem
-              key={entry.userId}
-              firstName={entry.firstName}
-              lastName={entry.lastName}
-              percentage={entry.percentage}
-            />
-          ))
-        ) : (
-          <Typography>No users to display</Typography>
-        )}
+        {leaderboard.map((entry) => (
+          <LeaderboardItem
+            key={entry.userId}
+            firstName={entry.firstName}
+            lastName={entry.lastName}
+            percentage={entry.percentage}
+          />
+        ))}
       </Grid>
     </>
   );
@@ -56,7 +55,7 @@ const LeaderboardItem = ({ firstName, lastName, percentage }) => {
   return (
     <>
       <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
-      <Typography variant="body1">{percentage}%</Typography>
+      <Typography variant="body1">{percentage * 100}%</Typography>
     </>
   );
 };
