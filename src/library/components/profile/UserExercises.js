@@ -8,12 +8,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function UserExercises({
   userExercises,
-  handleExerciseNameChange,
-  handleExerciseAmountChange,
+  handleExerciseChange,
   handleRemoveExerciseFromUser,
 }) {
   if (userExercises.length < 1)
-    return <Typography>User has no exercises</Typography>;
+    return (
+      <Grid container justifyContent="center">
+        <Typography>User has no exercises</Typography>
+      </Grid>
+    );
 
   return (
     <>
@@ -25,33 +28,39 @@ export default function UserExercises({
           justifyContent="space-between"
           xs={12}
           spacing={1}
+          sx={{ mb: 2 }}
         >
           <Grid item xs={5}>
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="exercise-name">Name</InputLabel>
+              <InputLabel htmlFor={`name:${id}`}>Name</InputLabel>
               <OutlinedInput
-                id="exercise-name"
+                id={`name:${id}`}
                 value={name}
                 label="Name"
-                onChange={handleExerciseNameChange}
+                onChange={handleExerciseChange}
               />
             </FormControl>
           </Grid>
           <Grid item xs={3}>
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor={id}>Amount</InputLabel>
+              <InputLabel htmlFor={`amount:${id}`}>Amount</InputLabel>
               <OutlinedInput
-                id={id}
+                id={`amount:${id}`}
                 value={amount}
-                onChange={handleExerciseAmountChange}
+                onChange={handleExerciseChange}
                 label="Amount"
               />
             </FormControl>
           </Grid>
           <Grid item xs={3}>
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="exercise-unit">Unit</InputLabel>
-              <OutlinedInput id="exercise-unit" value={unit} label="Amount" />
+              <InputLabel htmlFor={`unit:${id}`}>Unit</InputLabel>
+              <OutlinedInput
+                id={`unit:${id}`}
+                value={unit}
+                label="Amount"
+                onChange={handleExerciseChange}
+              />
             </FormControl>
           </Grid>
           <Grid
