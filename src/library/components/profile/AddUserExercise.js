@@ -46,7 +46,7 @@ export default function AddUserExercise() {
         setUnit("");
       }
     } catch (error) {
-      console.log("error creating user exercise", error);
+      // console.log("error creating user exercise", error);
     }
   };
 

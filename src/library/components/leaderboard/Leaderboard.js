@@ -13,7 +13,7 @@ export default function Leaderboard() {
           setLeaderboard(() => Object.values(resp.data));
         }
       } catch (error) {
-        console.log("error getting leaderboard", error.response.data);
+        // console.log("error getting leaderboard", error.response.data);
       }
     })();
   }, []);

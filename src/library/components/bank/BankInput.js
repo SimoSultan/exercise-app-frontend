@@ -47,7 +47,7 @@ function Input({ dailyExercises }) {
         }, 1500);
       }
     } catch (error) {
-      console.log("error adding user exercise entry", error);
+      // console.log("error adding user exercise entry", error);
     }
   };
 

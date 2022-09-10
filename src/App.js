@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   BasicAlert,
   FixedBottomNavigation,
@@ -14,13 +14,13 @@ import { ACTIONS } from "./library/store/initialState";
 function App() {
   const { state, dispatch } = useExerciseContext();
   const { alert } = state;
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       let user = {};
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
         const resp = await getCurrentUser();
         // TODO: Probably need a better way of validating the response than just checking if the ID exists.
         if (resp.status === 200 && resp.data.id) {
@@ -28,9 +28,9 @@ function App() {
           dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
         }
       } catch (error) {
-        console.log("error getting current user", error);
+        // console.log("error getting current user", error);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
 
       try {
@@ -40,9 +40,9 @@ function App() {
             dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
           }
         } catch (error) {
-          console.log("error getting current user exercises", error);
+          // console.log("error getting current user exercises", error);
         } finally {
-          setIsLoading(false);
+          // setIsLoading(false);
         }
       } catch (error) {}
     })();

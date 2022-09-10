@@ -39,13 +39,11 @@ export default function ProfileView() {
   function handleUserInfoChange(event) {
     event.preventDefault();
     setUnsavedChanges(true);
-    console.log(event.target.name, event.target.value);
   }
 
   const handleExerciseChange = (event) => {
     event.preventDefault();
     setUnsavedChanges(true);
-    console.log(event.target.id, event.target.value);
 
     const [field, id] = event.target.id.split(":");
     const exercise = userExercises.find((exercise) => exercise.id === id);
