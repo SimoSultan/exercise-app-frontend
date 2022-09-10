@@ -34,7 +34,6 @@ export async function updateUserDetails(user) {
 // EXERCISES
 
 export async function createUserExercise(routineId, name, amount, unit, order) {
-  console.log(routineId, name, amount, unit, order);
   return await api.post("/exercises/create", {
     routineId,
     name,

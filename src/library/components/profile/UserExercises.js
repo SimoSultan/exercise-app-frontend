@@ -24,7 +24,7 @@ export default function UserExercises({
         <Grid
           item
           container
-          key={name}
+          key={id}
           justifyContent="space-between"
           xs={12}
           spacing={1}

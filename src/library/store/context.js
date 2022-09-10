@@ -71,7 +71,9 @@ export default function ExerciseContextProvider({ children }) {
           ...state,
           user: {
             ...state.user,
-            exercises: state.user.exercises.filter((ex) => ex.id !== payload),
+            exercises: state.user.exercises.filter(
+              (exercise) => exercise.id !== payload
+            ),
           },
           alert: {
             type: "success",

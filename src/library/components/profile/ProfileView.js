@@ -21,24 +21,22 @@ export default function ProfileView() {
   const { user } = state;
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
-  const [updatedUserDetails, setUpdatedUserDetails] = useState(user);
+  // const [updatedUserDetails, setUpdatedUserDetails] = useState(user);
+  const [userExercises, setUserExercises] = useState(user.exercises ?? []);
 
   useEffect(() => {
-    setUpdatedUserDetails((prev) => ({
-      ...prev,
-      exercises: user.exercises.sort((a, b) => a.order - b.order),
-    }));
-  }, [user]);
+    setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));
+  }, [user.exercises]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     window.alert("currently I don't work");
     // dispatch({ type: ACTIONS.UPDATE_USER, payload: user });
-    // setUpdatedUserDetails(() => user);
+    // setUserExercises(() => user);
     setUnsavedChanges(false);
   };
 
-  function handleChange(event) {
+  function handleUserInfoChange(event) {
     event.preventDefault();
     setUnsavedChanges(true);
     console.log(event.target.name, event.target.value);
@@ -47,12 +45,12 @@ export default function ProfileView() {
   const handleExerciseChange = (event) => {
     event.preventDefault();
     setUnsavedChanges(true);
-    const [field, id] = event.target.id.split(":");
-    const exercise = updatedUserDetails.exercises.find(
-      (exercise) => exercise.id === id
-    );
+    console.log(event.target.id, event.target.value);
 
-    const filteredUserExercises = updatedUserDetails.exercises.filter(
+    const [field, id] = event.target.id.split(":");
+    const exercise = userExercises.find((exercise) => exercise.id === id);
+
+    const filteredUserExercises = userExercises.filter(
       (exercise) => exercise.id !== id
     );
 
@@ -62,12 +60,11 @@ export default function ProfileView() {
         field === "amount" ? Number(event.target.value) : event.target.value,
     };
 
-    setUpdatedUserDetails((prev) => ({
-      ...prev,
-      exercises: [...filteredUserExercises, updatedExercise].sort(
+    setUserExercises(() =>
+      [...filteredUserExercises, updatedExercise].sort(
         (a, b) => a.order - b.order
-      ),
-    }));
+      )
+    );
   };
 
   const handleRemoveExerciseFromUser = async (exerciseID) => {
@@ -75,7 +72,7 @@ export default function ProfileView() {
       return;
 
     try {
-      const resp = deleteUserExercise(exerciseID);
+      const resp = await deleteUserExercise(exerciseID);
       if (resp.status === 200) {
         dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }
@@ -110,8 +107,8 @@ export default function ProfileView() {
               id="username"
               label="Username"
               autoFocus
-              value={updatedUserDetails.username}
-              onChange={handleChange}
+              value={user.username}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
@@ -124,8 +121,8 @@ export default function ProfileView() {
               id="firstName"
               label="First Name"
               autoFocus
-              value={updatedUserDetails.firstName}
-              onChange={handleChange}
+              value={user.firstName}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
@@ -137,8 +134,8 @@ export default function ProfileView() {
               label="Last Name"
               name="lastName"
               autoComplete="family-name"
-              value={updatedUserDetails.lastName}
-              onChange={handleChange}
+              value={user.lastName}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
@@ -147,7 +144,7 @@ export default function ProfileView() {
           </Grid>
           <Grid item xs={12}>
             <UserExercises
-              userExercises={updatedUserDetails.exercises}
+              userExercises={userExercises}
               handleExerciseChange={handleExerciseChange}
               handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
             />
