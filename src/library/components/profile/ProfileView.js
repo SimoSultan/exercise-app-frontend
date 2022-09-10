@@ -111,18 +111,12 @@ export default function ProfileView() {
           <Grid item xs={12}>
             <Typography variant="h6">Exercises</Typography>
           </Grid>
-          {user.exercises?.length > 0 ? (
-            <UserExercises
-              userExercises={user.exercises}
-              handleExerciseNameChange={handleExerciseNameChange}
-              handleExerciseAmountChange={handleExerciseAmountChange}
-              handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
-            />
-          ) : (
-            <Grid item xs={12}>
-              <Typography>User has no exercises</Typography>
-            </Grid>
-          )}
+          <UserExercises
+            userExercises={user.exercises}
+            handleExerciseNameChange={handleExerciseNameChange}
+            handleExerciseAmountChange={handleExerciseAmountChange}
+            handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
+          />
           <Grid item xs={12} sx={{ py: 2 }}>
             <Divider />
           </Grid>

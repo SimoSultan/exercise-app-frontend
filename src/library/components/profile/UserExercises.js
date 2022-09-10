@@ -1,4 +1,5 @@
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -11,6 +12,9 @@ export default function UserExercises({
   handleExerciseAmountChange,
   handleRemoveExerciseFromUser,
 }) {
+  if (userExercises.length < 1)
+    return <Typography>User has no exercises</Typography>;
+
   return (
     <>
       {userExercises.map(({ id, name, amount, unit }) => (
@@ -35,9 +39,9 @@ export default function UserExercises({
           </Grid>
           <Grid item xs={3}>
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="exercise-amount">Amount</InputLabel>
+              <InputLabel htmlFor={id}>Amount</InputLabel>
               <OutlinedInput
-                id="exercise-amount"
+                id={id}
                 value={amount}
                 onChange={handleExerciseAmountChange}
                 label="Amount"

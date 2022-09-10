@@ -55,7 +55,11 @@ export async function deleteUserExercise(id) {
 // ENTRIES
 
 export async function getUserEntry(exerciseId) {
-  return await api.get("/entries/list", { exerciseId });
+  return await api.post("/entries/list", { exerciseId });
+}
+
+export async function submitUserEntry(exerciseId, amount) {
+  return await api.post("/entries/create", { exerciseId, amount });
 }
 
 // LEADERBOARD

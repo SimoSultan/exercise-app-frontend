@@ -32,11 +32,11 @@ export default function ExerciseContextProvider({ children }) {
             message: "Successfully logged out.",
           },
         };
-      // case ACTIONS.SHOW_ALERT:
-      //   return {
-      //     ...state,
-      //     alert: payload,
-      //   };
+      case ACTIONS.SHOW_ALERT:
+        return {
+          ...state,
+          alert: payload,
+        };
       case ACTIONS.HIDE_ALERT:
         return {
           ...state,
@@ -93,8 +93,9 @@ export default function ExerciseContextProvider({ children }) {
       case ACTIONS.BANK_USER_EXERCISE:
         return {
           ...state,
-          user: {
-            exercises: payload,
+          alert: {
+            type: "success",
+            message: "Successfully banked entry.",
           },
         };
       default:

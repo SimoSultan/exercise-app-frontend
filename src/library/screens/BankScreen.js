@@ -1,67 +1,55 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Container } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import CurrentSummary from "../components/bank/CurrentSummary";
-import BankInput from "../components/bank/BankInput";
+import { CurrentSummary } from "../components/bank/CurrentSummary";
+import { BankInput } from "../components/bank/BankInput";
 import { getUserEntry } from "../api/api";
-import { ACTIONS } from "../store/initialState";
 
 export default function Bank() {
-  const { state, dispatch } = useExerciseContext();
+  const { state } = useExerciseContext();
   const { user } = state;
   // const [isLoading, setIsLoading] = useState(false);
-  const [userEntries, setUserEntries] = useState([]);
-  const [userExercisesWithEntries, setUserExercisesWithEntries] = useState([]);
+  const [userEntries, setUserEntries] = useState({});
 
-  const updateUserExercises = useCallback(() => {
-    user.exercises.forEach((exercise) => {
-      const userEntry =
-        userEntries.find((entry) => entry.exerciseId === exercise.id) ?? null;
-
-      if (userEntry) {
-        setUserExercisesWithEntries(() => [
-          ...userExercisesWithEntries,
-          {
-            ...exercise,
-            progress: userEntry.amount,
-            completed: userEntry.completedAt,
-            created: userEntry.createdAt,
-          },
-        ]);
+  const getUserEntriesForExercise = async (exerciseId) => {
+    try {
+      const resp = await getUserEntry(exerciseId);
+      if (resp.status === 200) return resp.data;
+    } catch (error) {
+      if (
+        error.response.status === 404 &&
+        error.response.data === "no entries found"
+      ) {
+        return null;
       }
-    });
-  }, [user.exercises, userExercisesWithEntries, userEntries]);
-
-  useEffect(() => {
-    if (user.exercises.length < 1) return;
-
-    user.exercises.forEach((exercise, index) => {
-      (async () => {
-        try {
-          const resp = await getUserEntry(exercise.id);
-          if (resp.status === 200) {
-            setUserEntries(() => [...userEntries, resp.data]);
-          }
-        } catch (error) {
-          console.log("error getting current user exercise entry", error);
-        }
-      })();
-
-      // ONLY UPDATE USER EXERCISES AFTER ALL ENTRIES HAVE BEEN FOUND
-      if (index === user.exercises.length - 1) {
-        void updateUserExercises();
-      }
-    });
-  }, [user.exercises, userEntries, updateUserExercises]);
-
-  useEffect(() => {
-    if (userExercisesWithEntries.length === user.exercises.length) {
-      dispatch({
-        type: ACTIONS.SET_USER_EXERCISES,
-        payload: userExercisesWithEntries,
-      });
+      console.log("error getting current user exercise entry", error);
     }
-  }, [dispatch, userExercisesWithEntries, user.exercises]);
+  };
+
+  useEffect(() => {
+    if (
+      user.exercises.length < 1 ||
+      user.exercises.length === userEntries.length ||
+      userEntries === []
+    )
+      return;
+
+    (async () => {
+      for await (const exercise of user.exercises) {
+        const entries = await getUserEntriesForExercise(exercise.id);
+        if (entries !== null) {
+          const subtotal = entries.reduce(
+            (prev, curr) => prev + curr.amount,
+            0
+          );
+          setUserEntries((prev) => ({
+            ...prev,
+            [exercise.id]: subtotal,
+          }));
+        }
+      }
+    })();
+  }, [user.exercises, userEntries]);
 
   return (
     <Container
@@ -77,7 +65,10 @@ export default function Bank() {
       <Typography variant="h4" sx={{ py: 3 }}>
         Bank Daily Exercises
       </Typography>
-      <CurrentSummary dailyExercises={user.exercises} />
+      <CurrentSummary
+        dailyExercises={user.exercises}
+        userEntries={userEntries}
+      />
       <BankInput dailyExercises={user.exercises} />
     </Container>
   );
