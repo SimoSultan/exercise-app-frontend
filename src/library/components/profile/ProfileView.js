@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   TextField,
   Grid,
@@ -5,6 +6,7 @@ import {
   Typography,
   Avatar,
   Divider,
+  Button,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -18,22 +20,51 @@ export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
   const { user } = state;
 
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+  // const [updatedUserDetails, setUpdatedUserDetails] = useState(user);
+  const [userExercises, setUserExercises] = useState(user.exercises ?? []);
+
+  useEffect(() => {
+    setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));
+  }, [user.exercises]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    window.alert("currently I don't work");
     // dispatch({ type: ACTIONS.UPDATE_USER, payload: user });
+    // setUserExercises(() => user);
+    setUnsavedChanges(false);
   };
 
-  function handleChange(event) {
+  function handleUserInfoChange(event) {
     event.preventDefault();
+    setUnsavedChanges(true);
     console.log(event.target.name, event.target.value);
   }
 
-  const handleExerciseNameChange = (event) => {
+  const handleExerciseChange = (event) => {
     event.preventDefault();
-  };
+    setUnsavedChanges(true);
+    console.log(event.target.id, event.target.value);
 
-  const handleExerciseAmountChange = (event) => {
-    event.preventDefault();
+    const [field, id] = event.target.id.split(":");
+    const exercise = userExercises.find((exercise) => exercise.id === id);
+
+    const filteredUserExercises = userExercises.filter(
+      (exercise) => exercise.id !== id
+    );
+
+    const updatedExercise = {
+      ...exercise,
+      [field]:
+        field === "amount" ? Number(event.target.value) : event.target.value,
+    };
+
+    setUserExercises(() =>
+      [...filteredUserExercises, updatedExercise].sort(
+        (a, b) => a.order - b.order
+      )
+    );
   };
 
   const handleRemoveExerciseFromUser = async (exerciseID) => {
@@ -41,7 +72,7 @@ export default function ProfileView() {
       return;
 
     try {
-      const resp = deleteUserExercise(exerciseID);
+      const resp = await deleteUserExercise(exerciseID);
       if (resp.status === 200) {
         dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }
@@ -77,7 +108,7 @@ export default function ProfileView() {
               label="Username"
               autoFocus
               value={user.username}
-              onChange={handleChange}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
@@ -91,7 +122,7 @@ export default function ProfileView() {
               label="First Name"
               autoFocus
               value={user.firstName}
-              onChange={handleChange}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
@@ -104,19 +135,30 @@ export default function ProfileView() {
               name="lastName"
               autoComplete="family-name"
               value={user.lastName}
-              onChange={handleChange}
+              onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h6">Exercises</Typography>
           </Grid>
-          <UserExercises
-            userExercises={user.exercises}
-            handleExerciseNameChange={handleExerciseNameChange}
-            handleExerciseAmountChange={handleExerciseAmountChange}
-            handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
-          />
+          <Grid item xs={12}>
+            <UserExercises
+              userExercises={userExercises}
+              handleExerciseChange={handleExerciseChange}
+              handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            {unsavedChanges ? (
+              <Typography color="red" sx={{ py: 1 }}>
+                You have unsaved changes to your exercises
+              </Typography>
+            ) : null}
+            <Button type="submit" variant="contained">
+              Update Exercises
+            </Button>
+          </Grid>
           <Grid item xs={12} sx={{ py: 2 }}>
             <Divider />
           </Grid>
@@ -125,14 +167,6 @@ export default function ProfileView() {
             <AddUserExercise />
           </Grid>
         </Grid>
-        {/* <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 4, mb: 2 }}
-        >
-          Update User Name and Exercise Amounts
-        </Button> */}
       </Box>
     </Box>
   );

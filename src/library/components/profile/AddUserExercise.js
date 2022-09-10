@@ -28,7 +28,6 @@ export default function AddUserExercise() {
         unit,
         user.exercises.length + 1
       );
-      console.log({ resp });
       if (resp.status === 200) {
         const { id, name, amount, order, unit } = resp.data;
         dispatch({
@@ -91,8 +90,8 @@ export default function AddUserExercise() {
         </Grid>
       </Grid>
       <Button
-        variant="contained"
-        color="secondary"
+        variant="outlined"
+        color="primary"
         onClick={handleSubmitExercise}
         sx={{ mt: 2 }}
       >
