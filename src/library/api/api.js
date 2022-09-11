@@ -51,13 +51,32 @@ export async function deleteUserExercise(id) {
   return await api.post("/exercises/delete", { id });
 }
 
+export async function updateUserExerciseBatch(exercises) {
+  return await api.post("/exercises/batch-update", { exercises });
+}
+
 // ENTRIES
 
 export async function getUserEntry(exerciseId) {
   return await api.post("/entries/list", { exerciseId });
 }
 
-export async function submitUserEntry(exerciseId, amount) {
+export async function getUserEntries(exerciseIds) {
+  return await api.post("/entries/list-batch", { exerciseIds });
+}
+
+export async function getUserEntriesDaily(exerciseIds) {
+  return await api.post("/entries/list-batch-daily", {
+    exerciseIds,
+    day: new Date(
+      new Date().toLocaleString("en-US", {
+        timeZone: "Australia/Brisbane",
+      })
+    ),
+  });
+}
+
+export async function submitExerciseEntry(exerciseId, amount) {
   return await api.post("/entries/create", { exerciseId, amount });
 }
 

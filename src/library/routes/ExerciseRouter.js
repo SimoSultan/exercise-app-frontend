@@ -46,7 +46,10 @@ export default function Router() {
         path="/leaderboard"
         element={isAuthenticated ? <LeaderboardScreen /> : <LoginScreen />}
       />
-      <Route path="/login" element={<LoginScreen />} />
+      <Route
+        path="/login"
+        element={isAuthenticated ? <HomeScreen /> : <LoginScreen />}
+      />
       <Route path="*" element={<HomeScreen />} />
     </Routes>
   );

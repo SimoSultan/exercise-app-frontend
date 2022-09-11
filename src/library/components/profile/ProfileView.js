@@ -6,7 +6,6 @@ import {
   Typography,
   Avatar,
   Divider,
-  Button,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -14,36 +13,64 @@ import UserExercises from "./UserExercises";
 import AddUserExercise from "./AddUserExercise";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
-import { deleteUserExercise } from "../../api/api";
+import { deleteUserExercise, updateUserExerciseBatch } from "../../api/api";
+import { SubmitButton } from "../exports";
+import { arraysEqual } from "../../utils/utils";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
   const { user } = state;
 
-  const [unsavedChanges, setUnsavedChanges] = useState(false);
-  // const [updatedUserDetails, setUpdatedUserDetails] = useState(user);
+  const [loading, setLoading] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [userExercises, setUserExercises] = useState(user.exercises ?? []);
 
   useEffect(() => {
     setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));
   }, [user.exercises]);
 
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    if (arraysEqual(user.exercises, userExercises)) {
+      setHasUnsavedChanges(false);
+    }
+  }, [hasUnsavedChanges, user.exercises, userExercises]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    window.alert("currently I don't work");
-    // dispatch({ type: ACTIONS.UPDATE_USER, payload: user });
-    // setUserExercises(() => user);
-    setUnsavedChanges(false);
+    setLoading(true);
+    try {
+      const resp = await updateUserExerciseBatch(userExercises);
+      console.log({ resp });
+      if (resp.status === 200) {
+        setTimeout(() => {
+          dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
+          setLoading(false);
+          setHasUnsavedChanges(false);
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ACTIONS.SHOW_ALERT,
+        payload: {
+          type: "error",
+          message: "Something went wrong. Exercises were not updated.",
+        },
+      });
+      setLoading(false);
+      return;
+    }
   };
 
   function handleUserInfoChange(event) {
     event.preventDefault();
-    setUnsavedChanges(true);
+    setHasUnsavedChanges(true);
   }
 
   const handleExerciseChange = (event) => {
     event.preventDefault();
-    setUnsavedChanges(true);
+    setHasUnsavedChanges(true);
 
     const [field, id] = event.target.id.split(":");
     const exercise = userExercises.find((exercise) => exercise.id === id);
@@ -148,14 +175,14 @@ export default function ProfileView() {
             />
           </Grid>
           <Grid item xs={12}>
-            {unsavedChanges ? (
-              <Typography color="red" sx={{ py: 1 }}>
-                You have unsaved changes to your exercises
-              </Typography>
-            ) : null}
-            <Button type="submit" variant="contained">
+            <SubmitButton
+              variant="contained"
+              isLoading={loading}
+              isDisabled={!hasUnsavedChanges}
+              handleSubmit={handleSubmit}
+            >
               Update Exercises
-            </Button>
+            </SubmitButton>
           </Grid>
           <Grid item xs={12} sx={{ py: 2 }}>
             <Divider />
