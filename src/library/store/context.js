@@ -50,7 +50,7 @@ export default function ExerciseContextProvider({ children }) {
           ...state,
           activeTab: payload,
         };
-      // case ACTIONS.UPDATE_USER:
+      // case ACTIONS.UPDATE_USER_DETAILS:
       //   return {
       //     ...state,
       //     user: {
@@ -64,6 +64,10 @@ export default function ExerciseContextProvider({ children }) {
           user: {
             ...state.user,
             exercises: payload,
+          },
+          alert: {
+            type: "success",
+            message: "Exercises successfully updated.",
           },
         };
       case ACTIONS.DELETE_USER_EXERCISE:
@@ -92,9 +96,26 @@ export default function ExerciseContextProvider({ children }) {
             message: "Exercise successfully added.",
           },
         };
-      case ACTIONS.BANK_USER_EXERCISE:
+      case ACTIONS.SET_DAILY_ENTRIES:
         return {
           ...state,
+          user: {
+            ...state.user,
+            dailyEntries: payload,
+          },
+        };
+      case ACTIONS.BANK_DAILY_ENTRY:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            // TODO: This is just to re-render the app for now.
+            dailyEntries: {
+              ...state.user.dailyEntries,
+              [payload.exercise_id]:
+                state.user.dailyEntries[payload.exercise_id] + payload.amount,
+            },
+          },
           alert: {
             type: "success",
             message: "Successfully banked entry.",

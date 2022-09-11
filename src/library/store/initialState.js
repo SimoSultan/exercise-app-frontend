@@ -12,6 +12,7 @@ export const initialState = {
     username: "",
     routineId: "",
     exercises: [],
+    dailyEntries: {},
   },
 };
 
@@ -30,5 +31,6 @@ export const ACTIONS = {
   UPDATE_USER: "update-user",
   NAVIGATE_ROUTE: "navigate-route",
   SET_ACTIVE_TAB: "set-active-tab",
-  BANK_USER_EXERCISE: "bank-user-exercise",
+  BANK_DAILY_ENTRY: "bank-daily-entry",
+  SET_DAILY_ENTRIES: "set-daily-entries",
 };

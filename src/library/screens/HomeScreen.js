@@ -1,6 +1,6 @@
-import { Typography, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
-import { Footer } from "../components/exports";
+import { Footer, ScreenTitle } from "../components/exports";
 import { FOOTER_HEIGHT } from "../styles/styles";
 
 export default function HomeScreen() {
@@ -16,7 +16,7 @@ export default function HomeScreen() {
         alignItems: "center",
       }}
     >
-      <Typography>Home</Typography>
+      <ScreenTitle>Home</ScreenTitle>
       <Footer />
     </Container>
   );

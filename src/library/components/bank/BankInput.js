@@ -3,21 +3,22 @@ import {
   Typography,
   Box,
   Grid,
-  Button,
   TextField,
   capitalize,
+  Fab,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
-import { submitUserEntry } from "../../api/api";
+import { submitExerciseEntry } from "../../api/api";
 
-function Input({ dailyExercises }) {
-  const sortedDailyExercises = dailyExercises.sort((a, b) => a.order - b.order);
+function Input({ userExercises = [] }) {
+  const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
 
   const initialState = () =>
     ((arr) => {
       return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
-    })(sortedDailyExercises);
+    })(sortedUserExercises);
 
   const [bank, setBank] = useState({});
   const { dispatch } = useExerciseContext();
@@ -37,26 +38,34 @@ function Input({ dailyExercises }) {
     }
 
     try {
-      const resp = await submitUserEntry(exerciseId, bank[exerciseId]);
+      const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
       if (resp.status === 200) {
         dispatch({
-          type: ACTIONS.BANK_USER_EXERCISE,
+          type: ACTIONS.BANK_DAILY_ENTRY,
+          payload: resp.data,
         });
         setTimeout(() => {
           setBank(() => initialState());
         }, 1500);
       }
     } catch (error) {
-      // console.log("error adding user exercise entry", error);
+      console.log(error);
+      dispatch({
+        type: ACTIONS.SHOW_ALERT,
+        payload: {
+          type: "error",
+          message: "Something went wrong. Entry not submitted.",
+        },
+      });
     }
   };
 
-  if (sortedDailyExercises.length < 1)
+  if (sortedUserExercises.length < 1)
     return <Typography>User has no exercises</Typography>;
 
   return (
     <Box sx={{ width: "100%", mt: 6 }}>
-      {sortedDailyExercises.map(({ id, name }) => (
+      {sortedUserExercises.map(({ id, name }) => (
         <Grid
           key={`bank-exercise-${id}`}
           container
@@ -64,7 +73,7 @@ function Input({ dailyExercises }) {
           justifyContent="space-evenly"
           flexDirection="row"
           alignItems="center"
-          sx={{ px: 1, pb: 1 }}
+          sx={{ px: 1, pb: 2 }}
           xs={12}
           spacing={1}
         >
@@ -81,13 +90,21 @@ function Input({ dailyExercises }) {
             />
           </Grid>
           <Grid item xs={3}>
-            <Button
+            {/* <IconButton
               variant="contained"
               size="large"
+              color="primary"
               onClick={() => handleSubmit(id)}
             >
-              Add
-            </Button>
+              <AddIcon fontSize="inherit" />
+            </IconButton> */}
+            <Fab
+              color="primary"
+              aria-label="bank exercise"
+              onClick={() => handleSubmit(id)}
+            >
+              <AddIcon />
+            </Fab>
           </Grid>
         </Grid>
       ))}
