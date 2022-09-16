@@ -33,7 +33,9 @@ export async function updateUserDetails(user) {
 
 // EXERCISES
 
-export async function createUserExercise(routineId, name, amount, unit, order) {
+export async function createUserExercise(routineId, exerciseDetails, order) {
+  const { name, amount, unit } = exerciseDetails;
+
   return await api.post("/exercises/create", {
     routineId,
     name,

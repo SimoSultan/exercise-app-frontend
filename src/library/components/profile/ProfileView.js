@@ -7,7 +7,6 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 
 import UserExercises from "./UserExercises";
 import AddUserExercise from "./AddUserExercise";
@@ -115,8 +114,8 @@ export default function ProfileView() {
         alignItems: "center",
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <PersonIcon />
+      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} alt={user.firstName}>
+        {user.firstName[0]}
       </Avatar>
       <Typography component="h1" variant="h5">
         {`${user.firstName} ${user.lastName}`}
@@ -165,7 +164,7 @@ export default function ProfileView() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">Exercises</Typography>
+            <Typography variant="h6">Your Exercises</Typography>
           </Grid>
           <Grid item xs={12}>
             <UserExercises
@@ -189,6 +188,8 @@ export default function ProfileView() {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h6">Add New Exercise</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <AddUserExercise />
           </Grid>
         </Grid>

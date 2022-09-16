@@ -3,9 +3,11 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 export default function SubmitButton({
   children,
   variant,
+  color = "primary",
   handleSubmit,
   isLoading,
   isDisabled,
+  style,
 }) {
   return (
     <Box
@@ -13,6 +15,7 @@ export default function SubmitButton({
         position: "relative",
         width: "fit-content",
         margin: "0 auto",
+        ...style,
       }}
     >
       <>

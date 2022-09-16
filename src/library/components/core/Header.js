@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import PersonIcon from "@mui/icons-material/Person";
 
 import { HEADER_HEIGHT } from "../../styles/styles";
 import { Link } from "react-router-dom";
@@ -33,7 +34,7 @@ export default function Header() {
 
   const handleClickAuth = async () => {
     if (isAuthenticated) {
-      await logoutUser()
+      await logoutUser();
       dispatch({ type: ACTIONS.LOGOUT });
     } else {
       navigate("/login");
@@ -61,13 +62,15 @@ export default function Header() {
                 color: "inherit",
               }}
             >
-              LOGO
+              Sixty6
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Your Profile">
+                  <PersonIcon />
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu

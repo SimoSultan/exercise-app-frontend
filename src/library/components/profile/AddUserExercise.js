@@ -1,31 +1,54 @@
 import { useState } from "react";
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 import { createUserExercise } from "../../api/api";
+import { SubmitButton } from "../exports";
+
+const initialState = {
+  name: "",
+  amount: 0,
+  unit: "reps",
+};
 
 export default function AddUserExercise() {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [unit, setUnit] = useState("reps");
+  const [exerciseDetails, setExerciseDetails] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const { state, dispatch } = useExerciseContext();
   const { user } = state;
 
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    if (e.target.name === "amount") {
+      const num = Number(e.target.value);
+      setExerciseDetails((prev) => ({
+        ...prev,
+        [e.target.name]: isNaN(num) ? "" : num,
+      }));
+      return;
+    }
+
+    setExerciseDetails((prev) => ({
+      ...prev,
+      [e.target.name]: String(e.target.value),
+    }));
+  };
+
   const handleSubmitExercise = async () => {
-    if (name.length < 1) {
+    if (exerciseDetails.name.length < 1) {
       return window.alert("Please enter an exercise.");
     }
-    if (isNaN(amount) || amount < 1) {
+    if (isNaN(exerciseDetails.amount) || exerciseDetails.amount < 1) {
       return window.alert("Please ensure the amount is a number.");
     }
 
     try {
+      setIsLoading(true);
       const resp = await createUserExercise(
         user.routineId,
-        name,
-        Number(amount),
-        unit,
+        exerciseDetails,
         user.exercises.length + 1
       );
       if (resp.status === 200) {
@@ -41,12 +64,12 @@ export default function AddUserExercise() {
             unit,
           },
         });
-        setName("");
-        setAmount("");
-        setUnit("");
+        setExerciseDetails(initialState);
       }
     } catch (error) {
       // console.log("error creating user exercise", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -62,9 +85,10 @@ export default function AddUserExercise() {
         <Grid item xs={6}>
           <TextField
             label="Exercise Name"
+            name="name"
             variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={exerciseDetails.name}
+            onChange={handleChange}
             required
             sx={{ width: "100%" }}
           />
@@ -73,8 +97,9 @@ export default function AddUserExercise() {
           <TextField
             label="Amount"
             variant="outlined"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            name="amount"
+            value={exerciseDetails.amount}
+            onChange={handleChange}
             required
             sx={{ width: "100%" }}
           />
@@ -83,20 +108,27 @@ export default function AddUserExercise() {
           <TextField
             label="Units"
             variant="outlined"
-            value={unit}
-            onChange={(e) => setAmount(e.target.value)}
+            name="unit"
+            value={exerciseDetails.unit}
+            onChange={handleChange}
             sx={{ width: "100%" }}
           />
         </Grid>
       </Grid>
-      <Button
+
+      <SubmitButton
         variant="outlined"
-        color="primary"
-        onClick={handleSubmitExercise}
-        sx={{ mt: 2 }}
+        handleSubmit={handleSubmitExercise}
+        isLoading={isLoading}
+        isDisabled={
+          exerciseDetails.name === "" ||
+          exerciseDetails.amount === "" ||
+          exerciseDetails.unit === ""
+        }
+        style={{ mt: 3 }}
       >
         Submit New Exercise
-      </Button>
+      </SubmitButton>
     </>
   );
 }
