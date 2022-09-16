@@ -6,7 +6,9 @@ import {
   TextField,
   capitalize,
   Fab,
+  CircularProgress,
 } from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
 import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
@@ -14,7 +16,7 @@ import { submitExerciseEntry } from "../../api/api";
 
 function Input({ userExercises = [] }) {
   const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
-
+  const [isLoading, setIsLoading] = useState(false);
   const initialState = () =>
     ((arr) => {
       return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
@@ -38,6 +40,7 @@ function Input({ userExercises = [] }) {
     }
 
     try {
+      setIsLoading(true);
       const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
       if (resp.status === 200) {
         dispatch({
@@ -57,6 +60,8 @@ function Input({ userExercises = [] }) {
           message: "Something went wrong. Entry not submitted.",
         },
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,21 +94,27 @@ function Input({ userExercises = [] }) {
               onChange={(e) => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={3}>
-            {/* <IconButton
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={() => handleSubmit(id)}
-            >
-              <AddIcon fontSize="inherit" />
-            </IconButton> */}
+          <Grid item container justifyContent="flex-end" xs={3}>
             <Fab
               color="primary"
               aria-label="bank exercise"
               onClick={() => handleSubmit(id)}
             >
-              <AddIcon />
+              {isLoading ? (
+                <CircularProgress
+                  color="inherit"
+                  size={24}
+                  sx={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
+              ) : (
+                <AddIcon />
+              )}
             </Fab>
           </Grid>
         </Grid>
