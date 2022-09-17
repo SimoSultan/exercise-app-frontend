@@ -10,11 +10,20 @@ import "./App.css";
 import { getCurrentUser, getUserExercises } from "./library/api/api";
 import { useExerciseContext } from "./library/store/context";
 import { ACTIONS } from "./library/store/initialState";
+import { useSearchParams } from "react-router-dom";
 
 function App() {
   const { state, dispatch } = useExerciseContext();
   const { alert } = state;
   // const [isLoading, setIsLoading] = useState(false);
+
+  // Get and set the cookie from the URL query string.
+  const [searchParams] = useSearchParams()
+  const sessionParam = searchParams.get('session')
+  if (sessionParam) {
+    document.cookie = `connect.sid=${sessionParam}`
+    console.log(document.cookie)
+  }
 
   useEffect(() => {
     (async () => {
