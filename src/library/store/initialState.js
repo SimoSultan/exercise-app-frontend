@@ -10,7 +10,7 @@ export const initialState = {
     firstName: "",
     lastName: "",
     username: "",
-    routineId: "",
+    routineID: "",
     exercises: [],
     dailyEntries: {},
   },

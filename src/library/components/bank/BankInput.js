@@ -14,7 +14,7 @@ import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
 import { submitExerciseEntry } from "../../api/api";
 
-function Input({ userExercises = [] }) {
+function Input({ userID, userExercises = [] }) {
   const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
   const [isLoading, setIsLoading] = useState(false);
   const initialState = () =>
@@ -41,7 +41,11 @@ function Input({ userExercises = [] }) {
 
     try {
       setIsLoading(true);
-      const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
+      const resp = await submitExerciseEntry(
+        userID,
+        exerciseId,
+        bank[exerciseId]
+      );
       if (resp.status === 200) {
         dispatch({
           type: ACTIONS.BANK_DAILY_ENTRY,
@@ -64,9 +68,6 @@ function Input({ userExercises = [] }) {
       setIsLoading(false);
     }
   };
-
-  if (sortedUserExercises.length < 1)
-    return <Typography>User has no exercises</Typography>;
 
   return (
     <Box sx={{ width: "100%", mt: 6 }}>

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import { getLeaderboard } from "../../api/api";
+import { useExerciseContext } from "../../store/context";
 
 export default function Leaderboard() {
+  const { state } = useExerciseContext();
+  const { user } = state;
+
   const [leaderboard, setLeaderboard] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -10,7 +14,7 @@ export default function Leaderboard() {
     (async () => {
       try {
         setIsLoading(true);
-        const resp = await getLeaderboard();
+        const resp = await getLeaderboard(user.id);
         if (resp.status === 200) {
           setLeaderboard(() => Object.values(resp.data));
         }
@@ -20,7 +24,7 @@ export default function Leaderboard() {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [user.id]);
 
   if (leaderboard.length < 1) return;
   <Typography>No users to display</Typography>;
