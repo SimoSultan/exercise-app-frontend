@@ -33,13 +33,16 @@ export default function ProfileView() {
     if (AUTH_ENABLED || user.exercises.length > 0) return;
     (async () => {
       try {
+        setLoading(true);
         const resp = await getUserExercises(user.id, user.routineId);
         if (resp.status === 200) {
           setUserExercises(() => resp.data.sort((a, b) => a.order - b.order));
           dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
         }
       } catch (error) {
-        // console.log("error getting current user exercises", error);
+        console.log("error getting current user exercises", error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [dispatch, user.id, user.routineId, user.exercises]);
@@ -190,6 +193,7 @@ export default function ProfileView() {
               userExercises={userExercises}
               handleExerciseChange={handleExerciseChange}
               handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
+              loading={loading}
             />
           </Grid>
           <Grid item xs={12}>
