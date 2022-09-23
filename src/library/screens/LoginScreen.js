@@ -7,6 +7,7 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Box,
 } from "@mui/material";
 import { useExerciseContext } from "../store/context";
 import { useNavigate } from "react-router-dom";
@@ -78,19 +79,27 @@ export default function Login() {
         <Loading loading={loading} />
       ) : (
         <>
-          {AUTH_ENABLED ? (
-            <LoginWithGoogle
-              isAuthenticated={isAuthenticated}
-              handleLoginWithGoogle={handleLoginWithGoogle}
-            />
-          ) : (
-            <AuthDropdown
-              handleSelectUser={handleSelectUser}
-              userList={userList}
-              loginSelectedUser={loginSelectedUser}
-              selectedUser={selectedUser}
-            />
-          )}
+          <AuthDropdown
+            handleSelectUser={handleSelectUser}
+            userList={userList}
+            loginSelectedUser={loginSelectedUser}
+            selectedUser={selectedUser}
+          />
+          <Box>
+            <Typography color="error" sx={{ fontWeight: "bold" }}>
+              TEMPORARY AUTH HACK.
+            </Typography>
+            <Typography color="error">
+              If you do not appear in the dropdown list. Please first
+              authenticate with Google below.This will error after logging in.
+              However, you should then be able to see your name in the dropdown
+              list above to "login" and see your profile.
+            </Typography>
+          </Box>
+          <LoginWithGoogle
+            isAuthenticated={isAuthenticated}
+            handleLoginWithGoogle={handleLoginWithGoogle}
+          />
         </>
       )}
     </Grid>
@@ -99,11 +108,11 @@ export default function Login() {
 
 const LoginWithGoogle = ({ isAuthenticated, handleLoginWithGoogle }) => (
   <>
-    <Typography sx={{ py: 3 }}>
+    {/* <Typography sx={{ py: 3 }}>
       {isAuthenticated
         ? "You are already logged in"
         : "You must login to see this page"}
-    </Typography>
+    </Typography> */}
     <Button variant="contained" onClick={handleLoginWithGoogle}>
       Login With Google
     </Button>
