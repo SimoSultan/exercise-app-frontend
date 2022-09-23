@@ -16,10 +16,11 @@ export default function Leaderboard() {
         setIsLoading(true);
         const resp = await getLeaderboard(user.id);
         if (resp.status === 200) {
+          console.log(resp.data);
           setLeaderboard(() => Object.values(resp.data));
         }
       } catch (error) {
-        // console.log("error getting leaderboard", error.response.data);
+        console.log("error getting leaderboard", error);
       } finally {
         setIsLoading(false);
       }
