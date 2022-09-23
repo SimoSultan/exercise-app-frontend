@@ -17,10 +17,10 @@ import { submitExerciseEntry } from "../../api/api";
 function Input({ userID, userExercises = [] }) {
   const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
   const [isLoading, setIsLoading] = useState(false);
-  const initialState = () =>
-    ((arr) => {
-      return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
-    })(sortedUserExercises);
+  // const initialState = () =>
+  //   ((arr) => {
+  //     return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
+  //   })(sortedUserExercises);
 
   const [bank, setBank] = useState({});
   const { dispatch } = useExerciseContext();
@@ -52,7 +52,7 @@ function Input({ userID, userExercises = [] }) {
           payload: resp.data,
         });
         setTimeout(() => {
-          setBank(() => initialState());
+          setBank((prev) => ({ ...prev, [exerciseId]: 0 }));
         }, 1500);
       }
     } catch (error) {

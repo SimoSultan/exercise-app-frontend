@@ -20,6 +20,7 @@ export default function Login() {
   const { state, dispatch } = useExerciseContext();
   const { isAuthenticated } = state;
   const [loading, setLoading] = useState(false);
+  const [userUnderstands, setUserUnderstands] = useState(false);
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
 
@@ -93,11 +94,21 @@ export default function Login() {
               If you do not appear in the dropdown list. Please first
               authenticate with Google below.This will error after logging in.
               However, you should then be able to see your name in the dropdown
-              list above to "login" and see your profile.
+              list above to "login" and see your profile. Please click "I
+              Understand" to login through Google.
             </Typography>
+            <Button
+              variant="outlined"
+              disabled={userUnderstands}
+              onClick={() => setUserUnderstands(true)}
+              sx={{ my: 2 }}
+            >
+              I Understand
+            </Button>
           </Box>
           <LoginWithGoogle
             isAuthenticated={isAuthenticated}
+            disabled={!userUnderstands}
             handleLoginWithGoogle={handleLoginWithGoogle}
           />
         </>
@@ -106,14 +117,22 @@ export default function Login() {
   );
 }
 
-const LoginWithGoogle = ({ isAuthenticated, handleLoginWithGoogle }) => (
+const LoginWithGoogle = ({
+  isAuthenticated,
+  disabled = true,
+  handleLoginWithGoogle,
+}) => (
   <>
     {/* <Typography sx={{ py: 3 }}>
       {isAuthenticated
         ? "You are already logged in"
         : "You must login to see this page"}
     </Typography> */}
-    <Button variant="contained" onClick={handleLoginWithGoogle}>
+    <Button
+      variant="contained"
+      disabled={disabled}
+      onClick={handleLoginWithGoogle}
+    >
       Login With Google
     </Button>
   </>
