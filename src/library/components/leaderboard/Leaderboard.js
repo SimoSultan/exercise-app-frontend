@@ -16,7 +16,6 @@ export default function Leaderboard() {
         setIsLoading(true);
         const resp = await getLeaderboard(user.id);
         if (resp.status === 200) {
-          console.log(resp.data);
           setLeaderboard(() => Object.values(resp.data));
         }
       } catch (error) {
@@ -37,8 +36,7 @@ export default function Leaderboard() {
       </Typography>
       <Grid
         container
-        justifyContent={isLoading ? "center" : "space-between"}
-        alignItems={isLoading ? "center" : "flex-start"}
+        flexDirection="column"
         sx={{
           my: 2,
           p: 3,
@@ -69,9 +67,9 @@ export default function Leaderboard() {
 
 const LeaderboardItem = ({ firstName, lastName, percentage }) => {
   return (
-    <>
+    <Grid item container justifyContent="space-between" sx={{ py: 1 }}>
       <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
       <Typography variant="body1">{percentage.toFixed(4) * 100}%</Typography>
-    </>
+    </Grid>
   );
 };
