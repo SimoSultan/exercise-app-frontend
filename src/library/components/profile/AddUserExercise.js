@@ -48,7 +48,7 @@ export default function AddUserExercise() {
       setIsLoading(true);
       const resp = await createUserExercise(
         user.id,
-        user.routineID,
+        user.routineId,
         exerciseDetails,
         user.exercises.length + 1
       );
@@ -58,7 +58,7 @@ export default function AddUserExercise() {
           type: ACTIONS.ADD_USER_EXERCISE,
           payload: {
             id,
-            routineID: user.routineID,
+            routineId: user.routineId,
             name,
             amount,
             order,

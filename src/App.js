@@ -35,10 +35,10 @@ function App() {
   //       // console.log("error getting current user", error);
   //     }
 
-  //     if (!user.routineID) return;
+  //     if (!user.routineId) return;
 
   //     try {
-  //       const resp = await getUserExercises(user.routineID);
+  //       const resp = await getUserExercises(user.routineId);
   //       if (resp.status === 200) {
   //         dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
   //       }

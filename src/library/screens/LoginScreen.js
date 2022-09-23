@@ -61,7 +61,7 @@ export default function Login() {
         id: selectedUser.id,
         firstName: selectedUser.first_name,
         lastName: selectedUser.last_name,
-        routineID: selectedUser.routine_id,
+        routineId: selectedUser.routine_id,
         username: selectedUser.username,
       },
     });

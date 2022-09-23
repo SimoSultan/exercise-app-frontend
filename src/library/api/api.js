@@ -40,7 +40,7 @@ export async function getAllUsers() {
 
 export async function createUserExercise(
   sessionUserID,
-  routineID,
+  routineId,
   exerciseDetails,
   order
 ) {
@@ -48,7 +48,7 @@ export async function createUserExercise(
 
   return await api.post("/exercises/create", {
     sessionUserID,
-    routineID,
+    routineId,
     name,
     amount,
     unit,
@@ -56,8 +56,8 @@ export async function createUserExercise(
   });
 }
 
-export async function getUserExercises(sessionUserID, routineID) {
-  return await api.post("/exercises/list", { sessionUserID, routineID });
+export async function getUserExercises(sessionUserID, routineId) {
+  return await api.post("/exercises/list", { sessionUserID, routineId });
 }
 
 export async function deleteUserExercise(sessionUserID, id) {

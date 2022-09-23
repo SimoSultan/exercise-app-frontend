@@ -33,7 +33,7 @@ export default function ProfileView() {
     if (AUTH_ENABLED || user.exercises.length > 0) return;
     (async () => {
       try {
-        const resp = await getUserExercises(user.id, user.routineID);
+        const resp = await getUserExercises(user.id, user.routineId);
         if (resp.status === 200) {
           setUserExercises(() => resp.data.sort((a, b) => a.order - b.order));
           dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
@@ -42,7 +42,7 @@ export default function ProfileView() {
         // console.log("error getting current user exercises", error);
       }
     })();
-  }, [dispatch, user.id, user.routineID, user.exercises]);
+  }, [dispatch, user.id, user.routineId, user.exercises]);
 
   useEffect(() => {
     setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));
