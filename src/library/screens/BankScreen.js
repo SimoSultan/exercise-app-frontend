@@ -3,8 +3,8 @@ import { Container, Box } from "@mui/material";
 import { useExerciseContext } from "../store/context";
 import { getUserEntriesDaily } from "../api/api";
 import {
-  ScreenTitle,
   DailySummary,
+  ScreenTitle,
   BankInput,
   Loading,
 } from "../components/exports";
