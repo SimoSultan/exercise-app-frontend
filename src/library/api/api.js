@@ -38,10 +38,16 @@ export async function getAllUsers() {
 
 // EXERCISES
 
-export async function createUserExercise(routineID, exerciseDetails, order) {
+export async function createUserExercise(
+  sessionUserID,
+  routineID,
+  exerciseDetails,
+  order
+) {
   const { name, amount, unit } = exerciseDetails;
 
   return await api.post("/exercises/create", {
+    sessionUserID,
     routineID,
     name,
     amount,

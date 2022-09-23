@@ -60,7 +60,6 @@ export default function ProfileView() {
     setLoading(true);
     try {
       const resp = await updateUserExerciseBatch(user.id, userExercises);
-      console.log({ resp });
       if (resp.status === 200) {
         setTimeout(() => {
           dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
