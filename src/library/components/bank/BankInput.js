@@ -56,7 +56,7 @@ function Input({ userID, userExercises = [] }) {
         }, 1500);
       }
     } catch (error) {
-      console.log(error);
+      console.log("submitExerciseEntry", error);
       dispatch({
         type: ACTIONS.SHOW_ALERT,
         payload: {

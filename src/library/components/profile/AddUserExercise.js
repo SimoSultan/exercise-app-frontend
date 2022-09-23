@@ -68,7 +68,7 @@ export default function AddUserExercise() {
         setExerciseDetails(initialState);
       }
     } catch (error) {
-      // console.log("error creating user exercise", error);
+      console.log("error creating user exercise", error);
     } finally {
       setIsLoading(false);
     }
