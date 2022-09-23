@@ -11,6 +11,7 @@ export default function ProfileScreen() {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
+        paddingBottom: 10,
       }}
     >
       <ProfileView />

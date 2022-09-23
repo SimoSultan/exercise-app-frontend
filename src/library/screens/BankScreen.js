@@ -53,6 +53,7 @@ export default function Bank() {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
+        paddingBottom: 10,
       }}
     >
       <ScreenTitle>Bank Exercises</ScreenTitle>

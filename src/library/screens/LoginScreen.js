@@ -74,7 +74,7 @@ export default function Login() {
       maxWidth="sm"
       justifyContent="center"
       alignItems="center"
-      sx={{ height: "50vh", margin: "0 auto", px: 3 }}
+      sx={{ height: "50vh", margin: "0 auto", px: 3, paddingBottom: 10 }}
     >
       {loading ? (
         <Loading loading={loading} />
