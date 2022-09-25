@@ -69,7 +69,9 @@ const LeaderboardItem = ({ firstName, lastName, percentage }) => {
   return (
     <Grid item container justifyContent="space-between" sx={{ py: 1 }}>
       <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
-      <Typography variant="body1">{percentage.toFixed(4) * 100}%</Typography>
+      <Typography variant="body1">
+        {Number(percentage.toFixed(3)) * 100}%
+      </Typography>
     </Grid>
   );
 };
