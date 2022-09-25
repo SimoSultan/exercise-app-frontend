@@ -85,11 +85,7 @@ export async function getUserEntriesDaily(sessionUserID, exerciseIds) {
   return await api.post("/entries/list-batch-daily", {
     sessionUserID,
     exerciseIds,
-    day: new Date(
-      new Date().toLocaleString("en-US", {
-        timeZone: "Australia/Brisbane",
-      })
-    ),
+    day: new Date(),
   });
 }
 
@@ -106,10 +102,6 @@ export async function submitExerciseEntry(sessionUserID, exerciseId, amount) {
 export async function getLeaderboard(sessionUserID) {
   return await api.post("/leaderboard", {
     sessionUserID,
-    day: new Date(
-      new Date().toLocaleString("en-US", {
-        timeZone: "Australia/Brisbane",
-      })
-    ),
+    day: new Date(),
   });
 }
