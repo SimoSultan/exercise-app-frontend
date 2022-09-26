@@ -1,10 +1,58 @@
-import React, { useReducer, useContext } from "react";
+import {
+  // useState,
+  useEffect,
+  useReducer,
+  useContext,
+  createContext,
+} from "react";
 import { initialState, ACTIONS } from "./initialState";
+// import { getCurrentUser, getUserExercises } from "../api/api";
+import { getCurrentUser } from "../api/api";
 
-export const ExerciseContext = React.createContext();
+export const ExerciseContext = createContext();
 
 export default function ExerciseContextProvider({ children }) {
   const [state, dispatch] = useReducer(exerciseReducer, initialState);
+  const { isAuthenticated } = state;
+
+  // const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      // let user = {};
+      try {
+        // setIsLoading(true);
+        if (isAuthenticated) return;
+
+        const resp = await getCurrentUser();
+        console.log(resp);
+        // TODO: Probably need a better way of validating the response than just checking if the ID exists.
+        if (resp.status === 200 && resp.data.id) {
+          // user = { ...resp.data };
+          dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
+        }
+      } catch (error) {
+        console.log("error getting current user", error);
+      }
+
+      // if (!user.routineId) return;
+
+      // try {
+      //   const resp = await getUserExercises(user.routineId);
+      //   if (resp.status === 200) {
+      //     dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
+      //   }
+      // } catch (error) {
+      //   console.log("error getting current user exercises", error);
+      // }
+    })();
+
+    if (process.env.REACT_APP_API_ENDPOINT === undefined) {
+      dispatch({ type: ACTIONS.LOGOUT });
+      return;
+    }
+  }, [dispatch, isAuthenticated]);
+  // }, [dispatch]);
 
   function exerciseReducer(state, action) {
     const { type, payload } = action;

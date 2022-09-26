@@ -19,7 +19,7 @@ import {
 } from "../../api/api";
 import { SubmitButton } from "../exports";
 import { arraysEqual } from "../../utils/utils";
-import { AUTH_ENABLED } from "../../constants";
+import { GOOGLE_AUTH_ENABLED } from "../../constants";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
@@ -30,7 +30,7 @@ export default function ProfileView() {
   const [userExercises, setUserExercises] = useState(user.exercises ?? []);
 
   useEffect(() => {
-    if (AUTH_ENABLED || user.exercises.length > 0) return;
+    if (GOOGLE_AUTH_ENABLED || user.exercises.length > 0) return;
     (async () => {
       try {
         setLoading(true);

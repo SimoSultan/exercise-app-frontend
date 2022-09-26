@@ -12,7 +12,7 @@ import {
 import { useExerciseContext } from "../store/context";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../components/exports";
-import { AUTH_ENABLED } from "../constants";
+import { GOOGLE_AUTH_ENABLED } from "../constants";
 import { getAllUsers } from "../api/api";
 import { ACTIONS } from "../store/initialState";
 
@@ -36,7 +36,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (AUTH_ENABLED) return;
+    if (GOOGLE_AUTH_ENABLED) return;
     (async () => {
       try {
         const resp = await getAllUsers();
