@@ -1,12 +1,15 @@
-import { Container, Typography, useMediaQuery } from "@mui/material";
+import { Container, Typography, useMediaQuery, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
+import { Link } from "react-router-dom";
+import { useExerciseContext } from "../store/context";
 import { Footer, ScreenTitle } from "../components/exports";
 import { FOOTER_HEIGHT } from "../styles/styles";
 
 export default function HomeScreen() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
+  const { state } = useExerciseContext();
+  const { isAuthenticated } = state;
 
   return (
     <Container
@@ -27,7 +30,14 @@ export default function HomeScreen() {
           screens and will look funny on desktop computers for the time being.
         </Typography>
       ) : null}
-
+      {!isAuthenticated ? (
+        <>
+          <Typography>You are not logged in</Typography>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Button variant="contained">Login</Button>
+          </Link>
+        </>
+      ) : null}
       <Footer />
     </Container>
   );
