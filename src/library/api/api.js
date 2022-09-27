@@ -17,12 +17,17 @@ export async function getCurrentUser() {
   return await api.get("/users/current");
 }
 
-export async function updateUserDetails(user) {
+export async function updateUserDetails(sessionUserID, user) {
   return await api.post("/users/update", {
+    sessionUserID,
     id: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
   });
+}
+
+export async function getAllUsers() {
+  return await api.get("/users/list");
 }
 
 // export async function updateUser(userID, payload) {
@@ -33,10 +38,16 @@ export async function updateUserDetails(user) {
 
 // EXERCISES
 
-export async function createUserExercise(routineId, exerciseDetails, order) {
+export async function createUserExercise(
+  sessionUserID,
+  routineId,
+  exerciseDetails,
+  order
+) {
   const { name, amount, unit } = exerciseDetails;
 
   return await api.post("/exercises/create", {
+    sessionUserID,
     routineId,
     name,
     amount,
@@ -45,51 +56,52 @@ export async function createUserExercise(routineId, exerciseDetails, order) {
   });
 }
 
-export async function getUserExercises(routineId) {
-  return await api.post("/exercises/list", { routineId });
+export async function getUserExercises(sessionUserID, routineId) {
+  return await api.post("/exercises/list", { sessionUserID, routineId });
 }
 
-export async function deleteUserExercise(id) {
-  return await api.post("/exercises/delete", { id });
+export async function deleteUserExercise(sessionUserID, id) {
+  return await api.post("/exercises/delete", { sessionUserID, id });
 }
 
-export async function updateUserExerciseBatch(exercises) {
-  return await api.post("/exercises/batch-update", { exercises });
+export async function updateUserExerciseBatch(sessionUserID, exercises) {
+  return await api.post("/exercises/batch-update", {
+    sessionUserID,
+    exercises,
+  });
 }
 
 // ENTRIES
 
-export async function getUserEntry(exerciseId) {
-  return await api.post("/entries/list", { exerciseId });
+export async function getUserEntry(sessionUserID, exerciseId) {
+  return await api.post("/entries/list", { sessionUserID, exerciseId });
 }
 
-export async function getUserEntries(exerciseIds) {
-  return await api.post("/entries/list-batch", { exerciseIds });
+export async function getUserEntries(sessionUserID, exerciseIds) {
+  return await api.post("/entries/list-batch", { sessionUserID, exerciseIds });
 }
 
-export async function getUserEntriesDaily(exerciseIds) {
+export async function getUserEntriesDaily(sessionUserID, exerciseIds) {
   return await api.post("/entries/list-batch-daily", {
+    sessionUserID,
     exerciseIds,
-    day: new Date(
-      new Date().toLocaleString("en-US", {
-        timeZone: "Australia/Brisbane",
-      })
-    ),
+    day: new Date(),
   });
 }
 
-export async function submitExerciseEntry(exerciseId, amount) {
-  return await api.post("/entries/create", { exerciseId, amount });
+export async function submitExerciseEntry(sessionUserID, exerciseId, amount) {
+  return await api.post("/entries/create", {
+    sessionUserID,
+    exerciseId,
+    amount,
+  });
 }
 
 // LEADERBOARD
 
-export async function getLeaderboard() {
+export async function getLeaderboard(sessionUserID) {
   return await api.post("/leaderboard", {
-    day: new Date(
-      new Date().toLocaleString("en-US", {
-        timeZone: "Australia/Brisbane",
-      })
-    ),
+    sessionUserID,
+    day: new Date(),
   });
 }

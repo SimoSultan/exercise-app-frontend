@@ -47,6 +47,7 @@ export default function AddUserExercise() {
     try {
       setIsLoading(true);
       const resp = await createUserExercise(
+        user.id,
         user.routineId,
         exerciseDetails,
         user.exercises.length + 1
@@ -67,7 +68,7 @@ export default function AddUserExercise() {
         setExerciseDetails(initialState);
       }
     } catch (error) {
-      // console.log("error creating user exercise", error);
+      console.log("error creating user exercise", error);
     } finally {
       setIsLoading(false);
     }

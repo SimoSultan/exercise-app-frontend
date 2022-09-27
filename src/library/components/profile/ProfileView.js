@@ -12,9 +12,14 @@ import UserExercises from "./UserExercises";
 import AddUserExercise from "./AddUserExercise";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
-import { deleteUserExercise, updateUserExerciseBatch } from "../../api/api";
+import {
+  deleteUserExercise,
+  getUserExercises,
+  updateUserExerciseBatch,
+} from "../../api/api";
 import { SubmitButton } from "../exports";
 import { arraysEqual } from "../../utils/utils";
+import { AUTH_ENABLED } from "../../constants";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
@@ -23,6 +28,24 @@ export default function ProfileView() {
   const [loading, setLoading] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [userExercises, setUserExercises] = useState(user.exercises ?? []);
+
+  useEffect(() => {
+    if (AUTH_ENABLED || user.exercises.length > 0) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const resp = await getUserExercises(user.id, user.routineId);
+        if (resp.status === 200) {
+          setUserExercises(() => resp.data.sort((a, b) => a.order - b.order));
+          dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
+        }
+      } catch (error) {
+        console.log("error getting current user exercises", error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [dispatch, user.id, user.routineId, user.exercises]);
 
   useEffect(() => {
     setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));
@@ -39,8 +62,7 @@ export default function ProfileView() {
     event.preventDefault();
     setLoading(true);
     try {
-      const resp = await updateUserExerciseBatch(userExercises);
-      console.log({ resp });
+      const resp = await updateUserExerciseBatch(user.id, userExercises);
       if (resp.status === 200) {
         setTimeout(() => {
           dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
@@ -96,7 +118,7 @@ export default function ProfileView() {
       return;
 
     try {
-      const resp = await deleteUserExercise(exerciseID);
+      const resp = await deleteUserExercise(user.id, exerciseID);
       if (resp.status === 200) {
         dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }
@@ -171,6 +193,7 @@ export default function ProfileView() {
               userExercises={userExercises}
               handleExerciseChange={handleExerciseChange}
               handleRemoveExerciseFromUser={handleRemoveExerciseFromUser}
+              loading={loading}
             />
           </Grid>
           <Grid item xs={12}>

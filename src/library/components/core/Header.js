@@ -17,6 +17,7 @@ import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../api/api";
+import { DEV_MODE } from "../../constants";
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -65,6 +66,11 @@ export default function Header() {
               Sixty6
             </Typography>
           </Link>
+          {DEV_MODE ? (
+            <Typography color="yellow" fontWeight="bold" sx={{ mx: 2 }}>
+              DEVELOPMENT
+            </Typography>
+          ) : null}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

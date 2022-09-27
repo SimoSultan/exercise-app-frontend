@@ -11,6 +11,7 @@ export default function LeaderboardScreen() {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
+        paddingBottom: 10,
       }}
     >
       <Leaderboard />

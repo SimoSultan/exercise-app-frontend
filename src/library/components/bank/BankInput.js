@@ -14,13 +14,13 @@ import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
 import { submitExerciseEntry } from "../../api/api";
 
-function Input({ userExercises = [] }) {
+function Input({ userID, userExercises = [] }) {
   const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
   const [isLoading, setIsLoading] = useState(false);
-  const initialState = () =>
-    ((arr) => {
-      return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
-    })(sortedUserExercises);
+  // const initialState = () =>
+  //   ((arr) => {
+  //     return arr.reduce((prev, curr) => ({ ...prev, [curr.id]: 0 }), {});
+  //   })(sortedUserExercises);
 
   const [bank, setBank] = useState({});
   const { dispatch } = useExerciseContext();
@@ -41,18 +41,22 @@ function Input({ userExercises = [] }) {
 
     try {
       setIsLoading(true);
-      const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
+      const resp = await submitExerciseEntry(
+        userID,
+        exerciseId,
+        bank[exerciseId]
+      );
       if (resp.status === 200) {
         dispatch({
           type: ACTIONS.BANK_DAILY_ENTRY,
           payload: resp.data,
         });
         setTimeout(() => {
-          setBank(() => initialState());
+          setBank((prev) => ({ ...prev, [exerciseId]: 0 }));
         }, 1500);
       }
     } catch (error) {
-      console.log(error);
+      console.log("submitExerciseEntry", error);
       dispatch({
         type: ACTIONS.SHOW_ALERT,
         payload: {
@@ -64,9 +68,6 @@ function Input({ userExercises = [] }) {
       setIsLoading(false);
     }
   };
-
-  if (sortedUserExercises.length < 1)
-    return <Typography>User has no exercises</Typography>;
 
   return (
     <Box sx={{ width: "100%", mt: 6 }}>

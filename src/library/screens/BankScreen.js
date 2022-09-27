@@ -3,8 +3,8 @@ import { Container, Box } from "@mui/material";
 import { useExerciseContext } from "../store/context";
 import { getUserEntriesDaily } from "../api/api";
 import {
-  ScreenTitle,
   DailySummary,
+  ScreenTitle,
   BankInput,
   Loading,
 } from "../components/exports";
@@ -22,6 +22,7 @@ export default function Bank() {
       try {
         setLoading(true);
         const resp = await getUserEntriesDaily(
+          user.id,
           user.exercises.map((exercise) => exercise.id)
         );
         if (resp.status === 200) {
@@ -41,7 +42,7 @@ export default function Bank() {
         console.log("failed call for entries/list-batch-daily", error);
       }
     })();
-  }, [user.exercises, dispatch]);
+  }, [user.id, user.exercises, dispatch]);
 
   return (
     <Container
@@ -52,13 +53,14 @@ export default function Bank() {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
+        paddingBottom: 10,
       }}
     >
       <ScreenTitle>Bank Exercises</ScreenTitle>
       <Box sx={{ width: "90%", py: 4, bgcolor: "lightgrey" }}>
         {loading ? <Loading icon /> : <DailySummary />}
       </Box>
-      <BankInput userExercises={user.exercises} />
+      <BankInput userID={user.id} userExercises={user.exercises} />
     </Container>
   );
 }
