@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { getUserEntriesDaily, getUserExercises } from "../api/api";
+import { getUserEntriesDaily } from "../api/api";
 import {
   DailySummary,
   ScreenTitle,
