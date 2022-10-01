@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { getUserEntriesDaily } from "../api/api";
+import { getUserEntriesDaily, getUserExercises } from "../api/api";
 import {
   DailySummary,
   ScreenTitle,
@@ -16,15 +16,33 @@ export default function Bank() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user.exercises.length < 1) return;
+    // if (user.exercises.length < 1) {
+    //   (async () => {
+    //     try {
+    //       setLoading(true);
+    //       const resp = await getUserExercises(user.routineId);
+    //       if (resp.status === 200) {
+    //         const sortedExercises = resp.data.sort((a, b) => a.order - b.order);
+    //         dispatch({
+    //           type: ACTIONS.SET_USER_EXERCISES,
+    //           payload: sortedExercises,
+    //         });
+    //       }
+    //     } catch (error) {
+    //       console.log("error getting current user exercises", error);
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   })();
+    // }
 
     (async () => {
       try {
         setLoading(true);
         const resp = await getUserEntriesDaily(
-          user.id,
           user.exercises.map((exercise) => exercise.id)
         );
+        console.log(resp);
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_DAILY_ENTRIES,
@@ -42,7 +60,7 @@ export default function Bank() {
         console.log("failed call for entries/list-batch-daily", error);
       }
     })();
-  }, [user.id, user.exercises, dispatch]);
+  }, [user.id, user.exercises, dispatch, user.routineId]);
 
   return (
     <Container

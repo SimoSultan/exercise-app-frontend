@@ -41,11 +41,8 @@ function Input({ userID, userExercises = [] }) {
 
     try {
       setIsLoading(true);
-      const resp = await submitExerciseEntry(
-        userID,
-        exerciseId,
-        bank[exerciseId]
-      );
+      const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
+      console.log(resp);
       if (resp.status === 200) {
         dispatch({
           type: ACTIONS.BANK_DAILY_ENTRY,
@@ -92,6 +89,7 @@ function Input({ userID, userExercises = [] }) {
               id={id}
               value={bank[id] ?? 0}
               fullWidth
+              inputProps={{ inputMode: "numeric" }}
               onChange={(e) => handleChange(e)}
             />
           </Grid>

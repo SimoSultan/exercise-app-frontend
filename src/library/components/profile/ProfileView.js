@@ -19,7 +19,6 @@ import {
 } from "../../api/api";
 import { SubmitButton } from "../exports";
 import { arraysEqual } from "../../utils/utils";
-import { GOOGLE_AUTH_ENABLED } from "../../constants";
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
@@ -30,14 +29,19 @@ export default function ProfileView() {
   const [userExercises, setUserExercises] = useState(user.exercises ?? []);
 
   useEffect(() => {
-    if (GOOGLE_AUTH_ENABLED || user.exercises.length > 0) return;
+    if (user.exercises.length > 0) return;
+
     (async () => {
       try {
         setLoading(true);
-        const resp = await getUserExercises(user.id, user.routineId);
+        const resp = await getUserExercises(user.routineId);
         if (resp.status === 200) {
-          setUserExercises(() => resp.data.sort((a, b) => a.order - b.order));
-          dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
+          const sortedExercises = resp.data.sort((a, b) => a.order - b.order);
+          setUserExercises(() => sortedExercises);
+          dispatch({
+            type: ACTIONS.SET_USER_EXERCISES,
+            payload: sortedExercises,
+          });
         }
       } catch (error) {
         console.log("error getting current user exercises", error);
@@ -45,7 +49,7 @@ export default function ProfileView() {
         setLoading(false);
       }
     })();
-  }, [dispatch, user.id, user.routineId, user.exercises]);
+  }, [dispatch, user.routineId, user.exercises]);
 
   useEffect(() => {
     setUserExercises(() => user.exercises.sort((a, b) => a.order - b.order));

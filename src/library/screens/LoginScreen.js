@@ -10,7 +10,6 @@ import {
   Box,
 } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { useNavigate } from "react-router-dom";
 import { Loading } from "../components/exports";
 import { GOOGLE_AUTH_ENABLED } from "../constants";
 import { getAllUsers } from "../api/api";
@@ -24,14 +23,12 @@ export default function Login() {
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
 
-  const navigate = useNavigate();
-
+  console.log(process.env.REACT_APP_API_ENDPOINT);
   function handleLoginWithGoogle() {
     setLoading(true);
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
     }, 2500);
   }
 
