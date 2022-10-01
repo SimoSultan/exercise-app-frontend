@@ -10,9 +10,8 @@ import {
   Box,
 } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { useNavigate } from "react-router-dom";
 import { Loading } from "../components/exports";
-import { AUTH_ENABLED } from "../constants";
+import { GOOGLE_AUTH_ENABLED } from "../constants";
 import { getAllUsers } from "../api/api";
 import { ACTIONS } from "../store/initialState";
 
@@ -24,19 +23,16 @@ export default function Login() {
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
 
-  const navigate = useNavigate();
-
   function handleLoginWithGoogle() {
     setLoading(true);
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
     }, 2500);
   }
 
   useEffect(() => {
-    if (AUTH_ENABLED) return;
+    if (GOOGLE_AUTH_ENABLED) return;
     (async () => {
       try {
         const resp = await getAllUsers();
