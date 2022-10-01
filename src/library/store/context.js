@@ -21,7 +21,6 @@ export default function ExerciseContextProvider({ children }) {
         dispatch({ type: ACTIONS.ATTEMPTING_LOG_IN });
 
         const resp = await getCurrentUser();
-        console.log(resp);
         if (resp.status === 200 && resp.data) {
           dispatch({ type: ACTIONS.LOG_USER_IN, payload: resp.data });
         }
