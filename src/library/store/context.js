@@ -21,8 +21,7 @@ export default function ExerciseContextProvider({ children }) {
         dispatch({ type: ACTIONS.ATTEMPTING_LOG_IN });
 
         const resp = await getCurrentUser();
-        // TODO: Probably need a better way of validating the response than just checking if the ID exists.
-        if (resp.status === 200 && resp.data.id) {
+        if (resp.status === 200 && resp.data) {
           dispatch({ type: ACTIONS.LOG_USER_IN, payload: resp.data });
         }
       } catch (error) {

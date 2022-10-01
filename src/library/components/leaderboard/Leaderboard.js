@@ -7,15 +7,15 @@ import { ACTIONS } from "../../store/initialState";
 
 export default function Leaderboard() {
   const { state, dispatch } = useExerciseContext();
-  const { user, leaderboard } = state;
+  const { leaderboard } = state;
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (leaderboard.length > 0) return;
     (async () => {
-      if (leaderboard.length > 1) return;
       try {
         setLoading(true);
-        const resp = await getLeaderboard(user.id);
+        const resp = await getLeaderboard();
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_LEADERBOARD,
@@ -28,7 +28,7 @@ export default function Leaderboard() {
         setLoading(false);
       }
     })();
-  }, [user.id, leaderboard, dispatch]);
+  }, [leaderboard, dispatch]);
 
   if (!loading && leaderboard.length < 1) return;
   <Typography>No users to display</Typography>;

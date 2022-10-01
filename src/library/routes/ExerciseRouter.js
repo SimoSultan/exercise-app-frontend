@@ -50,6 +50,10 @@ export default function Router() {
         path="/login"
         element={isAuthenticated ? <HomeScreen /> : <LoginScreen />}
       />
+      <Route
+        path="/login/failure"
+        element={isAuthenticated ? <HomeScreen /> : <LoginScreen />}
+      />
       <Route path="*" element={<HomeScreen />} />
     </Routes>
   );
