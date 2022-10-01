@@ -12,6 +12,7 @@ export default function ExerciseContextProvider({ children }) {
 
   useEffect(() => {
     if (process.env.REACT_APP_API_ENDPOINT === undefined) {
+      console.log("herrrooooo");
       dispatch({ type: ACTIONS.LOGOUT });
       return;
     }
@@ -27,6 +28,7 @@ export default function ExerciseContextProvider({ children }) {
         }
       } catch (error) {
         console.log("error getting current user", error);
+        console.log("herrrooooo youuuuu");
         dispatch({ type: ACTIONS.LOGOUT });
       }
     })();
