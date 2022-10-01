@@ -3,7 +3,7 @@ import { initialState, ACTIONS } from "./initialState";
 export function exerciseReducer(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case ACTIONS.LOADING:
+    case ACTIONS.ATTEMPTING_LOG_IN:
       return {
         ...state,
         attemptingLogIn: true,
