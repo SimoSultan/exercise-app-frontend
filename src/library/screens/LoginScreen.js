@@ -23,7 +23,6 @@ export default function Login() {
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
 
-  console.log(process.env.REACT_APP_API_ENDPOINT);
   function handleLoginWithGoogle() {
     setLoading(true);
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");

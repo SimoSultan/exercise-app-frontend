@@ -42,7 +42,6 @@ function Input({ userID, userExercises = [] }) {
     try {
       setIsLoading(true);
       const resp = await submitExerciseEntry(exerciseId, bank[exerciseId]);
-      console.log(resp);
       if (resp.status === 200) {
         dispatch({
           type: ACTIONS.BANK_DAILY_ENTRY,

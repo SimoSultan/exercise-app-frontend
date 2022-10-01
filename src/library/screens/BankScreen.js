@@ -42,7 +42,6 @@ export default function Bank() {
         const resp = await getUserEntriesDaily(
           user.exercises.map((exercise) => exercise.id)
         );
-        console.log(resp);
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_DAILY_ENTRIES,
