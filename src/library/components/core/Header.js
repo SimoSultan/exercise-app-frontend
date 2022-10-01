@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { HEADER_HEIGHT } from "../../styles/styles";
+import { HEADER_HEIGHT, Z_INDEXES } from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { useExerciseContext } from "../../store/context";
 import { ACTIONS } from "../../store/initialState";
@@ -36,7 +36,7 @@ export default function Header() {
   const handleClickAuth = async () => {
     if (isAuthenticated) {
       await logoutUser();
-      dispatch({ type: ACTIONS.LOGOUT });
+      dispatch({ type: ACTIONS.LOG_USER_OUT });
     } else {
       navigate("/login");
     }
@@ -44,7 +44,10 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ height: HEADER_HEIGHT }}>
+    <AppBar
+      position="static"
+      sx={{ height: HEADER_HEIGHT, zIndex: Z_INDEXES.HEADER }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link

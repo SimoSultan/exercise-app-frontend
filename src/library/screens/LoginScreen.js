@@ -5,7 +5,7 @@ import { Loading } from "../components/exports";
 
 export default function Login() {
   const { state } = useExerciseContext();
-  const { isAuthenticated, isLoading } = state;
+  const { isAuthenticated, attemptingLogIn } = state;
   const [loading, setLoading] = useState(false);
 
   function handleLoginWithGoogle() {
@@ -24,7 +24,7 @@ export default function Login() {
       alignItems="center"
       sx={{ height: "50vh", margin: "0 auto", px: 3, paddingBottom: 10 }}
     >
-      {loading || isLoading ? (
+      {loading || attemptingLogIn ? (
         <Loading />
       ) : (
         <LoginWithGoogle

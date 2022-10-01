@@ -6,14 +6,14 @@ export function exerciseReducer(state, action) {
     case ACTIONS.LOADING:
       return {
         ...state,
-        isLoading: true,
+        attemptingLogIn: true,
       };
     case ACTIONS.FINISHED_LOADING:
       return {
         ...state,
-        isLoading: false,
+        attemptingLogIn: false,
       };
-    case ACTIONS.LOGIN:
+    case ACTIONS.LOG_USER_IN:
       return {
         ...state,
         isAuthenticated: true,
@@ -26,7 +26,7 @@ export function exerciseReducer(state, action) {
           message: "Successfully logged in.",
         },
       };
-    case ACTIONS.LOGOUT:
+    case ACTIONS.LOG_USER_OUT:
       return {
         ...state,
         isAuthenticated: false,

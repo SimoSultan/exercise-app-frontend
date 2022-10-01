@@ -15,9 +15,7 @@ export default function UserExercises({
   loading,
 }) {
   return loading ? (
-    <Grid item>
-      <Loading />
-    </Grid>
+    <Loading />
   ) : (
     userExercises.map(({ id, name, amount, unit }) => (
       <Grid

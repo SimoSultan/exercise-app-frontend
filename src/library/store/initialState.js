@@ -1,6 +1,6 @@
 export const initialState = {
   activeTab: "home",
-  isLoading: false,
+  attemptingLogIn: false,
   isAuthenticated: false,
   alert: {
     type: "",
@@ -19,10 +19,10 @@ export const initialState = {
 };
 
 export const ACTIONS = {
-  LOADING: "loading",
+  ATTEMPTING_LOG_IN: "attempting-log-in",
   FINISHED_LOADING: "finished-loading",
-  LOGIN: "login",
-  LOGOUT: "logout",
+  LOG_USER_IN: "login",
+  LOG_USER_OUT: "logout",
   SHOW_ALERT: "show-alert",
   HIDE_ALERT: "hide-alert",
   ADD_ALL_EXERCISES: "add-all-exercise",

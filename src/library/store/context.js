@@ -11,23 +11,23 @@ export default function ExerciseContextProvider({ children }) {
 
   useEffect(() => {
     if (process.env.REACT_APP_API_ENDPOINT === undefined) {
-      dispatch({ type: ACTIONS.LOGOUT });
+      dispatch({ type: ACTIONS.LOG_USER_OUT });
       return;
     }
 
     (async () => {
       try {
         if (isAuthenticated) return;
-        dispatch({ type: ACTIONS.LOADING });
+        dispatch({ type: ACTIONS.ATTEMPTING_LOG_IN });
 
         const resp = await getCurrentUser();
         // TODO: Probably need a better way of validating the response than just checking if the ID exists.
         if (resp.status === 200 && resp.data.id) {
-          dispatch({ type: ACTIONS.LOGIN, payload: resp.data });
+          dispatch({ type: ACTIONS.LOG_USER_IN, payload: resp.data });
         }
       } catch (error) {
         console.log("error getting current user", error);
-        dispatch({ type: ACTIONS.LOGOUT });
+        dispatch({ type: ACTIONS.LOG_USER_OUT });
       } finally {
         dispatch({ type: ACTIONS.FINISHED_LOADING });
       }

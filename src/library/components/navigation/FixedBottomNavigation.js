@@ -6,7 +6,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { Grid, Typography, IconButton } from "@mui/material";
-import { BOTTOM_NAVIGATION_HEIGHT } from "../../styles/styles";
+import { BOTTOM_NAVIGATION_HEIGHT, Z_INDEXES } from "../../styles/styles";
 import { useExerciseContext } from "../../store/context";
 
 export default function FixedBottomNavigation() {
@@ -20,7 +20,7 @@ export default function FixedBottomNavigation() {
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 1000,
+        zIndex: Z_INDEXES.BOTTOM_NAVIGATION,
       }}
     >
       <Paper

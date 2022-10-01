@@ -12,6 +12,7 @@ export default function Loading({ icon }) {
   return (
     <Grid
       container
+      item
       justifyContent="center"
       alignItems="center"
       sx={{ width: "100%", height: "50vh" }}

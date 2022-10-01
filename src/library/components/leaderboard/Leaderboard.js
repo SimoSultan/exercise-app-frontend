@@ -17,7 +17,6 @@ export default function Leaderboard() {
         setLoading(true);
         const resp = await getLeaderboard(user.id);
         if (resp.status === 200) {
-          console.log(resp.data);
           dispatch({
             type: ACTIONS.SET_LEADERBOARD,
             payload: Object.values(resp.data),
