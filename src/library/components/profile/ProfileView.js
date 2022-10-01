@@ -140,7 +140,12 @@ export default function ProfileView() {
         alignItems: "center",
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} alt={user.firstName}>
+      <Avatar
+        sx={{ m: 1, bgcolor: "secondary.main" }}
+        alt={`${user.firstName} ${user.lastName} avatar`}
+        src={user.picture}
+      >
+        {/* fallback below */}
         {user.firstName[0]}
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -201,14 +206,18 @@ export default function ProfileView() {
             />
           </Grid>
           <Grid item xs={12}>
-            <SubmitButton
-              variant="contained"
-              isLoading={loading}
-              isDisabled={!hasUnsavedChanges}
-              handleSubmit={handleSubmit}
-            >
-              Update Exercises
-            </SubmitButton>
+            {user.exercises.length > 0 ? (
+              <SubmitButton
+                variant="contained"
+                isLoading={loading}
+                isDisabled={!hasUnsavedChanges}
+                handleSubmit={handleSubmit}
+              >
+                Update Exercises
+              </SubmitButton>
+            ) : (
+              <Typography>Please add some exercises below.</Typography>
+            )}
           </Grid>
           <Grid item xs={12} sx={{ py: 2 }}>
             <Divider />

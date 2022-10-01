@@ -14,6 +14,7 @@ export const initialState = {
     routineId: "",
     exercises: [],
     dailyEntries: {},
+    picture: "",
   },
   leaderboard: [],
 };
