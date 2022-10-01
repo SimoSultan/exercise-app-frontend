@@ -3,6 +3,16 @@ import { initialState, ACTIONS } from "./initialState";
 export function exerciseReducer(state, action) {
   const { type, payload } = action;
   switch (type) {
+    case ACTIONS.LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ACTIONS.FINISHED_LOADING:
+      return {
+        ...state,
+        isLoading: false,
+      };
     case ACTIONS.LOGIN:
       return {
         ...state,
@@ -114,6 +124,11 @@ export function exerciseReducer(state, action) {
           type: "success",
           message: "Successfully banked entry.",
         },
+      };
+    case ACTIONS.SET_LEADERBOARD:
+      return {
+        ...state,
+        leaderboard: payload,
       };
     default:
       return state;

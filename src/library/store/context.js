@@ -8,11 +8,9 @@ export const ExerciseContext = createContext({});
 export default function ExerciseContextProvider({ children }) {
   const [state, dispatch] = useReducer(exerciseReducer, initialState);
   const { isAuthenticated, user } = state;
-  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (process.env.REACT_APP_API_ENDPOINT === undefined) {
-      console.log("herrrooooo");
       dispatch({ type: ACTIONS.LOGOUT });
       return;
     }
@@ -20,6 +18,7 @@ export default function ExerciseContextProvider({ children }) {
     (async () => {
       try {
         if (isAuthenticated) return;
+        dispatch({ type: ACTIONS.LOADING });
 
         const resp = await getCurrentUser();
         // TODO: Probably need a better way of validating the response than just checking if the ID exists.
@@ -28,8 +27,9 @@ export default function ExerciseContextProvider({ children }) {
         }
       } catch (error) {
         console.log("error getting current user", error);
-        console.log("herrrooooo youuuuu");
         dispatch({ type: ACTIONS.LOGOUT });
+      } finally {
+        dispatch({ type: ACTIONS.FINISHED_LOADING });
       }
     })();
   }, [dispatch, isAuthenticated, user.exercises, user.routineId]);

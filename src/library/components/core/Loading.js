@@ -4,7 +4,7 @@ const LoadingIcon = () => {
   return <CircularProgress color="success" />;
 };
 
-export default function Loading({ loading, icon }) {
+export default function Loading({ icon }) {
   if (icon) {
     return <LoadingIcon />;
   }
@@ -16,7 +16,7 @@ export default function Loading({ loading, icon }) {
       alignItems="center"
       sx={{ width: "100%", height: "50vh" }}
     >
-      {loading ? <CircularProgress color="success" size={60} /> : null}
+      <CircularProgress color="success" size={60} />
     </Grid>
   );
 }

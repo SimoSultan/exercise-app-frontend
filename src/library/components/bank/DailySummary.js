@@ -3,11 +3,11 @@ import { Typography, Grid } from "@mui/material";
 import { capitalize } from "../../utils/utils";
 import { useExerciseContext } from "../../store/context";
 
-function Summary() {
+function Summary({ loading }) {
   const { state } = useExerciseContext();
   const { user } = state;
 
-  if (user.exercises.length < 1)
+  if (!loading && user.exercises.length < 1)
     return (
       <Typography>
         If no exercises appear, please visit Profile page then return. Otherwise
