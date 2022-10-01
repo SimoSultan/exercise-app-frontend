@@ -3,7 +3,17 @@ import { initialState, ACTIONS } from "./initialState";
 export function exerciseReducer(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case ACTIONS.LOGIN:
+    case ACTIONS.ATTEMPTING_LOG_IN:
+      return {
+        ...state,
+        attemptingLogIn: true,
+      };
+    case ACTIONS.FINISHED_LOADING:
+      return {
+        ...state,
+        attemptingLogIn: false,
+      };
+    case ACTIONS.LOG_USER_IN:
       return {
         ...state,
         isAuthenticated: true,
@@ -16,7 +26,7 @@ export function exerciseReducer(state, action) {
           message: "Successfully logged in.",
         },
       };
-    case ACTIONS.LOGOUT:
+    case ACTIONS.LOG_USER_OUT:
       return {
         ...state,
         isAuthenticated: false,
@@ -114,6 +124,11 @@ export function exerciseReducer(state, action) {
           type: "success",
           message: "Successfully banked entry.",
         },
+      };
+    case ACTIONS.SET_LEADERBOARD:
+      return {
+        ...state,
+        leaderboard: payload,
       };
     default:
       return state;

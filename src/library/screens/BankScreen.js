@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { useExerciseContext } from "../store/context";
-import { getUserEntriesDaily } from "../api/api";
+import { getUserEntriesDaily, getUserExercises } from "../api/api";
 import {
   DailySummary,
   ScreenTitle,
@@ -14,40 +14,46 @@ export default function Bank() {
   const { state, dispatch } = useExerciseContext();
   const { user } = state;
   const [loading, setLoading] = useState(false);
+  const [userExercises, setUserExercises] = useState(
+    user.exercises.length < 1 ? [] : user.exercises
+  );
 
   useEffect(() => {
-    // if (user.exercises.length < 1) {
-    //   (async () => {
-    //     try {
-    //       setLoading(true);
-    //       const resp = await getUserExercises(user.routineId);
-    //       if (resp.status === 200) {
-    //         const sortedExercises = resp.data.sort((a, b) => a.order - b.order);
-    //         dispatch({
-    //           type: ACTIONS.SET_USER_EXERCISES,
-    //           payload: sortedExercises,
-    //         });
-    //       }
-    //     } catch (error) {
-    //       console.log("error getting current user exercises", error);
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   })();
-    // }
+    if (userExercises.length < 1) {
+      (async () => {
+        try {
+          setLoading(true);
+          const resp = await getUserExercises(user.routineId);
+          if (resp.status === 200) {
+            const sortedExercises = resp.data.sort((a, b) => a.order - b.order);
+            setUserExercises(sortedExercises);
+            dispatch({
+              type: ACTIONS.SET_USER_EXERCISES,
+              payload: sortedExercises,
+            });
+          }
+        } catch (error) {
+          console.log("error getting current user exercises", error);
+        }
+      })();
+    }
 
     (async () => {
+      if (
+        userExercises.length < 1 ||
+        Object.values(user.dailyEntries).length > 0
+      )
+        return;
       try {
         setLoading(true);
         const resp = await getUserEntriesDaily(
-          user.exercises.map((exercise) => exercise.id)
+          userExercises.map((exercise) => exercise.id)
         );
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_DAILY_ENTRIES,
             payload: resp.data,
           });
-          setLoading(false);
         }
       } catch (error) {
         if (
@@ -57,9 +63,11 @@ export default function Bank() {
           console.log(error.response.data, error);
         }
         console.log("failed call for entries/list-batch-daily", error);
+      } finally {
+        setLoading(false);
       }
     })();
-  }, [user.id, user.exercises, dispatch, user.routineId]);
+  }, [user.id, userExercises, dispatch, user.routineId, user.dailyEntries]);
 
   return (
     <Container
@@ -75,7 +83,7 @@ export default function Bank() {
     >
       <ScreenTitle>Bank Exercises</ScreenTitle>
       <Box sx={{ width: "90%", py: 4, bgcolor: "lightgrey" }}>
-        {loading ? <Loading icon /> : <DailySummary />}
+        {loading ? <Loading icon /> : <DailySummary loading={loading} />}
       </Box>
       <BankInput userID={user.id} userExercises={user.exercises} />
     </Container>

@@ -1,5 +1,6 @@
 export const initialState = {
   activeTab: "home",
+  attemptingLogIn: false,
   isAuthenticated: false,
   alert: {
     type: "",
@@ -14,12 +15,14 @@ export const initialState = {
     exercises: [],
     dailyEntries: {},
   },
+  leaderboard: [],
 };
 
 export const ACTIONS = {
-  LOADING: "loading",
-  LOGIN: "login",
-  LOGOUT: "logout",
+  ATTEMPTING_LOG_IN: "attempting-log-in",
+  FINISHED_LOADING: "finished-loading",
+  LOG_USER_IN: "login",
+  LOG_USER_OUT: "logout",
   SHOW_ALERT: "show-alert",
   HIDE_ALERT: "hide-alert",
   ADD_ALL_EXERCISES: "add-all-exercise",
@@ -33,4 +36,5 @@ export const ACTIONS = {
   SET_ACTIVE_TAB: "set-active-tab",
   BANK_DAILY_ENTRY: "bank-daily-entry",
   SET_DAILY_ENTRIES: "set-daily-entries",
+  SET_LEADERBOARD: "set-leaderboard",
 };

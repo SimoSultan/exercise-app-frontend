@@ -13,6 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { ACTIONS } from "../../store/initialState";
 import { useExerciseContext } from "../../store/context";
 import { submitExerciseEntry } from "../../api/api";
+import { Z_INDEXES } from "../../styles/styles";
 
 function Input({ userID, userExercises = [] }) {
   const sortedUserExercises = userExercises.sort((a, b) => a.order - b.order);
@@ -97,6 +98,7 @@ function Input({ userID, userExercises = [] }) {
               color="primary"
               aria-label="bank exercise"
               onClick={() => handleSubmit(id)}
+              sx={{ zIndex: Z_INDEXES.BANK_INPUT }}
             >
               {isLoading ? (
                 <CircularProgress
