@@ -3,6 +3,7 @@ import Header from "./core/Header";
 import Footer from "./core/Footer";
 import Loading from "./core/Loading";
 import SubmitButton from "./core/SubmitButton";
+import SectionTitle from "./core/SectionTitle";
 import ScreenTitle from "./core/ScreenTitle";
 import BasicAlert from "./core/BasicAlert";
 import ProfileView from "./profile/ProfileView";
@@ -17,6 +18,7 @@ export {
   Footer,
   Loading,
   SubmitButton,
+  SectionTitle,
   ScreenTitle,
   BasicAlert,
   FixedBottomNavigation,

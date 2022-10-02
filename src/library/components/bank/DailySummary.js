@@ -1,17 +1,19 @@
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { Typography, Grid } from "@mui/material";
-import { capitalize } from "../../utils/utils";
-import { useExerciseContext } from "../../store/context";
+import { capitalize, reduceDailyEntriesForDisplay } from "../../utils/utils";
 
-function Summary({ loading }) {
-  const { state } = useExerciseContext();
-  const { user } = state;
+function Summary({ loading, userExercises, userEntries }) {
+  const [dailyEntries, setDailyEntries] = useState({});
 
-  if (!loading && user.exercises.length < 1) {
+  useEffect(() => {
+    setDailyEntries(() => reduceDailyEntriesForDisplay(userEntries));
+  }, [userEntries]);
+
+  if (!loading && userExercises.length < 1) {
     return <Typography>No exercises available to show.</Typography>;
   }
 
-  return user.exercises.map(({ id, amount, name }) => (
+  return userExercises.map(({ id, amount, name }) => (
     <Grid
       key={`summary-exercise-${id}`}
       container
@@ -20,7 +22,7 @@ function Summary({ loading }) {
       sx={{ px: 3, pb: 1 }}
     >
       <Typography>{capitalize(name)}</Typography>
-      <Typography>{`${user.dailyEntries?.[id] ?? 0} / ${amount}`}</Typography>
+      <Typography>{`${dailyEntries?.[id] ?? 0} / ${amount}`}</Typography>
     </Grid>
   ));
 }

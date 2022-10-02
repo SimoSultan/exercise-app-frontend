@@ -21,10 +21,6 @@ export function exerciseReducer(state, action) {
           ...state.user,
           ...payload,
         },
-        alert: {
-          type: "success",
-          message: "Successfully logged in.",
-        },
       };
     case ACTIONS.LOG_USER_OUT:
       return {
@@ -63,6 +59,14 @@ export function exerciseReducer(state, action) {
     //     },
     //   };
     case ACTIONS.SET_USER_EXERCISES:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          exercises: payload,
+        },
+      };
+    case ACTIONS.UPDATE_USER_EXERCISES:
       return {
         ...state,
         user: {
@@ -109,6 +113,7 @@ export function exerciseReducer(state, action) {
         },
       };
     case ACTIONS.BANK_DAILY_ENTRY:
+      console.log(payload);
       return {
         ...state,
         user: {
@@ -116,8 +121,10 @@ export function exerciseReducer(state, action) {
           // TODO: This is just to re-render the app for now.
           dailyEntries: {
             ...state.user.dailyEntries,
-            [payload.exercise_id]:
-              state.user.dailyEntries[payload.exercise_id] + payload.amount,
+            [payload.exercise_id]: [
+              ...state.user.dailyEntries[payload.exercise_id],
+              payload,
+            ],
           },
         },
         alert: {
