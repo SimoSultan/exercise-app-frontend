@@ -10,6 +10,7 @@ import AddUserExercise from "./profile/AddUserExercise";
 import Leaderboard from "./leaderboard/Leaderboard";
 import { BankInput } from "./bank/BankInput";
 import { DailySummary } from "./bank/DailySummary";
+import EntriesList from "./bank/EntriesList";
 
 export {
   Header,
@@ -24,4 +25,5 @@ export {
   Leaderboard,
   BankInput,
   DailySummary,
+  EntriesList,
 };

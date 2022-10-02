@@ -44,6 +44,7 @@ export default function ProfileView() {
           });
         }
       } catch (error) {
+        if (error.response.data === "no exercises found") return;
         console.log("error getting current user exercises", error);
       } finally {
         setLoading(false);
@@ -144,8 +145,8 @@ export default function ProfileView() {
         sx={{ m: 1, bgcolor: "secondary.main" }}
         alt={`${user.firstName} ${user.lastName} avatar`}
         src={user.picture}
+        imgProps={{ referrerpolicy: "no-referrer" }}
       >
-        {/* fallback below */}
         {user.firstName[0]}
       </Avatar>
       <Typography component="h1" variant="h5">
