@@ -89,7 +89,7 @@ const LeaderboardItem = ({ entry }) => {
       </Grid>
       <Grid item xs={3}>
         <Typography variant="body1">
-          {Number(percentage.toFixed(3)) * 100}%
+          {(Number(percentage) * 100).toFixed(1)}%
         </Typography>
       </Grid>
     </Grid>
