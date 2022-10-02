@@ -20,13 +20,13 @@ export default function ExerciseContextProvider({ children }) {
         }
       } catch (error) {
         if (error.response.data === "Unauthorized") {
-          dispatch({
-            type: ACTIONS.SHOW_ALERT,
-            payload: {
-              type: "error",
-              message: "Something happened and you have been logged out.",
-            },
-          });
+          // dispatch({
+          //   type: ACTIONS.SHOW_ALERT,
+          //   payload: {
+          //     type: "error",
+          //     message: "Something happened and you have been logged out.",
+          //   },
+          // });
           return;
         }
         console.log("error getting current user", error);

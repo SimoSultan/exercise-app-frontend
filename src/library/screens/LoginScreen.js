@@ -17,6 +17,13 @@ export default function Login() {
     window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
     setTimeout(() => {
       setLoading(false);
+      dispatch({
+        type: ACTIONS.SHOW_ALERT,
+        payload: {
+          type: "success",
+          message: "Successfully logged in.",
+        },
+      });
     }, 2500);
     setFailedLogin(false);
   }

@@ -52,6 +52,7 @@ export default function Bank() {
         userExercises.length < 1
       )
         return;
+
       try {
         setLoadingEntries(true);
         const resp = await getUserEntriesDaily(
@@ -100,11 +101,18 @@ export default function Bank() {
         {loadingExercises || loadingEntries ? (
           <Loading icon />
         ) : (
-          <DailySummary loading={loadingExercises || loadingEntries} />
+          <DailySummary
+            loading={loadingExercises || loadingEntries}
+            userEntries={user.dailyEntries}
+            userExercises={user.exercises}
+          />
         )}
       </Box>
       <BankInput userID={user.id} userExercises={user.exercises} />
-      <EntriesList entries={user.entries} />
+      <EntriesList
+        userEntries={user.dailyEntries}
+        userExercises={user.exercises}
+      />
     </Container>
   );
 }

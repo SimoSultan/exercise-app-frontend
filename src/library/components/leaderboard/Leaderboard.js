@@ -79,7 +79,7 @@ const LeaderboardItem = ({ entry }) => {
           sx={{ bgcolor: "secondary.main", width: 32, height: 32, mr: 2 }}
           alt={`${firstName} ${lastName} avatar`}
           src={picture}
-          imgProps={{ referrerpolicy: "no-referrer" }}
+          imgProps={{ referrerPolicy: "no-referrer" }}
         >
           {/* fallback below */}
           {firstName[0]}

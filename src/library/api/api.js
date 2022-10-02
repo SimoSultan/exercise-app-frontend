@@ -65,12 +65,8 @@ export async function updateUserExerciseBatch(exercises) {
 
 // ENTRIES
 
-export async function getUserEntry(exerciseId) {
+export async function getAllEntriesOfExercise(exerciseId) {
   return await api.post("/entries/list", { exerciseId });
-}
-
-export async function getUserEntries(exerciseIds) {
-  return await api.post("/entries/list-batch", { exerciseIds });
 }
 
 export async function getUserEntriesDaily(exerciseIds) {

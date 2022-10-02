@@ -145,7 +145,7 @@ export default function ProfileView() {
         sx={{ m: 1, bgcolor: "secondary.main" }}
         alt={`${user.firstName} ${user.lastName} avatar`}
         src={user.picture}
-        imgProps={{ referrerpolicy: "no-referrer" }}
+        imgProps={{ referrerPolicy: "no-referrer" }}
       >
         {user.firstName[0]}
       </Avatar>
