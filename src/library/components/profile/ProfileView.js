@@ -67,7 +67,7 @@ export default function ProfileView() {
     event.preventDefault();
     setLoading(true);
     try {
-      const resp = await updateUserExerciseBatch(user.id, userExercises);
+      const resp = await updateUserExerciseBatch(userExercises);
       if (resp.status === 200) {
         setTimeout(() => {
           dispatch({ type: ACTIONS.SET_USER_EXERCISES, payload: resp.data });
@@ -123,7 +123,7 @@ export default function ProfileView() {
       return;
 
     try {
-      const resp = await deleteUserExercise(user.id, exerciseID);
+      const resp = await deleteUserExercise(exerciseID);
       if (resp.status === 200) {
         dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }

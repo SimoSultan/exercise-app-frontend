@@ -113,7 +113,6 @@ export function exerciseReducer(state, action) {
         },
       };
     case ACTIONS.BANK_DAILY_ENTRY:
-      console.log(payload);
       return {
         ...state,
         user: {

@@ -47,7 +47,6 @@ export default function AddUserExercise() {
     try {
       setIsLoading(true);
       const resp = await createUserExercise(
-        user.id,
         user.routineId,
         exerciseDetails,
         user.exercises.length + 1
