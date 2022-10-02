@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { Leaderboard, ScreenTitle } from "../components/exports";
+import { DailyLeaderboard, ScreenTitle } from "../components/exports";
 
 export default function LeaderboardScreen() {
   return (
@@ -15,7 +15,7 @@ export default function LeaderboardScreen() {
       }}
     >
       <ScreenTitle>Leaderboard</ScreenTitle>
-      <Leaderboard />
+      <DailyLeaderboard />
     </Container>
   );
 }

@@ -8,7 +8,8 @@ import ScreenTitle from "./core/ScreenTitle";
 import BasicAlert from "./core/BasicAlert";
 import ProfileView from "./profile/ProfileView";
 import AddUserExercise from "./profile/AddUserExercise";
-import Leaderboard from "./leaderboard/Leaderboard";
+import DailyLeaderboard from "./leaderboard/DailyLeaderboard";
+import UserLeaderboardStreak from "./leaderboard/UserLeaderboardStreak";
 import { BankInput } from "./bank/BankInput";
 import { DailySummary } from "./bank/DailySummary";
 import EntriesList from "./bank/EntriesList";
@@ -24,7 +25,8 @@ export {
   FixedBottomNavigation,
   ProfileView,
   AddUserExercise,
-  Leaderboard,
+  DailyLeaderboard,
+  UserLeaderboardStreak,
   BankInput,
   DailySummary,
   EntriesList,
