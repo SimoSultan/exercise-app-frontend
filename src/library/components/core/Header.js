@@ -22,7 +22,7 @@ import { DEV_MODE } from "../../constants";
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { state, dispatch } = useExerciseContext();
-  const { isAuthenticated } = state;
+  const { isAuthenticated, user } = state;
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
@@ -77,7 +77,12 @@ export default function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Your Profile">
+                <Avatar
+                  sx={{ m: 1, bgcolor: "secondary.main" }}
+                  alt={`${user.firstName} ${user.lastName} profile`}
+                  src={user.picture}
+                  imgProps={{ referrerPolicy: "no-referrer" }}
+                >
                   <PersonIcon />
                 </Avatar>
               </IconButton>

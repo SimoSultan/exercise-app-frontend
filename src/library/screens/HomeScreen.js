@@ -2,7 +2,11 @@ import { Container, Typography, useMediaQuery, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useExerciseContext } from "../store/context";
-import { Footer, ScreenTitle } from "../components/exports";
+import {
+  Footer,
+  UserLeaderboardStreak,
+  ScreenTitle,
+} from "../components/exports";
 import { FOOTER_HEIGHT } from "../styles/styles";
 
 export default function HomeScreen() {
@@ -37,7 +41,9 @@ export default function HomeScreen() {
             <Button variant="contained">Login</Button>
           </Link>
         </>
-      ) : null}
+      ) : (
+        <UserLeaderboardStreak />
+      )}
       <Footer />
     </Container>
   );

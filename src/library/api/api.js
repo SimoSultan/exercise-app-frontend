@@ -85,8 +85,17 @@ export async function submitExerciseEntry(exerciseId, amount) {
 
 // LEADERBOARD
 
-export async function getLeaderboard() {
+export async function getDailyLeaderboard() {
   return await api.post("/leaderboard", {
-    day: new Date(),
+    from: new Date(),
+    to: new Date(),
+  });
+}
+
+export async function getUserLeaderboard(userId, days = 1) {
+  return await api.post("/leaderboard/user", {
+    from: new Date(Date.now() - 1000 * 60 * 60 * 24 * days),
+    to: new Date(),
+    userId,
   });
 }

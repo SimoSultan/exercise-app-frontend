@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Grid, Typography, Avatar } from "@mui/material";
-import { getLeaderboard } from "../../api/api";
+import { getDailyLeaderboard } from "../../api/api";
 import { useExerciseContext } from "../../store/context";
 import { Loading } from "../exports";
 import { ACTIONS } from "../../store/initialState";
 
-export default function Leaderboard() {
+export default function DailyLeaderboard() {
   const { state, dispatch } = useExerciseContext();
   const { leaderboard } = state;
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,8 @@ export default function Leaderboard() {
     (async () => {
       try {
         setLoading(true);
-        const resp = await getLeaderboard();
+        const resp = await getDailyLeaderboard();
+        console.log(resp.data);
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_LEADERBOARD,
@@ -85,7 +86,7 @@ const LeaderboardItem = ({ entry }) => {
           {firstName[0]}
         </Avatar>
 
-        <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
+        <Typography variant="body1">{firstName}</Typography>
       </Grid>
       <Grid item xs={3}>
         <Typography variant="body1">
