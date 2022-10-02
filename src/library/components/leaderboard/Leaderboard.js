@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Avatar } from "@mui/material";
 import { getLeaderboard } from "../../api/api";
 import { useExerciseContext } from "../../store/context";
 import { Loading } from "../exports";
@@ -50,25 +50,48 @@ export default function Leaderboard() {
         <Loading />
       ) : (
         leaderboard.map((entry) => (
-          <LeaderboardItem
-            key={entry.userId}
-            firstName={entry.firstName}
-            lastName={entry.lastName}
-            percentage={entry.percentage}
-          />
+          <LeaderboardItem key={entry.userId} entry={entry} />
         ))
       )}
     </Grid>
   );
 }
 
-const LeaderboardItem = ({ firstName, lastName, percentage }) => {
+const LeaderboardItem = ({ entry }) => {
+  const { firstName, lastName, percentage, picture } = entry;
   return (
-    <Grid item container justifyContent="space-between" sx={{ py: 1 }}>
-      <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
-      <Typography variant="body1">
-        {Number(percentage.toFixed(3)) * 100}%
-      </Typography>
+    <Grid
+      item
+      container
+      justifyContent="space-evenly"
+      alignItems="center"
+      sx={{ py: 1 }}
+      xs={12}
+    >
+      <Grid
+        item
+        container
+        alignItems="center"
+        justifyContent="flex-start"
+        xs={9}
+      >
+        <Avatar
+          sx={{ bgcolor: "secondary.main", width: 32, height: 32, mr: 2 }}
+          alt={`${firstName} ${lastName} avatar`}
+          src={picture}
+          imgProps={{ referrerpolicy: "no-referrer" }}
+        >
+          {/* fallback below */}
+          {firstName[0]}
+        </Avatar>
+
+        <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <Typography variant="body1">
+          {Number(percentage.toFixed(3)) * 100}%
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

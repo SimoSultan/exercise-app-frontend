@@ -7,31 +7,35 @@ export const ExerciseContext = createContext({});
 
 export default function ExerciseContextProvider({ children }) {
   const [state, dispatch] = useReducer(exerciseReducer, initialState);
-  const { isAuthenticated, user } = state;
+  const { isAuthenticated } = state;
 
   useEffect(() => {
-    if (process.env.REACT_APP_API_ENDPOINT === undefined) {
-      dispatch({ type: ACTIONS.LOG_USER_OUT });
-      return;
-    }
-
     (async () => {
       try {
         if (isAuthenticated) return;
         dispatch({ type: ACTIONS.ATTEMPTING_LOG_IN });
-
         const resp = await getCurrentUser();
         if (resp.status === 200 && resp.data) {
           dispatch({ type: ACTIONS.LOG_USER_IN, payload: resp.data });
         }
       } catch (error) {
+        if (error.response.data === "Unauthorized") {
+          dispatch({
+            type: ACTIONS.SHOW_ALERT,
+            payload: {
+              type: "error",
+              message: "Something happened and you have been logged out.",
+            },
+          });
+          return;
+        }
         console.log("error getting current user", error);
         dispatch({ type: ACTIONS.LOG_USER_OUT });
       } finally {
         dispatch({ type: ACTIONS.FINISHED_LOADING });
       }
     })();
-  }, [dispatch, isAuthenticated, user.exercises, user.routineId]);
+  }, [dispatch, isAuthenticated]);
 
   return (
     <ExerciseContext.Provider value={{ state, dispatch }}>
