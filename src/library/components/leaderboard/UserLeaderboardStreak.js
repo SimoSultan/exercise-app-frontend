@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Typography, Button, Grid } from "@mui/material";
 import { getUserLeaderboard } from "../../api/api";
 import { LEADERBOARD_STREAK_ENABLED } from "../../constants";
 import { useExerciseContext } from "../../store/context";
@@ -30,6 +30,14 @@ export default function UserLeaderboardStreak() {
     <>
       <SectionTitle>LeaderboardStreak</SectionTitle>
       <Typography>Requesting for {daysRequested} days</Typography>
+      <Grid container justifyContent="space-around">
+        <Button variant="contained" onClick={() => setDaysRequested(7)}>
+          Show 7 Days
+        </Button>
+        <Button variant="contained" onClick={() => setDaysRequested(30)}>
+          Show 30 Days
+        </Button>
+      </Grid>
     </>
   );
 }

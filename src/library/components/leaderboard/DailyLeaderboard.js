@@ -4,6 +4,7 @@ import { getDailyLeaderboard } from "../../api/api";
 import { useExerciseContext } from "../../store/context";
 import { Loading } from "../exports";
 import { ACTIONS } from "../../store/initialState";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function DailyLeaderboard() {
   const { state, dispatch } = useExerciseContext();
@@ -16,7 +17,6 @@ export default function DailyLeaderboard() {
       try {
         setLoading(true);
         const resp = await getDailyLeaderboard();
-        console.log(resp.data);
         if (resp.status === 200) {
           dispatch({
             type: ACTIONS.SET_LEADERBOARD,
@@ -60,6 +60,10 @@ export default function DailyLeaderboard() {
 
 const LeaderboardItem = ({ entry }) => {
   const { firstName, lastName, percentage, picture } = entry;
+  const percentageToShow =
+    Number(percentage) * 100 === 100
+      ? 100
+      : (Number(percentage) * 100).toFixed(1);
   return (
     <Grid
       item
@@ -87,11 +91,12 @@ const LeaderboardItem = ({ entry }) => {
         </Avatar>
 
         <Typography variant="body1">{firstName}</Typography>
+        {percentageToShow === 100 ? (
+          <CheckCircleIcon sx={{ color: "green", ml: 1 }} />
+        ) : null}
       </Grid>
       <Grid item xs={3}>
-        <Typography variant="body1">
-          {(Number(percentage) * 100).toFixed(1)}%
-        </Typography>
+        <Typography variant="body1">{percentageToShow}%</Typography>
       </Grid>
     </Grid>
   );
