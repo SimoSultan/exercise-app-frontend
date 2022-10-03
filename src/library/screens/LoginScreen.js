@@ -31,13 +31,7 @@ export default function Login() {
   useEffect(() => {
     if (location.pathname === "/login/failure") {
       setFailedLogin(true);
-      dispatch({
-        type: ACTIONS.SHOW_ALERT,
-        payload: {
-          type: "error",
-          message: "Something went wrong when attempting Google login.",
-        },
-      });
+      dispatch({ type: ACTIONS.LOG_USER_OUT });
     }
   }, [location.pathname, dispatch]);
 
@@ -90,5 +84,7 @@ const LoginWithGoogle = ({
   );
 
 const FailedGoogleLogin = () => (
-  <Typography sx={{ py: 3 }}>You are </Typography>
+  <Typography sx={{ py: 3 }}>
+    You have been logged out. Something went wrong.
+  </Typography>
 );
