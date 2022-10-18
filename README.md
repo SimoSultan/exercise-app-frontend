@@ -12,3 +12,5 @@
 3. Create a PR and post it in Discord. We aren't enforcing approvals, but just get it sanity checked if it's a big / risky change.
 4. Squash and merge.
 
+# Server Code
+- https://github.com/reezy24/exercise-app-backend
