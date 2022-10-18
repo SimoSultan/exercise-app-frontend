@@ -13,4 +13,9 @@
 4. Squash and merge.
 
 # Server Code
+
 - https://github.com/reezy24/exercise-app-backend
+
+# Deployed Site (in development) 
+
+- https://sixty6.netlify.app/ 
