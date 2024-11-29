@@ -1,8 +1,8 @@
 # App Setup
 1. `git clone git@github.com:SimoSultan/exercise-app-frontend.git`
 2. `cd exercise-app-frontend`
-3. `npm i`
-4. `npm start`
+3. `yarn`
+4. `yarn start`
 5. Check the app is running at localhost:3000.
 
 # Contributing
