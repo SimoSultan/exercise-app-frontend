@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   TextField,
   Grid,
@@ -6,19 +6,19 @@ import {
   Typography,
   Avatar,
   Divider,
-} from "@mui/material";
+} from '@mui/material';
 
-import UserExercises from "./UserExercises";
-import AddUserExercise from "./AddUserExercise";
-import { useExerciseContext } from "../../store/context";
-import { ACTIONS } from "../../store/initialState";
+import UserExercises from './UserExercises';
+import AddUserExercise from './AddUserExercise';
+import { useExerciseContext } from '../../store/context';
+import { ACTIONS } from '../../store/initialState';
 import {
   deleteUserExercise,
   getUserExercises,
   updateUserExerciseBatch,
-} from "../../api/api";
-import { SubmitButton } from "../exports";
-import { arraysEqual } from "../../utils/utils";
+} from '../../api/api';
+import { SubmitButton } from '../exports';
+import { arraysEqual } from '../../utils/utils';
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();
@@ -44,8 +44,8 @@ export default function ProfileView() {
           });
         }
       } catch (error) {
-        if (error.response.data === "no exercises found") return;
-        console.log("error getting current user exercises", error);
+        if (error.response.data === 'no exercises found') return;
+        console.log('error getting current user exercises', error);
       } finally {
         setLoading(false);
       }
@@ -80,8 +80,8 @@ export default function ProfileView() {
       dispatch({
         type: ACTIONS.SHOW_ALERT,
         payload: {
-          type: "error",
-          message: "Something went wrong. Exercises were not updated.",
+          type: 'error',
+          message: 'Something went wrong. Exercises were not updated.',
         },
       });
       setLoading(false);
@@ -98,28 +98,28 @@ export default function ProfileView() {
     event.preventDefault();
     setHasUnsavedChanges(true);
 
-    const [field, id] = event.target.id.split(":");
+    const [field, id] = event.target.id.split(':');
     const exercise = userExercises.find((exercise) => exercise.id === id);
 
     const filteredUserExercises = userExercises.filter(
-      (exercise) => exercise.id !== id
+      (exercise) => exercise.id !== id,
     );
 
     const updatedExercise = {
       ...exercise,
       [field]:
-        field === "amount" ? Number(event.target.value) : event.target.value,
+        field === 'amount' ? Number(event.target.value) : event.target.value,
     };
 
     setUserExercises(() =>
       [...filteredUserExercises, updatedExercise].sort(
-        (a, b) => a.order - b.order
-      )
+        (a, b) => a.order - b.order,
+      ),
     );
   };
 
   const handleRemoveExerciseFromUser = async (exerciseID) => {
-    if (!window.confirm("Are you sure you want to delete this exercise?"))
+    if (!window.confirm('Are you sure you want to delete this exercise?'))
       return;
 
     try {
@@ -128,7 +128,7 @@ export default function ProfileView() {
         dispatch({ type: ACTIONS.DELETE_USER_EXERCISE, payload: exerciseID });
       }
     } catch (error) {
-      console.log("error deleting user exercise", error);
+      console.log('error deleting user exercise', error);
     }
   };
 
@@ -136,69 +136,95 @@ export default function ProfileView() {
     <Box
       sx={{
         marginTop: 2,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <Avatar
-        sx={{ m: 1, bgcolor: "secondary.main" }}
+        sx={{ m: 1, bgcolor: 'secondary.main' }}
         alt={`${user.firstName} ${user.lastName} avatar`}
         src={user.picture}
-        imgProps={{ referrerPolicy: "no-referrer" }}
+        imgProps={{ referrerPolicy: 'no-referrer' }}
       >
         {user.firstName[0]}
       </Avatar>
-      <Typography component="h1" variant="h5">
+      <Typography
+        component='h1'
+        variant='h5'
+      >
         {`${user.firstName} ${user.lastName}`}
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
+      <Box
+        component='form'
+        noValidate
+        onSubmit={handleSubmit}
+        sx={{ mt: 3 }}
+      >
+        <Grid
+          container
+          spacing={2}
+        >
+          <Grid
+            item
+            xs={12}
+          >
             <TextField
-              autoComplete="username"
-              name="username"
+              autoComplete='username'
+              name='username'
               required
               fullWidth
-              id="username"
-              label="Username"
+              id='username'
+              label='Username'
               autoFocus
               value={user.username}
               onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+          >
             <TextField
-              autoComplete="given-name"
-              name="firstName"
+              autoComplete='given-name'
+              name='firstName'
               required
               fullWidth
-              id="firstName"
-              label="First Name"
+              id='firstName'
+              label='First Name'
               autoFocus
               value={user.firstName}
               onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+          >
             <TextField
               required
               fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="family-name"
+              id='lastName'
+              label='Last Name'
+              name='lastName'
+              autoComplete='family-name'
               value={user.lastName}
               onChange={handleUserInfoChange}
               disabled
             />
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6">Your Exercises</Typography>
+          <Grid
+            item
+            xs={12}
+          >
+            <Typography variant='h6'>Your Exercises</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+          >
             <UserExercises
               userExercises={userExercises}
               handleExerciseChange={handleExerciseChange}
@@ -206,10 +232,13 @@ export default function ProfileView() {
               loading={loading}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+          >
             {user.exercises.length > 0 ? (
               <SubmitButton
-                variant="contained"
+                variant='contained'
                 isLoading={loading}
                 isDisabled={!hasUnsavedChanges}
                 handleSubmit={handleSubmit}
@@ -220,13 +249,23 @@ export default function ProfileView() {
               <Typography>Please add some exercises below.</Typography>
             )}
           </Grid>
-          <Grid item xs={12} sx={{ py: 2 }}>
+          <Grid
+            item
+            xs={12}
+            sx={{ py: 2 }}
+          >
             <Divider />
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6">Add New Exercise</Typography>
+          <Grid
+            item
+            xs={12}
+          >
+            <Typography variant='h6'>Add New Exercise</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+          >
             <AddUserExercise />
           </Grid>
         </Grid>

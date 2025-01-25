@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { Typography, Button, Grid } from "@mui/material";
-import { getUserLeaderboard } from "../../api/api";
-import { LEADERBOARD_STREAK_ENABLED } from "../../constants";
-import { useExerciseContext } from "../../store/context";
-import { SectionTitle } from "../exports";
+import { useEffect, useState } from 'react';
+import { Typography, Button, Grid } from '@mui/material';
+import { getUserLeaderboard } from '../../api/api';
+import { LEADERBOARD_STREAK_ENABLED } from '../../constants';
+import { useExerciseContext } from '../../store/context';
+import { SectionTitle } from '../exports';
 
 export default function UserLeaderboardStreak() {
   const { state } = useExerciseContext();
@@ -16,8 +16,7 @@ export default function UserLeaderboardStreak() {
     (async () => {
       try {
         if (!isAuthenticated || !user.id) return;
-        const resp = await getUserLeaderboard(user.id, daysRequested);
-        console.log(resp);
+        await getUserLeaderboard(user.id, daysRequested);
       } catch (error) {
         console.log(error);
       }
@@ -30,11 +29,20 @@ export default function UserLeaderboardStreak() {
     <>
       <SectionTitle>LeaderboardStreak</SectionTitle>
       <Typography>Requesting for {daysRequested} days</Typography>
-      <Grid container justifyContent="space-around">
-        <Button variant="contained" onClick={() => setDaysRequested(7)}>
+      <Grid
+        container
+        justifyContent='space-around'
+      >
+        <Button
+          variant='contained'
+          onClick={() => setDaysRequested(7)}
+        >
           Show 7 Days
         </Button>
-        <Button variant="contained" onClick={() => setDaysRequested(30)}>
+        <Button
+          variant='contained'
+          onClick={() => setDaysRequested(30)}
+        >
           Show 30 Days
         </Button>
       </Grid>

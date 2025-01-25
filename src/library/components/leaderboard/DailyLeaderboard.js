@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Grid, Typography, Avatar } from "@mui/material";
-import { getDailyLeaderboard } from "../../api/api";
-import { useExerciseContext } from "../../store/context";
-import { Loading } from "../exports";
-import { ACTIONS } from "../../store/initialState";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useEffect, useState } from 'react';
+import { Grid, Typography, Avatar } from '@mui/material';
+import { getDailyLeaderboard } from '../../api/api';
+import { useExerciseContext } from '../../store/context';
+import { Loading } from '../exports';
+import { ACTIONS } from '../../store/initialState';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export default function DailyLeaderboard() {
   const { state, dispatch } = useExerciseContext();
@@ -24,7 +24,7 @@ export default function DailyLeaderboard() {
           });
         }
       } catch (error) {
-        console.log("error getting leaderboard", error);
+        console.log('error getting leaderboard', error);
       } finally {
         setLoading(false);
       }
@@ -37,21 +37,24 @@ export default function DailyLeaderboard() {
   return (
     <Grid
       container
-      flexDirection="column"
+      flexDirection='column'
       sx={{
         my: 2,
         p: 3,
-        width: "95%",
-        minHeight: "35vh",
-        height: "fit-content",
-        bgcolor: "lightgrey",
+        width: '95%',
+        minHeight: '35vh',
+        height: 'fit-content',
+        bgcolor: 'lightgrey',
       }}
     >
       {loading ? (
         <Loading />
       ) : (
         leaderboard.map((entry) => (
-          <LeaderboardItem key={entry.userId} entry={entry} />
+          <LeaderboardItem
+            key={entry.userId}
+            entry={entry}
+          />
         ))
       )}
     </Grid>
@@ -68,35 +71,38 @@ const LeaderboardItem = ({ entry }) => {
     <Grid
       item
       container
-      justifyContent="space-evenly"
-      alignItems="center"
+      justifyContent='space-evenly'
+      alignItems='center'
       sx={{ py: 1 }}
       xs={12}
     >
       <Grid
         item
         container
-        alignItems="center"
-        justifyContent="flex-start"
+        alignItems='center'
+        justifyContent='flex-start'
         xs={9}
       >
         <Avatar
-          sx={{ bgcolor: "secondary.main", width: 32, height: 32, mr: 2 }}
+          sx={{ bgcolor: 'secondary.main', width: 32, height: 32, mr: 2 }}
           alt={`${firstName} ${lastName} avatar`}
           src={picture}
-          imgProps={{ referrerPolicy: "no-referrer" }}
+          imgProps={{ referrerPolicy: 'no-referrer' }}
         >
           {/* fallback below */}
           {firstName[0]}
         </Avatar>
 
-        <Typography variant="body1">{firstName}</Typography>
+        <Typography variant='body1'>{firstName}</Typography>
         {percentageToShow === 100 ? (
-          <CheckCircleIcon sx={{ color: "green", ml: 1 }} />
+          <CheckCircleIcon sx={{ color: 'green', ml: 1 }} />
         ) : null}
       </Grid>
-      <Grid item xs={3}>
-        <Typography variant="body1">{percentageToShow}%</Typography>
+      <Grid
+        item
+        xs={3}
+      >
+        <Typography variant='body1'>{percentageToShow}%</Typography>
       </Grid>
     </Grid>
   );

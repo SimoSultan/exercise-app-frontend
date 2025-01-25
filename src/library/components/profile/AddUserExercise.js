@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Grid, TextField } from "@mui/material";
+import { useState } from 'react';
+import { Grid, TextField } from '@mui/material';
 
-import { useExerciseContext } from "../../store/context";
-import { ACTIONS } from "../../store/initialState";
-import { createUserExercise } from "../../api/api";
-import { SubmitButton } from "../exports";
+import { useExerciseContext } from '../../store/context';
+import { ACTIONS } from '../../store/initialState';
+import { createUserExercise } from '../../api/api';
+import { SubmitButton } from '../exports';
 
 const initialState = {
-  name: "",
+  name: '',
   amount: 0,
-  unit: "reps",
+  unit: 'reps',
 };
 
 export default function AddUserExercise() {
@@ -21,11 +21,11 @@ export default function AddUserExercise() {
   const handleChange = (e) => {
     e.preventDefault();
 
-    if (e.target.name === "amount") {
+    if (e.target.name === 'amount') {
       const num = Number(e.target.value);
       setExerciseDetails((prev) => ({
         ...prev,
-        [e.target.name]: isNaN(num) ? "" : num,
+        [e.target.name]: isNaN(num) ? '' : num,
       }));
       return;
     }
@@ -38,10 +38,10 @@ export default function AddUserExercise() {
 
   const handleSubmitExercise = async () => {
     if (exerciseDetails.name.length < 1) {
-      return window.alert("Please enter an exercise.");
+      return window.alert('Please enter an exercise.');
     }
     if (isNaN(exerciseDetails.amount) || exerciseDetails.amount < 1) {
-      return window.alert("Please ensure the amount is a number.");
+      return window.alert('Please ensure the amount is a number.');
     }
 
     try {
@@ -49,7 +49,7 @@ export default function AddUserExercise() {
       const resp = await createUserExercise(
         user.routineId,
         exerciseDetails,
-        user.exercises.length + 1
+        user.exercises.length + 1,
       );
       if (resp.status === 200) {
         const { id, name, amount, order, unit } = resp.data;
@@ -67,7 +67,7 @@ export default function AddUserExercise() {
         setExerciseDetails(initialState);
       }
     } catch (error) {
-      console.log("error creating user exercise", error);
+      console.log('error creating user exercise', error);
     } finally {
       setIsLoading(false);
     }
@@ -78,52 +78,61 @@ export default function AddUserExercise() {
       <Grid
         item
         container
-        justifyContent="space-between"
-        alignItems="center"
+        justifyContent='space-between'
+        alignItems='center'
         spacing={1}
       >
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={6}
+        >
           <TextField
-            label="Exercise Name"
-            name="name"
-            variant="outlined"
+            label='Exercise Name'
+            name='name'
+            variant='outlined'
             value={exerciseDetails.name}
             onChange={handleChange}
             required
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid
+          item
+          xs={3}
+        >
           <TextField
-            label="Amount"
-            variant="outlined"
-            name="amount"
+            label='Amount'
+            variant='outlined'
+            name='amount'
             value={exerciseDetails.amount}
             onChange={handleChange}
             required
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid
+          item
+          xs={3}
+        >
           <TextField
-            label="Units"
-            variant="outlined"
-            name="unit"
+            label='Units'
+            variant='outlined'
+            name='unit'
             value={exerciseDetails.unit}
             onChange={handleChange}
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           />
         </Grid>
       </Grid>
 
       <SubmitButton
-        variant="outlined"
+        variant='outlined'
         handleSubmit={handleSubmitExercise}
         isLoading={isLoading}
         isDisabled={
-          exerciseDetails.name === "" ||
-          exerciseDetails.amount === "" ||
-          exerciseDetails.unit === ""
+          exerciseDetails.name === '' ||
+          exerciseDetails.amount === '' ||
+          exerciseDetails.unit === ''
         }
         style={{ mt: 3 }}
       >

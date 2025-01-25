@@ -1,11 +1,11 @@
 export function capitalize(str) {
-  if (!str) return "";
+  if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
 // https://stackoverflow.com/a/55256318
 const objectsEqual = (o1, o2) =>
-  typeof o1 === "object" && Object.keys(o1).length > 0
+  typeof o1 === 'object' && Object.keys(o1).length > 0
     ? Object.keys(o1).length === Object.keys(o2).length &&
       Object.keys(o1).every((p) => objectsEqual(o1[p], o2[p]))
     : o1 === o2;
@@ -29,7 +29,7 @@ export function reduceDailyEntriesForDisplay(payload) {
       (allEntries = {
         ...allEntries,
         [key]: value.reduce((prev, curr) => prev + curr.amount, 0),
-      })
+      }),
   );
   return allEntries;
 }
@@ -44,8 +44,8 @@ function convert24hTo12h(time) {
   if (time.length > 1) {
     // If time format correct
     time = time.slice(1); // Remove full string match value
-    time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
+    time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
     time[0] = +time[0] % 12 || 12; // Adjust hours
   }
-  return time.join(""); // return adjusted time or original string
+  return time.join(''); // return adjusted time or original string
 }
