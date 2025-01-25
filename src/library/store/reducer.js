@@ -1,4 +1,4 @@
-import { initialState, ACTIONS } from "./initialState";
+import { initialState, ACTIONS } from './initialState';
 
 export function exerciseReducer(state, action) {
   const { type, payload } = action;
@@ -28,8 +28,8 @@ export function exerciseReducer(state, action) {
         isAuthenticated: false,
         user: initialState.user,
         alert: {
-          type: "success",
-          message: "Successfully logged out.",
+          type: 'success',
+          message: 'Successfully logged out.',
         },
       };
     case ACTIONS.SHOW_ALERT:
@@ -41,8 +41,8 @@ export function exerciseReducer(state, action) {
       return {
         ...state,
         alert: {
-          type: "",
-          message: "",
+          type: '',
+          message: '',
         },
       };
     case ACTIONS.SET_ACTIVE_TAB:
@@ -74,8 +74,8 @@ export function exerciseReducer(state, action) {
           exercises: payload,
         },
         alert: {
-          type: "success",
-          message: "Exercises successfully updated.",
+          type: 'success',
+          message: 'Exercises successfully updated.',
         },
       };
     case ACTIONS.DELETE_USER_EXERCISE:
@@ -84,12 +84,12 @@ export function exerciseReducer(state, action) {
         user: {
           ...state.user,
           exercises: state.user.exercises.filter(
-            (exercise) => exercise.id !== payload
+            (exercise) => exercise.id !== payload,
           ),
         },
         alert: {
-          type: "success",
-          message: "Exercise successfully deleted.",
+          type: 'success',
+          message: 'Exercise successfully deleted.',
         },
       };
     case ACTIONS.ADD_USER_EXERCISE:
@@ -100,8 +100,8 @@ export function exerciseReducer(state, action) {
           exercises: [...state.user.exercises, payload],
         },
         alert: {
-          type: "success",
-          message: "Exercise successfully added.",
+          type: 'success',
+          message: 'Exercise successfully added.',
         },
       };
     case ACTIONS.SET_DAILY_ENTRIES:
@@ -127,8 +127,8 @@ export function exerciseReducer(state, action) {
           },
         },
         alert: {
-          type: "success",
-          message: "Successfully banked entry.",
+          type: 'success',
+          message: 'Successfully banked entry.',
         },
       };
     case ACTIONS.SET_LEADERBOARD:

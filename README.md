@@ -1,4 +1,5 @@
 # App Setup
+
 1. `git clone git@github.com:SimoSultan/exercise-app-frontend.git`
 2. `cd exercise-app-frontend`
 3. `yarn`
@@ -16,6 +17,6 @@
 
 - https://github.com/reezy24/exercise-app-backend
 
-# Deployed Site (in development) 
+# Deployed Site (in development)
 
-- https://sixty6.netlify.app/ 
+- https://sixty6.netlify.app/

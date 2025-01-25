@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import {
   LeaderboardScreen,
   LoginScreen,
   BankScreen,
   ProfileScreen,
   HomeScreen,
-} from "../screens/exports";
-import { useExerciseContext } from "../store/context";
-import { ACTIONS } from "../store/initialState";
+} from '../screens/exports';
+import { useExerciseContext } from '../store/context';
+import { ACTIONS } from '../store/initialState';
 
 export default function Router() {
   const { state, dispatch } = useExerciseContext();
@@ -17,17 +17,17 @@ export default function Router() {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/profile":
-        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "profile" });
+      case '/profile':
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: 'profile' });
         break;
-      case "/bank":
-        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "bank" });
+      case '/bank':
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: 'bank' });
         break;
-      case "/leaderboard":
-        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "leaderboard" });
+      case '/leaderboard':
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: 'leaderboard' });
         break;
       default:
-        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: "home" });
+        dispatch({ type: ACTIONS.SET_ACTIVE_TAB, payload: 'home' });
         break;
     }
   }, [location, dispatch]);
@@ -35,26 +35,25 @@ export default function Router() {
   return (
     <Routes>
       <Route
-        path="/profile"
+        path='/profile'
         element={isAuthenticated ? <ProfileScreen /> : <LoginScreen />}
       />
       <Route
-        path="/bank"
+        path='/bank'
         element={isAuthenticated ? <BankScreen /> : <LoginScreen />}
       />
       <Route
-        path="/leaderboard"
+        path='/leaderboard'
         element={isAuthenticated ? <LeaderboardScreen /> : <LoginScreen />}
       />
       <Route
-        path="/login"
+        path='/login'
         element={isAuthenticated ? <HomeScreen /> : <LoginScreen />}
       />
       <Route
-        path="/login/failure"
-        element={isAuthenticated ? <HomeScreen /> : <LoginScreen />}
+        path='*'
+        element={<HomeScreen />}
       />
-      <Route path="*" element={<HomeScreen />} />
     </Routes>
   );
 }

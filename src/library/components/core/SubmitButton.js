@@ -1,9 +1,9 @@
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 
 export default function SubmitButton({
   children,
   variant,
-  color = "primary",
+  color = 'primary',
   handleSubmit,
   isLoading,
   isDisabled,
@@ -12,9 +12,9 @@ export default function SubmitButton({
   return (
     <Box
       sx={{
-        position: "relative",
-        width: "fit-content",
-        margin: "0 auto",
+        position: 'relative',
+        width: 'fit-content',
+        margin: '0 auto',
         ...style,
       }}
     >
@@ -28,22 +28,22 @@ export default function SubmitButton({
           }}
         >
           <Typography
-            variant="button"
-            color={isLoading ? "transparent" : "inherit"}
+            variant='button'
+            color={isLoading ? 'transparent' : 'inherit'}
           >
             {children}
           </Typography>
         </Button>
         {isLoading ? (
           <CircularProgress
-            color="inherit"
+            color='inherit'
             size={24}
             sx={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              marginTop: "-12px",
-              marginLeft: "-12px",
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              marginTop: '-12px',
+              marginLeft: '-12px',
             }}
           />
         ) : null}

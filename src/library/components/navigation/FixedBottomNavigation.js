@@ -1,13 +1,13 @@
-import Box from "@mui/material/Box";
-import HomeIcon from "@mui/icons-material/Home";
-import PersonIcon from "@mui/icons-material/Person";
-import AddTaskIcon from "@mui/icons-material/AddTask";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
-import { Grid, Typography, IconButton } from "@mui/material";
-import { BOTTOM_NAVIGATION_HEIGHT, Z_INDEXES } from "../../styles/styles";
-import { useExerciseContext } from "../../store/context";
+import Box from '@mui/material/Box';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
+import { Grid, Typography, IconButton } from '@mui/material';
+import { BOTTOM_NAVIGATION_HEIGHT, Z_INDEXES } from '../../styles/styles';
+import { useExerciseContext } from '../../store/context';
 
 export default function FixedBottomNavigation() {
   const { state } = useExerciseContext();
@@ -16,7 +16,7 @@ export default function FixedBottomNavigation() {
   return (
     <Box
       sx={{
-        position: "fixed",
+        position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
@@ -29,27 +29,31 @@ export default function FixedBottomNavigation() {
           height: BOTTOM_NAVIGATION_HEIGHT,
         }}
       >
-        <Grid container justifyContent="space-evenly" alignItems="center">
+        <Grid
+          container
+          justifyContent='space-evenly'
+          alignItems='center'
+        >
           <Grid item>
             <Link
-              to="/"
+              to='/'
               style={{
-                textDecoration: "none",
-                color: "inherit",
-                userSelect: "none",
+                textDecoration: 'none',
+                color: 'inherit',
+                userSelect: 'none',
               }}
             >
               <IconButton
-                color="inherit"
+                color='inherit'
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <HomeIcon color={activeTab === "home" ? "primary" : ""} />
+                <HomeIcon color={activeTab === 'home' ? 'primary' : ''} />
                 <Typography
-                  variant="button"
-                  color={activeTab === "home" ? "primary" : ""}
+                  variant='button'
+                  color={activeTab === 'home' ? 'primary' : ''}
                 >
                   Home
                 </Typography>
@@ -58,24 +62,24 @@ export default function FixedBottomNavigation() {
           </Grid>
           <Grid item>
             <Link
-              to="profile"
+              to='profile'
               style={{
-                textDecoration: "none",
-                color: "inherit",
-                userSelect: "none",
+                textDecoration: 'none',
+                color: 'inherit',
+                userSelect: 'none',
               }}
             >
               <IconButton
-                color="inherit"
+                color='inherit'
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <PersonIcon color={activeTab === "profile" ? "primary" : ""} />
+                <PersonIcon color={activeTab === 'profile' ? 'primary' : ''} />
                 <Typography
-                  variant="button"
-                  color={activeTab === "profile" ? "primary" : ""}
+                  variant='button'
+                  color={activeTab === 'profile' ? 'primary' : ''}
                 >
                   Profile
                 </Typography>
@@ -84,17 +88,17 @@ export default function FixedBottomNavigation() {
           </Grid>
           <Grid item>
             <Link
-              to="bank"
-              style={{ textDecoration: "none", color: "inherit" }}
+              to='bank'
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <IconButton
-                color="inherit"
-                sx={{ display: "flex", flexDirection: "column" }}
+                color='inherit'
+                sx={{ display: 'flex', flexDirection: 'column' }}
               >
-                <AddTaskIcon color={activeTab === "bank" ? "primary" : ""} />
+                <AddTaskIcon color={activeTab === 'bank' ? 'primary' : ''} />
                 <Typography
-                  variant="button"
-                  color={activeTab === "bank" ? "primary" : ""}
+                  variant='button'
+                  color={activeTab === 'bank' ? 'primary' : ''}
                 >
                   Bank
                 </Typography>
@@ -103,19 +107,19 @@ export default function FixedBottomNavigation() {
           </Grid>
           <Grid item>
             <Link
-              to="leaderboard"
-              style={{ textDecoration: "none", color: "inherit" }}
+              to='leaderboard'
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <IconButton
-                color="inherit"
-                sx={{ display: "flex", flexDirection: "column" }}
+                color='inherit'
+                sx={{ display: 'flex', flexDirection: 'column' }}
               >
                 <LeaderboardIcon
-                  color={activeTab === "leaderboard" ? "primary" : ""}
+                  color={activeTab === 'leaderboard' ? 'primary' : ''}
                 />
                 <Typography
-                  variant="button"
-                  color={activeTab === "leaderboard" ? "primary" : ""}
+                  variant='button'
+                  color={activeTab === 'leaderboard' ? 'primary' : ''}
                 >
                   Leaderboard
                 </Typography>

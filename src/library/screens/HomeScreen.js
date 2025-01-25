@@ -1,30 +1,30 @@
-import { Container, Typography, useMediaQuery, Button } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { Link } from "react-router-dom";
-import { useExerciseContext } from "../store/context";
+import { Container, Typography, useMediaQuery, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import { useExerciseContext } from '../store/context';
 import {
   Footer,
   UserLeaderboardStreak,
   ScreenTitle,
-} from "../components/exports";
-import { FOOTER_HEIGHT } from "../styles/styles";
+} from '../components/exports';
+import { FOOTER_HEIGHT } from '../styles/styles';
 
 export default function HomeScreen() {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   const { state } = useExerciseContext();
   const { isAuthenticated } = state;
 
   return (
     <Container
-      maxWidth="sm"
+      maxWidth='sm'
       sx={{
         minHeight: `calc(100vh - ${FOOTER_HEIGHT}px)`,
         flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
       }}
     >
       <ScreenTitle>Home</ScreenTitle>
@@ -37,8 +37,11 @@ export default function HomeScreen() {
       {!isAuthenticated ? (
         <>
           <Typography>You are not logged in</Typography>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Button variant="contained">Login</Button>
+          <Link
+            to='/login'
+            style={{ textDecoration: 'none' }}
+          >
+            <Button variant='contained'>Login</Button>
           </Link>
         </>
       ) : (

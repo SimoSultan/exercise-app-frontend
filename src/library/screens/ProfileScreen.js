@@ -1,16 +1,16 @@
-import { Container } from "@mui/material";
-import { ProfileView } from "../components/exports";
+import { Container } from '@mui/material';
+import { ProfileView } from '../components/exports';
 
 export default function ProfileScreen() {
   return (
     <Container
-      maxWidth="sm"
+      maxWidth='sm'
       sx={{
         flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         paddingBottom: 10,
       }}
     >

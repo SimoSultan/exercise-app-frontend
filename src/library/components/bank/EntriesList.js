@@ -1,10 +1,10 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from '@mui/material';
 import {
   capitalize,
   formatDateToString,
   getExerciseByID,
-} from "../../utils/utils";
-import { SectionTitle } from "../exports";
+} from '../../utils/utils';
+import { SectionTitle } from '../exports';
 
 export default function EntriesList({ userEntries, userExercises }) {
   return (
@@ -15,28 +15,31 @@ export default function EntriesList({ userEntries, userExercises }) {
       ) : (
         <Grid
           container
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="space-between"
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='space-between'
         >
           {Object.entries(userEntries).length > 0
             ? Object.entries(userEntries).map(([exerciseID, entryList]) => {
-                const { name = "", unit = "reps" } = getExerciseByID(
+                const { name = '', unit = 'reps' } = getExerciseByID(
                   exerciseID,
-                  userExercises
+                  userExercises,
                 );
                 return (
                   <Grid
                     key={exerciseID}
                     item
                     container
-                    justifyContent="space-between"
+                    justifyContent='space-between'
                     sx={{ px: 4, py: 1 }}
                   >
-                    <Typography sx={{ fontWeight: "bold" }}>
+                    <Typography sx={{ fontWeight: 'bold' }}>
                       {capitalize(name)}
                     </Typography>
-                    <EntryList entryList={entryList} unit={unit} />
+                    <EntryList
+                      entryList={entryList}
+                      unit={unit}
+                    />
                   </Grid>
                 );
               })
@@ -51,13 +54,16 @@ const EntryList = ({ entryList, unit }) => {
   if (entryList.length < 1) return null;
 
   return (
-    <Grid container flexDirection="column">
+    <Grid
+      container
+      flexDirection='column'
+    >
       {entryList.map(({ id, amount, created_at }) => (
         <Grid
           key={id}
           item
           container
-          justifyContent="space-between"
+          justifyContent='space-between'
           sx={{ px: 4, py: 1 }}
         >
           <Typography>

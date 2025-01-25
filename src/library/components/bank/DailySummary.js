@@ -1,6 +1,6 @@
-import { memo, useState, useEffect } from "react";
-import { Typography, Grid } from "@mui/material";
-import { capitalize, reduceDailyEntriesForDisplay } from "../../utils/utils";
+import { memo, useState, useEffect } from 'react';
+import { Typography, Grid } from '@mui/material';
+import { capitalize, reduceDailyEntriesForDisplay } from '../../utils/utils';
 
 function Summary({ loading, userExercises, userEntries }) {
   const [dailyEntries, setDailyEntries] = useState({});
@@ -17,8 +17,8 @@ function Summary({ loading, userExercises, userEntries }) {
     <Grid
       key={`summary-exercise-${id}`}
       container
-      justifyContent="space-between"
-      flexDirection="row"
+      justifyContent='space-between'
+      flexDirection='row'
       sx={{ px: 3, pb: 1 }}
     >
       <Typography>{capitalize(name)}</Typography>

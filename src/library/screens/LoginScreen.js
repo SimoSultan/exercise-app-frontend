@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import { useExerciseContext } from "../store/context";
-import { Loading } from "../components/exports";
-import { Link, useLocation } from "react-router-dom";
-import { ACTIONS } from "../store/initialState";
+import { useState, useEffect } from 'react';
+import { Button, Grid, Typography } from '@mui/material';
+import { useExerciseContext } from '../store/context';
+import { Loading } from '../components/exports';
+import { Link, useLocation } from 'react-router-dom';
+import { ACTIONS } from '../store/initialState';
 
 export default function Login() {
   const { state, dispatch } = useExerciseContext();
@@ -14,14 +14,14 @@ export default function Login() {
 
   function handleLoginWithGoogle() {
     setLoading(true);
-    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, "_self");
+    window.open(`${process.env.REACT_APP_API_ENDPOINT}/auth/google`, '_self');
     setTimeout(() => {
       setLoading(false);
       dispatch({
         type: ACTIONS.SHOW_ALERT,
         payload: {
-          type: "success",
-          message: "Successfully logged in.",
+          type: 'success',
+          message: 'Successfully logged in.',
         },
       });
     }, 2500);
@@ -29,7 +29,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (location.pathname === "/login/failure") {
+    if (location.pathname === '/login/failure') {
       setFailedLogin(true);
       dispatch({ type: ACTIONS.LOG_USER_OUT });
     }
@@ -38,10 +38,10 @@ export default function Login() {
   return (
     <Grid
       container
-      maxWidth="sm"
-      justifyContent="center"
-      alignItems="center"
-      sx={{ height: "50vh", margin: "0 auto", px: 3, paddingBottom: 10 }}
+      maxWidth='sm'
+      justifyContent='center'
+      alignItems='center'
+      sx={{ height: '50vh', margin: '0 auto', px: 3, paddingBottom: 10 }}
     >
       {loading || attemptingLogIn ? (
         <Loading />
@@ -64,8 +64,14 @@ const LoginWithGoogle = ({
   isAuthenticated ? (
     <>
       <Typography sx={{ py: 3 }}>You are already logged in</Typography>
-      <Button variant="contained" sx={{ py: 3 }}>
-        <Link to="/" sx={{ textDecoration: "none" }}>
+      <Button
+        variant='contained'
+        sx={{ py: 3 }}
+      >
+        <Link
+          to='/'
+          sx={{ textDecoration: 'none' }}
+        >
           Home
         </Link>
       </Button>
@@ -74,7 +80,7 @@ const LoginWithGoogle = ({
     <>
       {failedLogin ? <FailedGoogleLogin /> : null}
       <Button
-        variant="contained"
+        variant='contained'
         disabled={isAuthenticated}
         onClick={handleLoginWithGoogle}
       >
@@ -84,7 +90,5 @@ const LoginWithGoogle = ({
   );
 
 const FailedGoogleLogin = () => (
-  <Typography sx={{ py: 3 }}>
-    You have been logged out. Something went wrong.
-  </Typography>
+  <Typography sx={{ py: 3 }}>You are not logged in.</Typography>
 );

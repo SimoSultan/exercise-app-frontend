@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { Container, Box } from "@mui/material";
-import { useExerciseContext } from "../store/context";
-import { getUserEntriesDaily, getUserExercises } from "../api/api";
+import { useEffect, useState } from 'react';
+import { Container, Box } from '@mui/material';
+import { useExerciseContext } from '../store/context';
+import { getUserEntriesDaily, getUserExercises } from '../api/api';
 import {
   DailySummary,
   ScreenTitle,
   BankInput,
   Loading,
   EntriesList,
-} from "../components/exports";
-import { ACTIONS } from "../store/initialState";
+} from '../components/exports';
+import { ACTIONS } from '../store/initialState';
 
 export default function Bank() {
   const { state, dispatch } = useExerciseContext();
@@ -18,7 +18,7 @@ export default function Bank() {
   const [loadingExercises, setLoadingExercises] = useState(false);
   const [loadingEntries, setLoadingEntries] = useState(false);
   const [userExercises, setUserExercises] = useState(
-    user.exercises.length < 1 ? [] : user.exercises
+    user.exercises.length < 1 ? [] : user.exercises,
   );
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export default function Bank() {
           });
         }
       } catch (error) {
-        if (error.response.data === "no exercises found") return;
-        console.log("error getting current user exercises", error);
+        if (error.response.data === 'no exercises found') return;
+        console.log('error getting current user exercises', error);
       } finally {
         setLoadingExercises(false);
       }
@@ -56,7 +56,7 @@ export default function Bank() {
       try {
         setLoadingEntries(true);
         const resp = await getUserEntriesDaily(
-          userExercises.map((exercise) => exercise.id)
+          userExercises.map((exercise) => exercise.id),
         );
         if (resp.status === 200) {
           dispatch({
@@ -67,11 +67,11 @@ export default function Bank() {
       } catch (error) {
         if (
           error.response.status === 404 &&
-          error.response.data === "no entries found"
+          error.response.data === 'no entries found'
         ) {
           console.log(error.response.data, error);
         }
-        console.log("failed call for entries/list-batch-daily", error);
+        console.log('failed call for entries/list-batch-daily', error);
       } finally {
         setLoadingEntries(false);
       }
@@ -86,18 +86,18 @@ export default function Bank() {
 
   return (
     <Container
-      maxWidth="sm"
+      maxWidth='sm'
       sx={{
         flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         paddingBottom: 10,
       }}
     >
       <ScreenTitle>Bank Exercises</ScreenTitle>
-      <Box sx={{ width: "90%", py: 4, bgcolor: "lightgrey" }}>
+      <Box sx={{ width: '90%', py: 4, bgcolor: 'lightgrey' }}>
         {loadingExercises || loadingEntries ? (
           <Loading icon />
         ) : (
@@ -108,7 +108,10 @@ export default function Bank() {
           />
         )}
       </Box>
-      <BankInput userID={user.id} userExercises={user.exercises} />
+      <BankInput
+        userID={user.id}
+        userExercises={user.exercises}
+      />
       <EntriesList
         userEntries={user.dailyEntries}
         userExercises={user.exercises}
