@@ -1,8 +1,9 @@
-import { useEffect, useReducer, useContext, createContext } from 'react';
-import { initialState, ACTIONS } from './initialState';
-import { exerciseReducer } from './reducer';
-import { getCurrentUser } from '../api/api';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { getCurrentUser } from '../api/api';
+import { ACTIONS, initialState } from './initialState';
+import { exerciseReducer } from './reducer';
 
 export const ExerciseContext = createContext({});
 

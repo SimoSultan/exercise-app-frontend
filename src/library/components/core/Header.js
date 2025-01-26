@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import PersonIcon from '@mui/icons-material/Person';
-
-import { HEADER_HEIGHT, Z_INDEXES } from '../../styles/styles';
 import { Link } from 'react-router-dom';
-import { useExerciseContext } from '../../store/context';
-import { ACTIONS } from '../../store/initialState';
 import { useNavigate } from 'react-router-dom';
+
+import PersonIcon from '@mui/icons-material/Person';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+
 import { logoutUser } from '../../api/api';
 import { DEV_MODE } from '../../constants';
+import { useExerciseContext } from '../../store/context';
+import { ACTIONS } from '../../store/initialState';
+import { HEADER_HEIGHT, Z_INDEXES } from '../../styles/styles';
 
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);

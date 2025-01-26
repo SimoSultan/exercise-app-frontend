@@ -1,11 +1,10 @@
+import './App.css';
 import {
   BasicAlert,
   FixedBottomNavigation,
   Header,
 } from './library/components/exports';
 import ExerciseRouter from './library/routes/ExerciseRouter';
-
-import './App.css';
 import { useExerciseContext } from './library/store/context';
 
 function App() {

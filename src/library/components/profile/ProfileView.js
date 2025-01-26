@@ -1,24 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import {
-  TextField,
-  Grid,
-  Box,
-  Typography,
   Avatar,
+  Box,
   Divider,
+  Grid,
+  TextField,
+  Typography,
 } from '@mui/material';
 
-import UserExercises from './UserExercises';
-import AddUserExercise from './AddUserExercise';
-import { useExerciseContext } from '../../store/context';
-import { ACTIONS } from '../../store/initialState';
 import {
   deleteUserExercise,
   getUserExercises,
   updateUserExerciseBatch,
 } from '../../api/api';
-import { SubmitButton } from '../exports';
+import { useExerciseContext } from '../../store/context';
+import { ACTIONS } from '../../store/initialState';
 import { arraysEqual } from '../../utils/utils';
+import { SubmitButton } from '../exports';
+import AddUserExercise from './AddUserExercise';
+import UserExercises from './UserExercises';
 
 export default function ProfileView() {
   const { state, dispatch } = useExerciseContext();

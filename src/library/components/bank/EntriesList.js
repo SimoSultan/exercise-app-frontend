@@ -1,4 +1,5 @@
 import { Grid, Typography } from '@mui/material';
+
 import {
   capitalize,
   formatDateToString,

@@ -1,5 +1,5 @@
-import { Container, Alert, Stack, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Alert, Container, IconButton, Stack } from '@mui/material';
 
 import { useExerciseContext } from '../../store/context';
 import { ACTIONS } from '../../store/initialState';

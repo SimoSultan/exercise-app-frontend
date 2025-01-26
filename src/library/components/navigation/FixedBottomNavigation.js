@@ -1,13 +1,15 @@
-import Box from '@mui/material/Box';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import AddTaskIcon from '@mui/icons-material/AddTask';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { Grid, Typography, IconButton } from '@mui/material';
-import { BOTTOM_NAVIGATION_HEIGHT, Z_INDEXES } from '../../styles/styles';
+
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import HomeIcon from '@mui/icons-material/Home';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import PersonIcon from '@mui/icons-material/Person';
+import { Grid, IconButton, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+
 import { useExerciseContext } from '../../store/context';
+import { BOTTOM_NAVIGATION_HEIGHT, Z_INDEXES } from '../../styles/styles';
 
 export default function FixedBottomNavigation() {
   const { state } = useExerciseContext();

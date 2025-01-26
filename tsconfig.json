@@ -6,6 +6,7 @@
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
+    "noEmit": true,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
@@ -13,6 +14,17 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true
+    // "baseUrl": "./"
+    // "paths": {
+    //   "@components/*": [
+    //     "/Users/simon.curran/simons-projects/exercise-app-frontend/src/library/components"
+    //   ],
+    //   "@screens/*": ["library/screens/*"],
+    //   "@hooks/*": ["library/hooks/*"],
+    //   "@api/*": ["library/api/*"],
+    //   "@utils/*": ["library/utils/*"],
+    //   "@routes/*": ["library/routes/*"]
+    // }
   },
   "exclude": [
     "node_modules",

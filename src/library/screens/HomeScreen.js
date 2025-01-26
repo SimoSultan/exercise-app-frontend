@@ -1,12 +1,14 @@
-import { Container, Typography, useMediaQuery, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { useExerciseContext } from '../store/context';
+
+import { Button, Container, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import {
   Footer,
-  UserLeaderboardStreak,
   ScreenTitle,
+  UserLeaderboardStreak,
 } from '../components/exports';
+import { useExerciseContext } from '../store/context';
 import { FOOTER_HEIGHT } from '../styles/styles';
 
 export default function HomeScreen() {

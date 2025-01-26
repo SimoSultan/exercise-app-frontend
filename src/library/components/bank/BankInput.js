@@ -1,18 +1,19 @@
-import { useState, memo } from 'react';
-import {
-  Typography,
-  Box,
-  Grid,
-  TextField,
-  capitalize,
-  Fab,
-  CircularProgress,
-} from '@mui/material';
+import { memo, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
-import { ACTIONS } from '../../store/initialState';
-import { useExerciseContext } from '../../store/context';
+import {
+  Box,
+  CircularProgress,
+  Fab,
+  Grid,
+  TextField,
+  Typography,
+  capitalize,
+} from '@mui/material';
+
 import { submitExerciseEntry } from '../../api/api';
+import { useExerciseContext } from '../../store/context';
+import { ACTIONS } from '../../store/initialState';
 import { Z_INDEXES } from '../../styles/styles';
 
 function Input({ userID, userExercises = [] }) {

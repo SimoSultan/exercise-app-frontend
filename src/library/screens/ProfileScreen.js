@@ -1,4 +1,5 @@
 import { Container } from '@mui/material';
+
 import { ProfileView } from '../components/exports';
 
 export default function ProfileScreen() {

@@ -1,4 +1,4 @@
-import { Grid, CircularProgress } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 
 const LoadingIcon = () => {
   return <CircularProgress color='success' />;
