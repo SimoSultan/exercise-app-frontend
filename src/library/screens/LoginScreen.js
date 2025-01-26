@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
-import { useExerciseContext } from '../store/context';
-import { Loading } from '../components/exports';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
+import { Button, Grid, Typography } from '@mui/material';
+
+import { Loading } from '../components/exports';
+import { useExerciseContext } from '../store/context';
 import { ACTIONS } from '../store/initialState';
 
 export default function Login() {

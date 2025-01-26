@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Grid, Typography, Avatar } from '@mui/material';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Avatar, Grid, Typography } from '@mui/material';
+
 import { getDailyLeaderboard } from '../../api/api';
 import { useExerciseContext } from '../../store/context';
-import { Loading } from '../exports';
 import { ACTIONS } from '../../store/initialState';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Loading } from '../exports';
 
 export default function DailyLeaderboard() {
   const { state, dispatch } = useExerciseContext();

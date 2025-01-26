@@ -1,4 +1,5 @@
 import { Container } from '@mui/material';
+
 import { DailyLeaderboard, ScreenTitle } from '../components/exports';
 
 export default function LeaderboardScreen() {

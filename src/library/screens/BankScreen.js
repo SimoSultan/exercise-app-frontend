@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Container, Box } from '@mui/material';
-import { useExerciseContext } from '../store/context';
+
+import { Box, Container } from '@mui/material';
+
 import { getUserEntriesDaily, getUserExercises } from '../api/api';
 import {
-  DailySummary,
-  ScreenTitle,
   BankInput,
-  Loading,
+  DailySummary,
   EntriesList,
+  Loading,
+  ScreenTitle,
 } from '../components/exports';
+import { useExerciseContext } from '../store/context';
 import { ACTIONS } from '../store/initialState';
 
 export default function Bank() {

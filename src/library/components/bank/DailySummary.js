@@ -1,5 +1,7 @@
-import { memo, useState, useEffect } from 'react';
-import { Typography, Grid } from '@mui/material';
+import { memo, useEffect, useState } from 'react';
+
+import { Grid, Typography } from '@mui/material';
+
 import { capitalize, reduceDailyEntriesForDisplay } from '../../utils/utils';
 
 function Summary({ loading, userExercises, userEntries }) {

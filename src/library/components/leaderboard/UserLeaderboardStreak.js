@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Typography, Button, Grid } from '@mui/material';
+
+import { Button, Grid, Typography } from '@mui/material';
+
 import { getUserLeaderboard } from '../../api/api';
 import { LEADERBOARD_STREAK_ENABLED } from '../../constants';
 import { useExerciseContext } from '../../store/context';

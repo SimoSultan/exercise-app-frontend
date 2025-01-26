@@ -1,11 +1,12 @@
-import {
-  IconButton,
-  OutlinedInput,
-  FormControl,
-  InputLabel,
-  Grid,
-} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material';
+
 import { Loading } from '../exports';
 
 export default function UserExercises({

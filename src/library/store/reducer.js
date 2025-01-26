@@ -1,4 +1,4 @@
-import { initialState, ACTIONS } from './initialState';
+import { ACTIONS, initialState } from './initialState';
 
 export function exerciseReducer(state, action) {
   const { type, payload } = action;

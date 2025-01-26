@@ -1,9 +1,10 @@
 import { useState } from 'react';
+
 import { Grid, TextField } from '@mui/material';
 
+import { createUserExercise } from '../../api/api';
 import { useExerciseContext } from '../../store/context';
 import { ACTIONS } from '../../store/initialState';
-import { createUserExercise } from '../../api/api';
 import { SubmitButton } from '../exports';
 
 const initialState = {

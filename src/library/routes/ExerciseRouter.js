@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
+
 import {
+  BankScreen,
+  HomeScreen,
   LeaderboardScreen,
   LoginScreen,
-  BankScreen,
   ProfileScreen,
-  HomeScreen,
 } from '../screens/exports';
 import { useExerciseContext } from '../store/context';
 import { ACTIONS } from '../store/initialState';
